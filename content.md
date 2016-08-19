@@ -1,15 +1,6 @@
 #Ryan Goldstein's Website
 ###High School Computer Science Student
-<table>
-<tr>
-<td><a href="#Projects">Projects</a></td>
-<td><a href="#Technologies">Technologies</a></td>
-<td><a href="#Languages">Languages</a></td>
-<td><a href="#Site">This Site</a></td>
-</tr>
-</table>
-<br/>
-<h2 id="Projects">Completed or Significant Projects</h2>
+##Completed or Significant Projects
 
 - [This website](https://github.com/ryanisaacg/ryanisaacg.github.io) written by hand in Markdown and CSS
 - [ChemcialWriter: ](https://github.com/ryanisaacg/ChemicalWriter) A python program that converts a string into atomic symbols
@@ -24,12 +15,12 @@
 - [Speech Generator: ](https://github.com/ryanisaacg/speech-generator) A program that takes written human speech, analyzes it, and attempts to create the most similar string of words
 - [FwumDeStego: ](https://github.com/ryanisaacg/fwumdestego) A stegnonography program that can encode text in images
 
-<h2 id="Technologies">Technologies Experience</h2>
+##Technologies Experience
 - Windows and Unix systems
 - Visual Studio IDE
 - Eclipse IDE
 - Atom editor
-- Visual Studio Code 
+- Visual Studio Code
 - Git
 - Bash
 - Windows Command Prompt
@@ -41,7 +32,7 @@
 - CMake
 - Ninja
 
-<h2 id="Languages">Language Experience</h2>
+##Programming Language Experience
 - High Level of Proficiency and Experience
 	- Java
 	- C
@@ -59,8 +50,7 @@
 	- Scheme
 	- Ruby
 
-<h2 id="Site">Your Website Looks Old/Weird/Simple, Why?</h2>
-This website is a very simple HTML document, hosted on Github. It is probably one of the fastest-loading sites you've visited today, if not the fastest to load. This is helped along quite a bit by my choice of host; Github's infrastructure is all based on Amazon Web Services, which is often considered the leader in the server market. On the other hand, many AWS sites are still quite slow. This site uses hand-written CSS for styling, whereas frameworks like Bootstrap take up thousands of times more disk space. The difference is imperceptible to a modern hard drive but over a network, it can be felt much more strongly. 
+##Your Website Looks Old/Weird/Simple, Why?
+This website is a very simple HTML document, hosted on Github. It is probably one of the fastest-loading sites you've visited today, if not the fastest to load. This is helped along quite a bit by my choice of host; Github's infrastructure is all based on Amazon Web Services, which is often considered the leader in the server market. On the other hand, many AWS sites are still quite slow. This site uses hand-written CSS for styling, whereas frameworks like Bootstrap take up thousands of times more disk space. The difference is imperceptible to a modern hard drive but over a network, it can be felt much more strongly.
 
-*In short: less is more.*
-<div class="floating"><a href="#">Back To Top</a></div>
+**In short: less is more.**

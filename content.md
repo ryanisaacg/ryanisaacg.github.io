@@ -1,9 +1,13 @@
 #Ryan Goldstein's Website
 ###High School Computer Science Student
-<a href="#Projects" class="header-item">Projects</a>
-<a href="#Technologies" class="header-item">Technologies</a>
-<a href="#Languages" class="header-item">Languages</a>
-<a href="#Site" class="header-item">This Site</a>
+<table>
+<tr>
+<td><a href="#Projects">Projects</a></td>
+<td><a href="#Technologies">Technologies</a></td>
+<td><a href="#Languages">Languages</a></td>
+<td><a href="#Site">This Site</a></td>
+</tr>
+</table>
 <br/>
 <h2 id="Projects">Completed or Significant Projects</h2>
 

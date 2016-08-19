@@ -1,0 +1,30 @@
+html {
+	font-family: "Helvetica", Sans-Serif;
+}
+body {
+	margin:2.2em auto;
+	max-width:36em;
+	line-height:1.6;
+	font-size:18px;
+	color:#444;
+	padding:0.5em;
+	background-color:#EEE;
+}
+a {
+	text-decoration: underline;
+	color:#333;
+}
+h1, h2, h3 {
+	line-height:1.2;
+	text-align: center;
+}
+.floating {
+	position:fixed;
+	bottom:0.7em;
+	right:2.8em;
+	font-size:18px;
+}
+.header-item {
+	padding-left:3em;
+	font-size:18px;
+}

@@ -63,4 +63,4 @@
 This website is a very simple HTML document, hosted on Github. It is probably one of the fastest-loading sites you've visited today, if not the fastest to load. This is helped along quite a bit by my choice of host; Github's infrastructure is all based on Amazon Web Services, which is often considered the leader in the server market. On the other hand, many AWS sites are still quite slow. This site uses hand-written CSS for styling, whereas frameworks like Bootstrap take up thousands of times more disk space. The difference is imperceptible to a modern hard drive but over a network, it can be felt much more strongly. 
 
 *In short: less is more.*
-<div class="floating"><a href="#">Back To Top]</a></div>
+<div class="floating"><a href="#">Back To Top</a></div>

@@ -1,5 +1,14 @@
 #Ryan Goldstein's Website
 ###High School Computer Science Student
+
+
+##Work Experience
+- Computer Science Researcher at [Monmouth University](https://monmouth.edu)'s Summer Research Program
+
+##Education
+
+- Computer Science student at Freehold High School (5.07 GPA)
+
 ##Completed or Significant Projects
 
 - [This website](https://github.com/ryanisaacg/ryanisaacg.github.io) written by hand in Markdown and CSS
@@ -49,6 +58,14 @@
 	- Go
 	- Scheme
 	- Ruby
+
+##Honors and Awards
+
+- AP Scholar with Honors Award
+
+- Xerox Award for Innovation and Technology
+
+- Eagle Scout
 
 ##Your Website Looks Old/Weird/Simple, Why?
 This website is a very simple HTML document, hosted on Github. It is probably one of the fastest-loading sites you've visited today, if not the fastest to load. This is helped along quite a bit by my choice of host; Github's infrastructure is all based on Amazon Web Services, which is often considered the leader in the server market. On the other hand, many AWS sites are still quite slow. This site uses hand-written CSS for styling, whereas frameworks like Bootstrap take up thousands of times more disk space. The difference is imperceptible to a modern hard drive but over a network, it can be felt much more strongly.

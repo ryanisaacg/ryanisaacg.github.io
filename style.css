@@ -47,6 +47,9 @@ section {
 	border-radius: 10px;
 	border-color: #CBE86B;
 }
+section:hover {
+	background-color: #DBF87B;
+}
 aside {
 	background-color:#54D75A;
 	opacity: 0.95;

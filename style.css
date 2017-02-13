@@ -1,6 +1,6 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#fff;
+	background-color:#fffefe;
 }
 body {
 	margin:2.2em auto;
@@ -12,7 +12,7 @@ body {
 	padding:1em;
 	padding-top:0em;
 	padding-bottom:1em;
-	background-color:#F2E9E1;
+	background-color:#FFE9E1;
 }
 a {
 	text-decoration: underline;

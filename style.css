@@ -1,6 +1,6 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#ddd;
+	background-color:#fff;
 }
 body {
 	margin:2.2em auto;
@@ -8,15 +8,15 @@ body {
 	max-width:52em;
 	line-height:1.6;
 	font-size:18px;
-	color:#444;
-	padding:0.5em;
+	color:#406240;
+	padding:1em;
 	padding-top:0em;
-	padding-bottom:0em;
-	background-color:#eee;
+	padding-bottom:1em;
+	background-color:#F2E9E1;
 }
 a {
 	text-decoration: underline;
-	color:#333;
+	color:#393939;
 }
 header {
 	padding-top: 1em;
@@ -25,6 +25,7 @@ h1, h2, h3, h4, h5 {
 	margin-top: 0;
 	line-height:1.2;
 	text-align: center;
+	color:#203120;
 }
 article {
 	display: -webkit-flex;
@@ -37,13 +38,13 @@ article {
 	margin-bottom: 2em;
 }
 section {
-	background-color:#fff;
+	background-color:#CBE86B;
 	width:15em;
 	margin:0.1em;
 	padding:1em;
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 10px;
-	border-color: #ddd;
+	border-color: #CBE86B;
 }
 

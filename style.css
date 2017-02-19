@@ -46,6 +46,7 @@ section {
 	border-width: 1px;
 	border-radius: 10px;
 	border-color: #CBE86B;
+	cursor: pointer;
 }
 section:hover {
 	background-color: #DBF87B;
@@ -68,4 +69,5 @@ aside {
 	border-width: 3px;
 	border-radius: 10px;
 	border-color: #aaa;
+	cursor: pointer;
 }

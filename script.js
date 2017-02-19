@@ -18,3 +18,12 @@ document.onclick = function(e) {
 		open_aside = null;
 	}
 }
+var images = document.getElementsByClassName('img');
+for(var i = 0; i < images.length; i++) {
+	var image_marker = images[i];
+	var image = new Image();
+	image.src = image_marker.innerHTML;
+	var parent = image_marker.parentNode;
+	parent.removeChild(image_marker);
+	parent.insertBefore(image, parent.firstChild);
+}

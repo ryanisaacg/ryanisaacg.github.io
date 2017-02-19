@@ -51,7 +51,7 @@ section:hover {
 	background-color: #DBF87B;
 }
 aside {
-	background-color:#54D75A;
+	background-color:#ddd;
 	opacity: 0.95;
 	position: fixed;
 	max-width: 52em;
@@ -60,7 +60,6 @@ aside {
 	left: 0;
 	right: 0;
 	margin: 2.2em auto;
-	text-align: center;
 	padding: 1em;
 	color:#201020;
 	overflow: auto;
@@ -68,5 +67,5 @@ aside {
 	border-style: solid;
 	border-width: 3px;
 	border-radius: 10px;
-	border-color: #109317;
+	border-color: #aaa;
 }

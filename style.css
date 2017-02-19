@@ -53,7 +53,6 @@ section:hover {
 }
 aside {
 	background-color:#FBF87B;
-	opacity: 0.95;
 	position: fixed;
 	max-width: 52em;
 	min-height: 80%;

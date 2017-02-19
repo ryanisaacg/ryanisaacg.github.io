@@ -1,14 +1,20 @@
 var sections = document.getElementsByTagName('section');
+var open_aside = null;
 for(var i = 0; i < sections.length; i++) {
-	var section = sections[i];
-	var contained = document.getElementsByTagName('aside');
-	if(contained.length === 0) continue;
-	var aside = contained[0];
-	section.onclick = function(e) {
+	sections[i].onclick = function(e) {
+		var contained = this.getElementsByTagName('aside');
+		if(contained.length === 0) return;
+		var aside = contained[0];
 		if(aside.style.visibility !== "visible") {
 			aside.style.visibility = "visible";
-		} else {
-			aside.style.visibility = "hidden";
+			open_aside = aside;
+			e.stopPropagation();
 		}
 	};
+}
+document.onclick = function(e) {
+	if(open_aside !== null) {
+		open_aside.style.visibility = "hidden";
+		open_aside = null;
+	}
 }

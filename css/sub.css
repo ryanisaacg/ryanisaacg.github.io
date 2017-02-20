@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5 {
 	line-height:1.2;
 	color:#203120;
 }
-article {
+nav, article {
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-wrap: wrap;
@@ -46,8 +46,16 @@ section {
 	border-radius: 10px;
 	border-color: #CBE86B;
 }
+nav section {
+	width: auto;
+}
 img {
 	display: block;
 	margin: 1em auto;
 	max-width: 100%;
+}
+.media-icon {
+	width: 32px;
+	height: 32px;
+	margin: 0;
 }

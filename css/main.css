@@ -39,41 +39,20 @@ article {
 }
 section {
 	background-color:#CBE86B;
+	border-color:#CBE86B;
 	width:15em;
 	margin:0.1em;
 	padding:1em;
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 10px;
-	border-color: #CBE86B;
-	cursor: pointer;
 }
-section:hover {
+a, a:visited, a:link, a:active section {
+	text-decoration:none;
+}
+a section:hover {
 	background-color: #DBF87B;
-}
-aside {
-	background-color:#FBF87B;
-	position: fixed;
-	max-width: 52em;
-	min-height: 80%;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin: 2.2em auto;
-	padding: 1em;
-	color:#201020;
-	overflow: auto;
-	visibility: hidden;
-	border-style: solid;
-	border-width: 3px;
-	border-radius: 10px;
-	border-color: #aaa;
-	cursor: pointer;
 }
 center {
 	margin: 1.1em;
-}
-img {
-	display: block;
-	margin: 1em auto;
 }

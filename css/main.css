@@ -46,6 +46,7 @@ section {
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 10px;
+	min-height: 10em;
 }
 a, a:visited, a:link, a:active section {
 	text-decoration:none;

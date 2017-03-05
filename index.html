@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<header>
-			<h1> Ryan Goldstein's Website </h1>
+			<h1> ryan.isaac.goldstein </h1>
 			<h3> High School Computer Science Student </h3>
 			<center> (Click on a box for more information.) </center> 
 		</header>
@@ -18,7 +18,6 @@
 			</section>
 		</article>
 		<h4> Games </h4>
-		<!-- TODO: Pictures in the asides -->
 		<article>
 			<a href="html/cosmic.html">
 				<section>
@@ -60,103 +59,63 @@
 		</article>
 		<h4> Systems Applications / Compilers </h4>
 		<article>
-			<section> 
-				<a href="https://github.com/ryanisaacg/AST"> <h5> AST </h5> </a>
-				A small project that converts an Abstract Syntax Tree into C source code
-				<aside>
-					<h2> AST </h2>
-					An Abstract Syntax Tree is an intermediate representation between source code and the compiler's output. 
-					Each node is an operator or value, and each leaf is a value. 
-					This project was my first step towards writing compilers that targeted C, as it was intend to turn a data structure into executable C code.
-					I didn't wrap every feature of the C language with an AST feature, but enough that I learned critical parts of writing compiler infrastructure.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/fwum"> <h5> Fwum </h5> </a>
-				A work-in-progress programming language with a compiler
-				<aside>
-					<h2> Fwum </h2>
-					Fwum was created out of my frustration with other programming languages. 
-					I found garbage collection unsatisfactory for game development, and reference counting just as bad, leaving just a few languages.
-					Mainly, the candidates were C and C++, which are the too hot and too cold of a Goldilocks metaphor. 
-					C wasn't quite featured enough for me, but C++ had too much complexity. 
-					I created a grammar, a parser for the grammar, a semantic analyzer, a basic linker, and an output to C as a compile target for the language. 
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/IslandScript"> <h5> IslandScript </h5> </a>
-				A Python-Inspired language that compiles to Javascript
-				<aside>
-					<h2> Island Script </h2>
-					Island Script was my first compiler, intended to make the syntax of Javascript more like Python. 
-					At the time, I believed semantic indentation was obviously the correct path, and wanted to be able to use it for web development.
-					The language is nearly semantically identical to Javascript, with only minor semantic tweaks.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/Snakefile"> <h5> Snakefile </h5> </a>
-				A build system in Python that is similar to Makefile (pun intended)
-				<aside>
-					<h2> Snakefile </h2>
-					When I first started creating complex C projects, I was using a simple Makefile that mapped each source file to an object file. 
-					However, changes to dependent headers would often break builds, which meant I was in need of a better solution. 
-					Autotools was too complex, and I didn't like that CMake required learning an entire new Domain-Specific Language, so I created Snakefile.
-					It is intended to allow creating complex, turing-complete build files and to be easy to configure. 
-					However, incompatibility with Visual Studio project files eventually turned me away from the project.
-				</aside>
-			</section>
+			<a href="html/ast.html">
+				<section>
+					<h5> AST </h5>
+					A small project that converts an Abstract Syntax Tree into C source code
+				</section>
+			</a>
+			<a href="html/fwum.html">
+				<section>
+					<h5> Fwum </h5>
+					A work-in-progress programming language with a compiler
+				</section>
+			</a>
+			<a href="html/island.html">
+				<section>
+					<h5>IslandScript</h5>
+					A Python-Inspired language that compiles to Javascript
+				</section>
+			</a>
+			<a href="html/snakefile.html">
+				<section>
+					<h5> Snakefile </h5>
+					A build system in Python that is similar to Makefile (pun intended)
+				</section>
+			</a>
 		</article>
 		<h4> Desktop Software / Command Line Utilities </h4>
 		<article>
-			<section> 
-				<a href="https://github.com/ryanisaacg/ChemicalWriter"> <h5> Chemical Writer </h5> </a>
-				A program that converts a string into atomic symbols, using Python
-				<aside>
-					<h2> Chemical Writer </h2>
-					This is more of a toy than a utility, but it's fun to play around with. It converts "BACON" to Barium, Carbon, Oxygen, and Nitrogen (BaCON). 
-					It is guaranteed to find a solution if it exists, and will prioritize single-element.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/CLChat"> <h5> CLChat </h5> </a>
-				A basic chatroom that runs over TCP/IP, using Java
-				<aside>
-					<h2> CLChat </h2>
-					This was mostly for me to learn the basiscs of a networked TCP application development and creating a server that can manage many clients at once.
-					The server should scale to an arbitrary number of clients, but the architecture means it will probably decrease greatly in performance under
-					heavy message load.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/fwumdestego"> <h5> FwumDeStego </h5> </a>
-				A stegnonography program that can encode text in images, using Java
-				<aside>
-					<h2> FwumDeStego </h2>
-					The program converts a string to a bitstring and maps it over the RGB values of the image. Even values indicate a 0 in the bitstring and odd 
-					values indicate a 1 in the bitstring. To read the value from the image, it follows the same order and uses modulo to read the string. 
-					The changes to the RGB values are invisible to the human eye but allow for the transmission of information.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/speech-generator"> <h5> Speech Generator </h5> </a>
-				A program that takes written human speech, analyzes it, and attempts to create the most similar string of words, using Python
-				<aside>
-					<h2> Speech Generator </h2>
-					The program analyzes what words follow others most often, and attempts to reconstruct the same pattern and write in a similar fashion.
-					It is a rather naive implementation that only takes a basic context, and most often generates nonsense. 
-					However, this is a basic demo of what a Markov chain is like.
-				</aside>
-			</section>
-			<section> 
-				<a href="https://github.com/ryanisaacg/spacey"> <h5> Spacey </h5> </a>
-				A program that manages the type of indentation a piece of source code has, using C++
-				<aside>
-					<h2> Spacey </h2>
-					Especially in Python code, mixing of tabs and spaces to indent can cause problems. 
-					The objective of the program is to take all of the indentation and make it all tabs or all spaces.
-					It's a relatively simple program, which I wrote to learn string manipulation in C++.
-				</aside>
-			</section>
+			<a href="html/chemical.html">
+				<section>
+					<h5> ChemicalWriter </h5>
+					A program that converts a string into atomic symbols, using Python
+				</section>
+			</a>
+			<a href="html/chat.html">
+				<section>
+					<h5> CLChat </h5>
+					A basic chatroom that runs over TCP/IP, using Java
+				</section>
+			</a>
+			<a href="html/stego.html">
+				<section>
+					<h5> BasicStego </h5>
+					A stegnonography program that can encode text in images, using Java
+				</section>
+			</a>
+			<a href="html/speech.html">
+				<section>
+					<h5> Speech Generator </h5>
+					A program that takes written human speech, analyzes it, and attempts to create the most similar string of words, using Python
+				</section>
+			</a>
+			<a href="html/spacey.html">
+				<section>
+					<h5> Spacey </h5>
+					A program that manages the type of indentation a piece of source code has, using C++
+				</section>
+			</a>
 		</article>
 		<h4> Webapps </h4>
 		<article>

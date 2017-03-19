@@ -34,7 +34,6 @@ article {
 	flex-wrap: wrap;
 	-webkit-align-content: flex-start;
 	align-content: flex-start;
-	width: 100%;
 	margin-bottom: 2em;
 }
 section {
@@ -47,6 +46,16 @@ section {
 	border-width: 1px;
 	border-radius: 10px;
 	min-height: 10em;
+}
+header article {
+	justify-content: center;
+}
+header section {
+	min-height: 0em;
+	padding-bottom: 0.1em;
+	padding-top:0.2em;
+	width:8em;
+	height: 1.3em;
 }
 a, a:visited, a:link, a:active section {
 	text-decoration:none;

@@ -1,31 +1,45 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#fffefe;
+	background-color:#EDE7F6;
+	padding: 0;
 }
 body {
 	margin:2.2em auto;
 	margin-top:0em;
-	max-width:52em;
+	/*max-width:52em;*/
 	line-height:1.6;
 	font-size:18px;
 	color:#406240;
-	padding:1em;
+	/*padding:1em;*/
 	padding-top:0em;
 	padding-bottom:1em;
-	background-color:#FFE9E1;
 }
 a {
 	text-decoration: underline;
 	color:#393939;
 }
-header {
-	padding-top: 1em;
-}
 h1, h2, h3, h4, h5 {
-	margin-top: 0;
 	line-height:1.2;
 	text-align: center;
-	color:#203120;
+	color: #FFFFFF;
+	position : relative;
+	width: 100%;
+	margin: 0;
+}
+h1 {
+	background-color: #673AB7;
+	padding: 0.5em;
+	box-shadow: 0px 2.5px 20px #000; 
+	z-index : 6;
+}
+h3 {
+	background-color: #7E57C2;
+	box-shadow: 0px 1.5px 20px #000; 
+	padding : 0.5em;
+	z-index : 5;
+}
+header {
+	margin-bottom: 1em;
 }
 article {
 	display: -webkit-flex;
@@ -35,10 +49,11 @@ article {
 	-webkit-align-content: flex-start;
 	align-content: flex-start;
 	margin-bottom: 2em;
+
 }
 section {
-	background-color:#CBE86B;
-	border-color:#CBE86B;
+	background-color:#AED581;
+	border-color:#558B2F;
 	width:15em;
 	margin:0.1em;
 	padding:1em;
@@ -61,7 +76,7 @@ a, a:visited, a:link, a:active section {
 	text-decoration:none;
 }
 a section:hover {
-	background-color: #DBF87B;
+	background-color: #DCEDC8;
 }
 center {
 	margin: 1.1em;

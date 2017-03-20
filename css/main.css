@@ -1,6 +1,6 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#EDE7F6; /* 50 */
+	background-color:#E1F5FE; /* 50 */
 	padding: 0;
 }
 body {
@@ -20,18 +20,18 @@ h1, h2, h3, h4, h5 {
 	box-shadow: 0px 0.5px 2.5px rgba(0, 0, 0, 0.5); 
 }
 h1 {
-	background-color: #673AB7; /* 500 */
+	background-color: #03A9F4; /* 500 */
 	padding: 0.5em;
 	z-index : 6;
 }
 h3 {
-	background-color: #9575CD; /* 300 */
+	background-color: #4FC3F7; /* 300 */
 	padding : 0.5em;
 	z-index : 5;
 	font-size: 150%;
 }
 h4 {
-	background-color: #9575CD; /* 300 */
+	background-color: #4FC3F7; /* 300 */
 	padding : 0.5em;
 	z-index : 5;
 }
@@ -50,8 +50,8 @@ article {
 	justify-content: center;
 }
 section {
-	background-color:#673AB7; /* 500 */
-	border-color:#673AB7; /* 500 */
+	background-color:#03A9F4; /* 500 */
+	border-color:#03A9F4; /* 500 */
 	width:15em;
 	margin:0.5em;
 	padding:1em;
@@ -76,7 +76,7 @@ section a {
 	text-decoration: underline;
 }
 a section:hover {
-	background-color: #B39DDB; /* 200 */
+	background-color: #81D4FA; /* 200 */
 	box-shadow: 0.3px 0.3px 5px #000; 
 }
 center {

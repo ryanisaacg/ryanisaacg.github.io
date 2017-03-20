@@ -10,10 +10,6 @@ body {
 	color:#FFFFFF;
 	padding-top:0em;
 }
-a {
-	text-decoration: underline;
-	color:#FFFFFF;
-}
 h1, h2, h3, h4, h5 {
 	line-height:1.2;
 	text-align: center;
@@ -72,8 +68,12 @@ header section {
 	width:8em;
 	height: 1.3em;
 }
-a, a:visited, a:link, a:active section {
+a {
 	text-decoration:none;
+	color:#FFFFFF;
+}
+section a {
+	text-decoration: underline;
 }
 a section:hover {
 	background-color: #B39DDB;

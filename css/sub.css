@@ -68,21 +68,20 @@ a section:hover {
 	background-color: #B39DDB;
 	box-shadow: 0.3px 0.3px 5px #000; 
 }
-nav section {
-	width: auto;
+nav a section {
+	min-height: 0em;
+	margin-top: 1em;
+	padding-bottom: 0.2em;
+	padding-top:0.1em;
+	width:8em;
+	height: 1.3em;
+	justify-content: center;
+	text-align: center;
 }
 img {
 	display: block;
 	margin: 1em auto;
 	max-width: 100%;
-}
-.media-icon {
-	width: 32px;
-	height: 32px;
-	margin: 0;
-}
-#home {
-	cursor: pointer;
 }
 a {
 	text-decoration:none;

@@ -1,0 +1,12 @@
+{
+	"title" : "Escape From Science",
+	"subtitle" : "Navigate lethal escape rooms",
+	"link" : "https://github.com/ryanisaacg/LD33",
+	"body" : [
+	["Written In", 
+	"This project was written in Java, using libGDX"],
+	["Why does it exist?", 
+	"I created this project for <a href='http://ludumdare.com/compo/ludum-dare-33/'>Ludum Dare 33</a>."],
+	["How does it work?", 
+	"It tasks the player with escaping from a variety of rooms with deadly obstacles such as turrets, mines, and pressure plates."]]
+}

@@ -35,37 +35,7 @@ h3 {
 	background-color: #009688;
 }
 nav  {
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-align-content: flex-start;
-	align-content: flex-start;
-	width: 100%;
-	margin-bottom: 2em;
-	justify-content: center;
-}
-article section {
-	margin: 0;
-}
-nav section:hover {
-	background-color: #FFC400;
-	box-shadow: 0.3px 0.3px 5px #000; 
-}
-nav section {
-	background-color: #6200EA;
-	border-color: #6200EA;
-	min-height: 0em;
-	margin: 1em;
-	padding-bottom: 0.2em;
-	padding-top:0.1em;
-	width:8em;
-	height: 1.3em;
-	justify-content: center;
 	text-align: center;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 10px;
 }
 button {
 	cursor: pointer;
@@ -84,6 +54,12 @@ button:hover {
 button:active {
 	background-color: #C51162;
 	box-shadow: 1.5px 1.5px 10px rgba(0, 0, 0, 0.5); 
+}
+section {
+	padding-left: 1.5em;
+	padding-right:1em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
 }
 
 img {

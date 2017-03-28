@@ -1,0 +1,12 @@
+{
+	"title" : "IslandScript",
+	"subtitle" : "A proto-compiler application",
+	"link" : "https://github.com/ryanisaacg/IslandScript",
+	"body" : [
+	["Written In", 
+	"This project was written in JavaScript with NodeJS."],
+	["Why does it exist?",
+    "I wanted to improve on JavaScript and make my experience with the language a little less painful."],
+    ["How does it work?", 
+    "The project is bootstrapped, meaning it is written in the language it compiles. It uses regex to parse the source code."]]
+}

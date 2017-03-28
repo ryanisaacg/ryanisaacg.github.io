@@ -1,0 +1,12 @@
+{
+	"title" : "HackRU Goes to Space",
+	"subtitle" : "Use texting to pilot a spaceship",
+	"link" : "https://github.com/fwumdesoft/hackru_viii",
+	"body" : [
+	["Written In", 
+	"This project was written in Python, using Pygame for graphics, Flask for network communication, and Twilio for SMS integration."],
+	["Why does it exist?",
+    "My friend and I  wanted to create an interesting local-multiplayer experience and Twilio was a sponsor, so after messing around with a few ideas this is what we settled on."],
+    ["How does it work?", 
+    "The game uses the Twilio API to read SMS messages from various players, and applies the actions to the game server, which is presented with pygame."]]
+}

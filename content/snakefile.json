@@ -1,0 +1,12 @@
+{
+	"title" : "Snakefile",
+	"subtitle" : "A build system in Python",
+	"link" : "https://github.com/ryanisaacg/Snakefile",
+	"body" : [
+	["Written In", 
+	"This project was written in Python."],
+	["Why does it exist?",
+    "I felt that scripting in Makefile was lacking, and that I wanted to be able to create more complex rules. Additionally, this will run on any platform Python is on, unlike Makefile, which requires a Unix shell."],
+    ["How does it work?", 
+    "The program uses filesystem metadata to see which targets need to be rebuilt from which source code."]]
+}

@@ -1,0 +1,12 @@
+{
+	"title" : "BasicStego",
+	"subtitle" : "A basic stegonography project",
+	"link" : "https://github.com/ryanisaacg/BasicStego",
+	"body" : [
+	["Written In", 
+	"This project was written in Java."],
+	["Why does it exist?",
+    "Stegonography is a very interesting topic for me, and I wanted to create my own implementation."],
+    ["How does it work?", 
+    "The program touches each pixel of the program, using the RGB values to encode a binary string. It will make a change of +/-1 to each pixel, making the changes practically invisble."]]
+}

@@ -1,0 +1,10 @@
+{
+	"title" : "Website",
+	"subtitle" : "A resume/personal website",
+	"link" : "https://github.com/ryanisaacg/ryanisaacg.github.io",
+	"body" : [
+	["Written In", 
+	"This project was written in HTML, CSS, and JavaScript, with a content generator pipeline created in Python."],
+	["Why does it exist?",
+    "I wanted to present my work in a more interactive and aesthetic format than a resume. Also, I needed to put something at <a href=\"ryanisaacg.com\">ryanisaacg.com</a>"]]
+}

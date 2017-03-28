@@ -1,0 +1,12 @@
+{
+	"title" : "Meteors",
+	"subtitle" : "Play a small game against some aliens",
+	"link" : "https://github.com/ryanisaacg/Meteors",
+	"body" : [
+	["Written In", 
+	"This project was written in a custom language that I wrote a compiler for. However, it is still essentially JavaScript."],
+	["Why does it exist?",
+    "This project did two things for me: it helped me learn the HTML5 canvas API, and it was the first time I wrote a compiler. Also, it was a fun distraction to play with friends."],
+    ["How does it work?", 
+    "The game features a player-controlled ship against an alien AI and a few asteroids. When an asteroid is destroyed, its fragments spread around the level. Asteroids, bullets, and both ships wrap around the edge of the game world, requiring players to considering geometry in a different way. Each time the alien is killed, the player gains a point, but the alien also becomes more powerful and more accurate."]]
+}

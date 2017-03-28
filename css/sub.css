@@ -1,12 +1,12 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#EDE7F6;
 	padding: 0;
+	background-color: #004D40;
 }
 body {
 	margin: 0;
 	line-height:1.6;
-	font-size:18px;
+	font-size:22px;
 	color:#FFFFFF;
 	padding-top:0em;
 }
@@ -22,27 +22,19 @@ h1, h2, h3, h4, h5 {
 	width: 100%;
 	margin: 0;
 	box-shadow: 0px 0.5px 2.5px rgba(0, 0, 0, 0.5); 
+	background-color: #4DB6AC;
+	padding : 0.5em;
+	z-index : 5;
 }
 h1 {
-	background-color: #673AB7;
+	background-color: #00796B;
 	padding: 0.5em;
 	z-index : 6;
 }
 h3 {
-	background-color: #9575CD;
-	padding : 0.5em;
-	z-index : 5;
-	font-size: 150%;
+	background-color: #009688;
 }
-h4 {
-	background-color: #9575CD;
-	padding : 0.5em;
-	z-index : 5;
-}
-h5 {
-	box-shadow: none;
-}
-nav, article {
+nav  {
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-wrap: wrap;
@@ -52,32 +44,48 @@ nav, article {
 	width: 100%;
 	margin-bottom: 2em;
 	justify-content: center;
-
 }
-section {
-	background-color:#673AB7;
-	width:15em;
-	margin:0.1em;
-	padding:1em;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 10px;
-	border-color: #673AB7;
+article section {
+	margin: 0;
 }
-a section:hover {
-	background-color: #B39DDB;
+nav section:hover {
+	background-color: #FFC400;
 	box-shadow: 0.3px 0.3px 5px #000; 
 }
-nav a section {
+nav section {
+	background-color: #6200EA;
+	border-color: #6200EA;
 	min-height: 0em;
-	margin-top: 1em;
+	margin: 1em;
 	padding-bottom: 0.2em;
 	padding-top:0.1em;
 	width:8em;
 	height: 1.3em;
 	justify-content: center;
 	text-align: center;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
 }
+button {
+	cursor: pointer;
+	background-color: #F50057;
+	color: #fff;
+	border:none;
+	font-size: 24px;
+	margin: 1em;
+	padding: 0.5em;
+	box-shadow: 0.5px 0.5px 2.5px rgba(0, 0, 0, 0.5); 
+}
+button:hover {
+	background-color: #FF4081;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); 
+}
+button:active {
+	background-color: #C51162;
+	box-shadow: 1.5px 1.5px 10px rgba(0, 0, 0, 0.5); 
+}
+
 img {
 	display: block;
 	margin: 1em auto;

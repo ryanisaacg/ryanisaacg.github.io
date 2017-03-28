@@ -1,0 +1,12 @@
+{
+	"title" : "AST",
+	"subtitle" : "A proto-compiler application",
+	"link" : "https://github.com/ryanisaacg/AST",
+	"body" : [
+	["Written In", "This project was written in C."],
+	["Why does it exist?", "The project was an mimicing the job of the last stage of a ",
+	"compiler: turning an abstract representation of code into some emitted code."],
+	["How does it work?", "Each node is an operator or value, and each leaf is a value. ",
+	"This project was my first step towards writing compilers that targeted C, ",
+	"as it turns a data structure into executable C code."]]
+}

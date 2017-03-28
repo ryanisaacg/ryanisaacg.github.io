@@ -1,0 +1,12 @@
+{
+	"title" : "Cosmic Circuitry",
+	"subtitle" : "Use Kirchoff's Laws to solve circuit puzzles",
+	"link" : "https://github.com/fwumdesoft/project8-java",
+	"body" : [
+	["Written In", 
+	"This project was actually originally written in Python, but we switched to Java for performance reasons."],
+	["Why does it exist?", 
+	"It was created as a school project for a physics class."],
+	["How does it work?", 
+	"The game works with a tile-based overworld that allows the player to collect resources, which they use to solve circuit puzzles. When presented with a broken door, fire suppression unit, or escape pod launcher, the player can open a circuit interface."]]
+}

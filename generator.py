@@ -27,7 +27,7 @@ skeleton = mini("""
 			<button type="button" onclick="window.open('{link}')"> Github </button>
 		</nav>
 	</body>
-</html>)
+</html>
 """)
 section = mini("""
 <h5> {header} </h5>

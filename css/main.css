@@ -76,7 +76,7 @@ section a {
 	text-decoration: underline;
 }
 a section:hover {
-	background-color: #B39DDB; /* 200 */
+	background-color: #00B0FF; /* 200 */
 	box-shadow: 0.3px 0.3px 5px #000; 
 }
 center {

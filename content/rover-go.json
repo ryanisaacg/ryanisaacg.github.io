@@ -1,0 +1,9 @@
+{
+	"title" : "Rover Go!",
+	"subtitle" : "A game powered by machine learning",
+	"link" : "https://github.com/teamrg/hackfree",
+	"body" : [
+	["Written In", "This project was written in Python with pyglet and sklearn."],
+	["Why does it exist?", "My partner and I wanted to integrate our skills of machine learning and game development."],
+	["How does it work?", "The project uses the amplitudes of the soundwave as samples for machine learning and then generates a pattern for enemies."]]
+}

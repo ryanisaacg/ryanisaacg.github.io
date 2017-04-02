@@ -2,6 +2,7 @@
 	"title" : "Escape From Science",
 	"subtitle" : "Navigate lethal escape rooms",
 	"link" : "https://github.com/ryanisaacg/LD33",
+	"image" : "../img/science.gif",
 	"body" : [
 	["Written In", 
 	"This project was written in Java, using libGDX"],

@@ -2,6 +2,7 @@
 	"title" : "Cosmic Circuitry",
 	"subtitle" : "Use Kirchoff's Laws to solve circuit puzzles",
 	"link" : "https://github.com/fwumdesoft/project8-java",
+	"image" : "../img/cc_gif.gif",
 	"body" : [
 	["Written In", 
 	"This project was actually originally written in Python, but we switched to Java for performance reasons."],

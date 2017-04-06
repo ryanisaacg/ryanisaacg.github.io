@@ -26,7 +26,12 @@
 				</a>
 			</article>
 		</header>
-		<p> This site won't work on Internet Explorer or Microsoft Edge. Please use a standards-compliant browser, like Chrome or Firefox. </p>
+		<p id="warning"> This site won't work on Internet Explorer or Microsoft Edge. Please use a standards-compliant browser, like Chrome or Firefox. </p>
+		<script>
+			if(!(navigator.appName == 'Microsoft Internet Explorer' || (navigator.appName == "Netscape" && navigator.appVersion.indexOf('Edge') > -1))) {
+				document.getElementById('warning').style.display = 'none';
+			}
+		</script>
 		<h3> Work Experience </h3>
 		<article>
 			<section>

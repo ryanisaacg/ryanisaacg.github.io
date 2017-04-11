@@ -25,13 +25,13 @@ h1 {
 	padding: 0.5em;
 	z-index : 6;
 }
-h3 {
+h3, summary {
 	background-color: #009688; /* 300 */
 	padding : 0.5em;
 	z-index : 5;
 	font-size: 150%;
 }
-h4, summary {
+h4 {
 	background-color: #009688; /* 300 */
 	padding : 0.5em;
 	z-index : 4;

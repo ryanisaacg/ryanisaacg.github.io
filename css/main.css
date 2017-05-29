@@ -42,10 +42,11 @@ details {
 	padding-right: 0;
 	z-index : 4;
 	font-weight: normal;
-	margin-bottom: 0.5em;
+	margin: 0em auto 1em auto;
+	max-width: 90%;
 }
 [open] {
-	margin-bottom: 1em;
+	margin-bottom: 2em;
 }
 h5 {
 	box-shadow: none;

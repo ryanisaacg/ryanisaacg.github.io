@@ -41,16 +41,20 @@ h4 { margin: 0; }
 	width: 30em;
 	text-align: left;
 	margin-bottom: 2em;
-
+}
+.columns {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: space-around;
+}
+.column {
+margin: 0 auto 0 auto;
+}
+ul {
+	text-align: left;
 }
 
-table {
-	border-spacing: 5px;
-	margin-left: 36px;
-}
-td {
-	padding: 36px;
-}
 hr {
 	width: 85%;
 	font-size: 1px;

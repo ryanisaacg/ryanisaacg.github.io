@@ -57,9 +57,12 @@ h4 { margin: 0; }
 .column {
 margin: 0 auto 0 auto;
 }
-.column ul {
+.container ul, .column ul {
 	text-align: left;
 	list-style-type: circle;
+}
+.container ul {
+	margin-top: 0;
 }
 ul {
 	list-style-type: none;

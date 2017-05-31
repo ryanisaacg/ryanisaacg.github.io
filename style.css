@@ -18,6 +18,7 @@ aside {
 	height: 100%;
 	padding-top: 24px;
 	position: fixed;
+	box-shadow: 0px 0px 5px 1px #000;
 }
 
 aside h1, aside h2, aside h3 { color: #fff; }

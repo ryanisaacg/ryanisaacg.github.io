@@ -47,12 +47,18 @@ h4 { margin: 0; }
 	flex-wrap: wrap;
 	justify-content: center;
 	align-content: space-around;
+
 }
+
 .column {
 margin: 0 auto 0 auto;
 }
-ul {
+.column ul {
 	text-align: left;
+	list-style-type: circle;
+}
+ul {
+	list-style-type: none;
 }
 
 hr {

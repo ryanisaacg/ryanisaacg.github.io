@@ -1,7 +1,7 @@
 html {
 	font-family: "Helvetica", Sans-Serif;
-	background-color:#004D40; /* 50 */
 	padding: 0;
+	background-color: #EEE;
 }
 body {
 	margin: 0;
@@ -9,7 +9,7 @@ body {
 	color:#FFFFFF;
 	padding-top:0em;
 }
-h1, h2, h3, h4, h5, details {
+h1, h5 {
 	line-height:1.2;
 	text-align: center;
 	color: #FFFFFF;
@@ -20,33 +20,9 @@ h1, h2, h3, h4, h5, details {
 	font-weight: bold;
 }
 h1 {
-	background-color: #00796B; /* 500 */
+	background-color: #9C27B0; /* 500 */
 	padding : 0.5em 0em 0.5em 0em;
 	z-index : 6;
-}
-h3 {
-	background-color: #009688; /* 300 */
-	padding : 0.5em 0em 0.5em 0em;
-	z-index : 5;
-	font-size: 150%;
-}
-summary {
-	line-height: 1.2;
-	font-size: 150%;
-	font-weight: bold;
-}
-details {
-	background-color: #009688; /* 300 */
-	padding : 0.5em;
-	padding-left: 0;
-	padding-right: 0;
-	z-index : 4;
-	font-weight: normal;
-	margin: 0em auto 1em auto;
-	max-width: 90%;
-}
-[open] {
-	margin-bottom: 2em;
 }
 h5 {
 	box-shadow: none;
@@ -63,8 +39,6 @@ article {
 	justify-content: center;
 }
 section {
-	background-color:#0091EA; /* 500 */
-	border-color:#0091EA; /* 500 */
 	width:15em;
 	margin:0.5em;
 	padding:1em;
@@ -74,12 +48,21 @@ section {
 	min-height: 10em;
 	box-shadow: 0.15px 0.15px 2.5px rgba(0, 0, 0, 0.5);
 }
-header section {
-	min-height: 0em;
-	padding-bottom: 0.1em;
-	padding-top:0.2em;
-	width:8em;
-	height: 1.3em;
+#games section {
+	background-color: #F44336;
+	border-color: #F44336;
+}
+#systems section {
+	background-color: #FF5722;
+	border-color: #FF5722;
+}
+#desktop section {
+	background-color: #4CAF50;
+	border-color: #4CAF50;
+}
+#webapps section {
+	background-color: #2196F3;
+	border-color: #2196F3;
 }
 p {
 	text-align: center;
@@ -95,10 +78,17 @@ a section:hover {
 	background-color: #00B0FF; /* 200 */
 	box-shadow: 0.3px 0.3px 5px #000;
 }
-details summary:hover {
-	background-color: #4DB6AC;
-	z-index: 7;
-	box-shadow: 0px 0px 2.5px rgba(0, 0, 0, 0.5);
-	cursor: pointer;
+#home {
+	background-color: #444;
+	border-color: #444;
+	width:4em;
+	height: 1em;
+	padding:1em;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 2.5px;
+	box-shadow: 0.15px 0.15px 2.5px rgba(0, 0, 0, 0.5);
+	position: fixed;
+	bottom: 1em;
+	left: 1em;
 }
-

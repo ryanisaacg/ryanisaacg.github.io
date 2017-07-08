@@ -48,21 +48,21 @@ section {
 	min-height: 10em;
 	box-shadow: 0.15px 0.15px 2.5px rgba(0, 0, 0, 0.5);
 }
-#games section {
-	background-color: #F44336;
-	border-color: #F44336;
+a.game section {
+	background-color: #673AB7;
+	border-color: #673AB7;
 }
-#systems section {
-	background-color: #FF5722;
-	border-color: #FF5722;
+a.system section {
+	background-color: #3F51B5;
+	border-color: #3F51B5;
 }
-#desktop section {
-	background-color: #4CAF50;
-	border-color: #4CAF50;
-}
-#webapps section {
+a.desktop section {
 	background-color: #2196F3;
 	border-color: #2196F3;
+}
+a.webapp section {
+	background-color: #009688;
+	border-color: #009688;
 }
 p {
 	text-align: center;
@@ -75,7 +75,6 @@ section a {
 	text-decoration: underline;
 }
 a section:hover {
-	background-color: #00B0FF; /* 200 */
 	box-shadow: 0.3px 0.3px 5px #000;
 }
 #home {

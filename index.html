@@ -3,24 +3,52 @@
 		<title> Ryan Goldstein </title>
 		<meta name=viewport content="width=device-width, initial-scale=1"></meta>
 		<link rel="stylesheet" href="style.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 	</head>
 	<body>
-		<aside>
-			<h2> Ryan Goldstein </h2>
-			<h3> Computer Science Student </h3>
-			<ul>
-				<a href="showcase/index.html"> <li> Showcase </li> </a>
-				<a href="http://linkedin.com/in/ryanisaacg" target="_blank"> <li> LinkedIn </li> </a>
-				<a href="http://github.com/ryanisaacg" target="_blank"> <li> GitHub </li> </a>
-				<a href="https://goo.gl/VdtnDX" target="_blank"> <li> Resume </li> </a>
-			</ul>
-		</aside>
+		<div id="top-bar">
+			<h1> Ryan Goldstein </h1>
+			<div id="top-bar-links">
+				<a class="link-icon" title="Home" href="index.html"> 
+					<i class="material-icons md-48">home</i> 
+				</a>
+				<a class="link-icon" title="Showcase" href="showcase/index.html"> 
+					<i class="material-icons md-48">code</i> 
+				</a>
+				<a class="link-icon" title="GitHub" href="https://github.com/ryanisaacg" target="_blank"> 
+					<img src="github.png"/> 
+				</a>
+				<a class="link-icon" title="LinkedIn" href="https://linkedin.com/in/ryanisaacg" target="_blank"> 
+					<img src="linkedin.png"/> 
+				</a>
+			</div>
+		</div>
 		<article>
+			<h3> Computer Science Student </h3>
+			<p>
+				I'm a student at Rutgers University New Brunswick, studying Computer Science in the School 
+				of Arts and Sciences Honors Program. My main area of experience is PC game development,
+				and I have had internships for both web and mobile applications.
+			<hr>
 			<h3 id="exp"> Work Experience </h3>
 			<div class="container">
 				<div class="left">
-					<h4> Student Researcher </h4>
-					Monmouth University <br>
+					<h4> Vydia Inc </h4>
+					Software Engineer Intern <br>
+					Summer of 2017 <br>
+				</div>
+				<div class="right">
+					<ul>
+						<li> Worked on the Vydia Mobile app for Android and iOS </li>
+						<li> Used React Native to display data, Redux to store it, and GraphQL to fetch it </li>
+						<li> Helped develop a specialized testing system for react native applications </li>
+					</ul>
+				</div>
+				<div class="left">
+					<h4> Monmouth University </h4>
+					Student Researcher <br>
 					Summer of 2016 <br>
 				</div>
 				<div class="right">
@@ -36,7 +64,7 @@
 			</div>
 			<hr>
 			<h3 id="skill"> Skills </h3>
-			<div class="columns">
+			<div class="container">
 				<div class="column">
 					<h4> Technologies Experience </h4>
 					<ul>
@@ -80,23 +108,38 @@
 			</div>
 			<hr>
 			<h3 id="awards"> Honors and Awards </h3>
-			<h4> Programming Contests / Competitions </h4>
-			<ul>
-				<li> Hack of Distinction at HackFRee 2017 </li>
-				<li> First Place at the Monmouth University 2016 High School programming competition </li>
-				<li> Third Place at Widener University High School 2017 Computer Science Competition </li>
-				<li> Fourth Place at Rowan University High School 2017 Computer Science Competition </li>
-			</ul>
-			<h4> Academic Awards </h4>
-			<ul>
-				<li> AP Scholar with Honors </li>
-				<li> Xerox Award for Innovation and Technology</li>
-			</ul>
-			<h4> Other Awards </h4>
-			<ul>
-				<li> Eagle Scout (Silver Palm)</li>
-			</ul>
+			<div class="container">
+				<div class="tri-column">
+					<h4> Programming Contests / Competitions </h4>
+					<ul>
+						<li> Hack of Distinction at HackFRee 2017 </li>
+						<li> First Place at the Monmouth University 2016 High School programming competition </li>
+						<li> Third Place at Widener University High School 2017 Computer Science Competition </li>
+						<li> Fourth Place at Rowan University High School 2017 Computer Science Competition </li>
+					</ul>
+				</div>
+				<div>
+					<h4> Academic Awards </h4>
+					<ul>
+						<li> AP Scholar with Honors </li>
+						<li> Xerox Award for Innovation and Technology</li>
+					</ul>
+				</div>
+				<div>
+					<h4> Other Awards </h4>
+					<ul>
+						<li> Eagle Scout (Silver Palm)</li>
+					</ul>
+				</div>
+			</div>
 			<hr>
+			<h3> Links </h3>
+			<ul>
+				<a href="showcase/index.html"> <li> Showcase </li> </a>
+				<a href="http://linkedin.com/in/ryanisaacg" target="_blank"> <li> LinkedIn </li> </a>
+				<a href="http://github.com/ryanisaacg" target="_blank"> <li> GitHub </li> </a>
+				<a href="https://goo.gl/VdtnDX" target="_blank"> <li> Resume </li> </a>
+			</ul>
 		</article>
 	</body>
 </html>

@@ -41,10 +41,35 @@ h4 {
     #profession {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
 }
 #summary p {
     line-height: 1.5;
 }
 #profession div {
     padding: 0 15% 0 15%;
+}
+#projects {
+    display: grid;
+}
+@media (min-width: 800px) {
+    #projects {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (min-width: 1200px) {
+    #projects {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (min-width: 1600px) {
+    #projects {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+code {
+    display: block;
+    white-space: pre;
+    background-color: #eee;
+    margin: 5px;
 }

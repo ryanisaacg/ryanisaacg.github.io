@@ -38,20 +38,20 @@
     <div>
         <h4> AUVM (Gold Virtual Machine) </h4>
         <code>
-            mov =0 R0
-            mov =0 R1
-            mov =1 R2
-            lbl =0
-            add =48 R2 R3
-            wto R3
-            add R1 R2 R4
-            mov R2 R1
-            mov R4 R2
-            add =1 R0 R0
-            cmp R0 =5
-            brnng =0
-            wto =10
-            end
+mov =0 R0
+mov =0 R1
+mov =1 R2
+lbl =0
+add =48 R2 R3
+wto R3
+add R1 R2 R4
+mov R2 R1
+mov R4 R2
+add =1 R0 R0
+cmp R0 =5
+brnng =0
+wto =10
+end
         </code>
         <p>
             The AUVM was my high school senior project. It defines a virtual machine, an assembler, and a basic (incomplete) LISP. 
@@ -91,12 +91,28 @@ func main(argc i32, argv $$i8) i32 {
         printf("POSITIVE");
     } else if a < 0 {
         printf("NEGATIVE");
-    } else {
-        printf("ZERO");
     }
     return 0;
 }
         </code>
+        <p>
+            A small programming language I created that compiles to C
+        </p>
     </div>
-
+    <div>
+        <h4> XCLM (Cross-Platform C Library Manager) </h4>
+        <code>
+$ xclm list
+$ pwd
+/C/Users/ryan/Downloads/SDL2-2.0.5/
+$ xclm install sdl2
+$ xclm list
+sdl2
+$ cd ../SDL2-2.0.7/
+$ xclm update sdl2
+        </code>
+        <p>
+            A utility I wrote mostly for MinGW and Git Bash that allows sytem-wide installation of C libraries, but will work on any Unix-like system
+        </p>
+    </div>
 </div>

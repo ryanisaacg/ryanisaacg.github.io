@@ -69,8 +69,7 @@ h4 {
 }
 #projects {
     grid-gap: 20px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 0px 20px 0px 20px;
 }
 #projects div h4 {
     text-align: center;

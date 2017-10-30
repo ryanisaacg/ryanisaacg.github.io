@@ -67,9 +67,15 @@ h4 {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
+#projects div h4 {
+    text-align: center;
+}
 code {
     display: block;
     white-space: pre;
     background-color: #eee;
     margin: 5px;
+}
+img {
+    width: 350;
 }

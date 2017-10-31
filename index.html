@@ -100,7 +100,7 @@ func main(argc i32, argv $$i8) i32 {
         </p>
     </div>
     <div>
-        <h4> XCLM (Cross-Platform C Library Manager) </h4>
+        <h4> XCLM: X-Platform C Library Manager </h4>
         <code>
 $ xclm list
 $ pwd
@@ -114,5 +114,18 @@ $ xclm update sdl2
         <p>
             A utility I wrote mostly for MinGW and Git Bash that allows sytem-wide installation of C libraries, but will work on any Unix-like system
         </p>
+    </div>
+    <div>
+        <h4> BasicStego </h4>
+        <code>
+$ #Put some image in image.png
+$ cat "Hello world!" &gr; test.txt
+$ java -jar BasicStego.jar encode 
+    image.png text.txt
+$ java -jar BasicStego.jar decode 
+    image.png out.txt
+$ cat out.txt
+        </code>
+        A program that demonstrates stegonography: the practice of hiding information in images. It creates a binary string out of a Java string and then sets the RGBA values to even or odd, depending if each bit is on or off. This can be reversed, retrieving the information.
     </div>
 </div>

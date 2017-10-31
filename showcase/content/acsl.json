@@ -1,9 +1,0 @@
-{
-	"title" : "ACSL Assembler",
-	"subtitle" : "An assembler using the ACSL assembly format",
-	"link" : "https://github.com/ryanisaacg/acsl-assembler",
-	"body" : [
-	["Written In", "This project was written in C with Lex and Yacc."],
-	["Why does it exist?", "I was practicing for the American Computer Science League competition and noticed there was no easy way to evaluate practice problems"],
-	["How does it work?", "The virtual machine follows the format of single-variable memory locations and a single register, and executes the assembly as faithfully as possible."]]
-}

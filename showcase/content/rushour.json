@@ -1,9 +1,0 @@
-{
-	"title" : "RusHour",
-	"subtitle" : "Machine learning meets A* in a simulated city",
-	"link" : "https://github.com/ryanisaacg/GridlockGods",
-	"body" : [
-	["Written In", "The project was created with Java and the Swing UI library."],
-	["Why does it exist?", "Balancing traffic lights perfectly is a problem that isn't fit for humans, but it seems well-suietd to neural networks."],
-	["How does it work?", "Cars enter the traffic grid and determine a location to go to. They use A* to choose a path there, stopping at traffic lights if necessary. The lights use neural networks to determine when to switch."]]
-}

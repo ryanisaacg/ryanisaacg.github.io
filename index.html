@@ -1,126 +1,23 @@
-<title> Ryan Goldstein </title>
-<meta name=viewport content="width=device-width, initial-scale=1"></meta>
-<link rel="stylesheet" href="style.css"/>
-<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
-<meta name="google-site-verification" content="STaLpl2FR-_PqOPOS6qSCenkAzLbHk66Sjsvhl_ZzGQ" />
-<div id="top-bar">
-    <h1> Ryan Goldstein </h1>
-    <h2>
-        <a href="https://github.com/ryanisaacg" target="_blank"> GitHub </a>
-        &#8729;
-        <a href="https://linkedin.com/in/ryanisaacg" target="_blank"> LinkedIn </a>
-        &#8729;
-        <a href="https://drive.google.com/file/d/0B5La54gkB9Cza0pCcEhsUVhDYjQ/view" target="_blank"> Resume </a>
-        &#8729;
-        <a href="mailto:ryan@ryanisaacg.com"> Email </a>
-    </h2>
-</div>
-<div id="profession">
-    <div id="summary">
-        <h3> Summary </h3>
+<html>
+    <head>
+        <title>Ryan Goldstein Branding</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1> I'm <underline>Ryan Goldstein</underline>, computer science student at Rutgers University with experience in game, mobile, and web development.</h1>
+        <span class="label"> About Me </span>
         <p>
-            I'm a student at Rutgers University New Brunswick, studying Computer Science in the School 
-            of Arts and Sciences Honors Program. My main area of experience is PC game development,
-            and I have had internships for both web and mobile applications. Most of my side projects
-            are written either C, Java, Python, Rust, or D.
+            I'm a student at Rutgers University New Brunswick, studying Computer Science in the School of Arts and Sciences Honors Program. My main area of experience is PC game development, and I have had internships for both web and mobile applications. Most of my side projects are written either C, Java, Python, Rust, or D. 
         </p>
-    </div>
-    <div id="experience">
-        <h3 id="exp"> Work Experience </h3>
-        <h4> Vydia Inc &mdash; <i> Software Engineer Intern </i> </h4>
-        Worked on a React Native mobile app for iOS and Android
-        <h4> Monmouth University &mdash; <i> Student Research Assistant </i> </h4>
-        Created an object tracking system with GPS, RFID, and Video processing
-    </div>
-</div>
-<h3> Notable Projects </h3>
-<div id="projects">
-    <div>
-        <h4> AUVM (Gold Virtual Machine) </h4>
-        <code>
-mov =0 R0
-mov =0 R1
-mov =1 R2
-lbl =0
-add =48 R2 R3
-wto R3
-add R1 R2 R4
-mov R2 R1
-mov R4 R2
-add =1 R0 R0
-cmp R0 =5
-brnng =0
-wto =10
-end
-        </code>
+        <span class="label"> Experience </span>
         <p>
-            The AUVM was my high school senior project. It defines a virtual machine, an assembler, and a basic (incomplete) LISP. 
-            The program snippet above will print the ASCII values of the first 5 Fibonacci numbers using the assembler from the project. 
+            Vydia Inc
+            Summer of 2017
+            Software Engineer Intern <br/>
+            Worked on a React Native mobile app for iOS and Android
+            Monmouth University — Student Research Assistant
+            Created an object tracking system with GPS, RFID, and Video processing 
         </p>
-    </div>
-    <div>
-        <h4> Cosmic Circuitry </h4>
-        <img src="cosmic-circuitry.gif">
-        <p>
-            A roguelike video game for a school assignment that requires players to use Kirchoff's Laws to solve circuit puzzles
-        </p>
-    </div>
-    <div>
-        <h4> CapMan </h4>
-        <img src="capman.gif">
-        <p>
-            A twist on a popular arcade game where the player has to consider gravity
-        </p>
-    </div>
-    <div>
-        <h4> Fwum </h4>
-        <code>
-func incr(a $i32) void {
-    $a = $a + 1;
-}
-
-func main(argc i32, argv $$i8) i32 {
-    a := 0;
-    incr(@a);
-    if a &gt; 0 {
-        printf("POSITIVE");
-    } else if a < 0 {
-        printf("NEGATIVE");
-    }
-    return 0;
-}
-        </code>
-        <p>
-            A small programming language I created that compiles to C
-        </p>
-    </div>
-    <div>
-        <h4> XCLM: X-Platform C Library Manager </h4>
-        <code>
-$ xclm list
-$ pwd
-/C/Users/ryan/Downloads/SDL2-2.0.5/
-$ xclm install sdl2
-$ xclm list
-sdl2
-$ cd ../SDL2-2.0.7/
-$ xclm update sdl2
-        </code>
-        <p>
-            A utility I wrote mostly for MinGW and Git Bash that allows sytem-wide installation of C libraries, but will work on any Unix-like system
-        </p>
-    </div>
-    <div>
-        <h4> BasicStego </h4>
-        <code>
-$ #Put some image in image.png
-$ cat "Hello world!" > test.txt
-$ java -jar BasicStego.jar encode 
-    image.png text.txt
-$ java -jar BasicStego.jar decode 
-    image.png out.txt
-$ cat out.txt
-        </code>
-        A program that demonstrates stegonography: the practice of hiding information in images. It creates a binary string out of a Java string and then sets the RGBA values to even or odd, depending if each bit is on or off. This can be reversed, retrieving the information.
-    </div>
-</div>
+    </body>
+</html>

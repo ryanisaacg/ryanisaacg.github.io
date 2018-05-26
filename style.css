@@ -13,18 +13,22 @@ body {
 	align-items: start;
 	grid-row-gap: 100px;
 }
-/* Headers shouldn't be bold */
-h1, h2, h3 {
+/* The initial header shouldn't be bold */
+h1 {
 	font-weight: normal
 }
-/* The top header should take up two cells */
-h1, header {
+/* The top header should span the page*/
+h1 {
     grid-column-start: 1;
     grid-column-end: 5;
 }
+h3, strong {
+	color: #4A148C;
+}
 /* There should be no padding from the top for the labels */
-h3 {
+h3, h4 {
 	margin-top: 0;
+	margin-bottom: 0;
 }
 .label {
 	font-size: 24px;
@@ -33,6 +37,12 @@ h3 {
 	font-size: 18px;
 	grid-column-start: 2;
 	grid-column-end: 5;
+}
+.projects {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: start;
+	grid-gap: 25px;
 }
 .skills {
 	font-size: 20px;
@@ -51,9 +61,21 @@ h3 {
 p {
 	font-size: 18px;
 }
+ul, li {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+a, a:hover, a:visited {
+	font-weight: bold;
+	color: #1e1e1e;
+}
 @media only screen and (max-width: 800px) {
 	body {
 		display: block;
 		padding-top: 100px;
+	}
+	.projects {
+		grid-template-columns: repeat(2, 1fr);
 	}
 }

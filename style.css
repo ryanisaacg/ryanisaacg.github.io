@@ -6,24 +6,47 @@ body {
 	/* Establish the size of the content area */
 	max-width: 50em;
 	margin: 0 auto;
-	padding: 10% 5%;
+	padding: 25% 5%;
 	/* Establish the content grid */
 	display: grid;
-	grid-template-columns: 25% 1fr;
-    align-items: center;
+	grid-template-columns: repeat(4, 1fr);
+	align-items: start;
+	grid-row-gap: 100px;
 }
 /* Headers shouldn't be bold */
 h1, h2, h3 {
 	font-weight: normal
 }
 /* The top header should take up two cells */
-h1 {
+h1, header {
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 5;
+}
+/* There should be no padding from the top for the labels */
+h3 {
+	margin-top: 0;
 }
 .label {
-	min-width: 25%;
 	font-size: 24px;
+}
+.description {
+	font-size: 18px;
+	grid-column-start: 2;
+	grid-column-end: 5;
+}
+.skills {
+	font-size: 20px;
+	align-self: start;
+}
+.job {
+	font-size: 18px;
+	grid-column-start: 2;
+	grid-column-end: 4;
+}
+.timeframe {
+	font-size: 16px;
+	grid-column-start: 4;
+	grid-column-end: 5;
 }
 p {
 	font-size: 18px;

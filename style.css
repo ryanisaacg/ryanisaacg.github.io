@@ -10,10 +10,16 @@ body {
 	/* Establish the content grid */
 	display: grid;
 	grid-template-columns: 25% 1fr;
+    align-items: center;
 }
 /* Headers shouldn't be bold */
 h1, h2, h3 {
 	font-weight: normal
+}
+/* The top header should take up two cells */
+h1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 .label {
 	min-width: 25%;

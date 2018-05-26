@@ -6,7 +6,7 @@ body {
 	/* Establish the size of the content area */
 	max-width: 50em;
 	margin: 0 auto;
-	padding: 25% 5%;
+	padding: 100px 10px;
 	/* Establish the content grid */
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -54,5 +54,6 @@ p {
 @media only screen and (max-width: 800px) {
 	body {
 		display: block;
+		padding-top: 100px;
 	}
 }

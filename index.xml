@@ -10,5 +10,15 @@
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title></title>
+      <link>https://www.ryanisaacg.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/about/</guid>
+      <description>About Me I&amp;rsquo;m studing Computer Science at Rutgers University New Brunswick in the School of Arts and Sciences Honors Program. My main area of experience is PC game development, and I have had internships for both web and mobile applications. Most of my side projects are written either C, Java, Python, or Rust.
+Professional Experience My professional experience so far is limited to internships and work in research labs. This past summer (2019) I worked as an intern at Facebook in the Connectivity organization.</description>
+    </item>
+    
   </channel>
 </rss>

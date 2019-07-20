@@ -6,18 +6,29 @@
     <description>Recent content on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title></title>
+      <title>The State of Quicksilver Feb 2019</title>
+      <link>https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</link>
+      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</guid>
+      <description>What is Quicksilver? For anyone who doesn&amp;rsquo;t know, Quicksilver is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.
+The State of Rust (WASM) Game Development Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework. Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
       <link>https://www.ryanisaacg.com/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://www.ryanisaacg.com/about/</guid>
-      <description>About Me I&amp;rsquo;m studing Computer Science at Rutgers University New Brunswick in the School of Arts and Sciences Honors Program. My main area of experience is PC game development, and I have had internships for both web and mobile applications. Most of my side projects are written either C, Java, Python, or Rust.
-Professional Experience My professional experience so far is limited to internships and work in research labs. This past summer (2019) I worked as an intern at Facebook in the Connectivity organization.</description>
+      <description>I&amp;rsquo;m studing Computer Science at Rutgers University New Brunswick in the School of Arts and Sciences Honors Program. My main area of experience is PC game development, and I have had internships for both web and mobile applications. Most of my side projects are written either C, Java, Python, or Rust.
+Academic Experience I study Computer Science in the school of Arts and Sciences at Rutgers University. I haven&amp;rsquo;t found time for an official minor, though I try take classes on linguistics and sociology when I&amp;rsquo;m able.</description>
     </item>
     
   </channel>

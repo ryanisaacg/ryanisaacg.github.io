@@ -6,10 +6,20 @@
     <description>Recent content on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Website Makeover</title>
+      <link>https://www.ryanisaacg.com/posts/new-blog-debut/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/new-blog-debut/</guid>
+      <description>So www.ryanisaacg.com has a very new look, powered by Hugo and my (fairly small) fork of the hello-friend-ng theme. Partly the site will be dedicated to a bit of a professional showcase / bio for myself, but also with added blog functionality I can communicate in a more public way about my plans for my open source projects.
+The State of Quicksilver that I wrote earlier this year has moved from its previous home as Github gist to retroactively being a post here, as I feel more comfortable linking to my writing in a domain that I control and can ensure the links stay live.</description>
+    </item>
     
     <item>
       <title>The State of Quicksilver Feb 2019</title>

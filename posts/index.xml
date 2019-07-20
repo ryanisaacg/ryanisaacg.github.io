@@ -5,8 +5,24 @@
         <description>Recent content in Posts on ryan.isaac.g</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://www.ryanisaacg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Website Makeover</title>
+            <link>https://www.ryanisaacg.com/posts/new-blog-debut/</link>
+            <pubDate>Sat, 20 Jul 2019 00:00:00 +0000</pubDate>
+            
+            <guid>https://www.ryanisaacg.com/posts/new-blog-debut/</guid>
+            <description>So www.ryanisaacg.com has a very new look, powered by Hugo and my (fairly small) fork of the hello-friend-ng theme. Partly the site will be dedicated to a bit of a professional showcase / bio for myself, but also with added blog functionality I can communicate in a more public way about my plans for my open source projects.
+The State of Quicksilver that I wrote earlier this year has moved from its previous home as Github gist to retroactively being a post here, as I feel more comfortable linking to my writing in a domain that I control and can ensure the links stay live.</description>
+            <content type="html"><![CDATA[<p>So www.ryanisaacg.com has a very new look, powered by Hugo and my (fairly small) fork of the <a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng">hello-friend-ng</a> theme. Partly the site will be dedicated to a bit of a professional showcase / bio for myself, but also with added blog functionality I can communicate in a more public way about my plans for my open source projects.</p>
+
+<p>The State of Quicksilver that I wrote earlier this year has moved from its previous home as Github gist to retroactively being a post here, as I feel more comfortable linking to my writing in a domain that I control and can ensure the links stay live. The Quicksilver website itself is still hosted within the Quicksilver repo, partially for ease of version control (if a commit changes code, it can change the website docs in lockstep) and partially because I&rsquo;m not sure how much I want to present Quicksilver as being <em>my project</em> versus the <em>Quicksilver project</em>. I&rsquo;m too cheap and lazy to buy a quicksilver domain, so the URL still contains my screen name, but the website is independent of the rest of ryanisaacg.com. Future State-Of-Quicksilver posts will also live on this blog though, as my personal plans for the project and my work for the Rust ecosystem feel out-of-band for the actual Quicksilver site.</p>
+
+<p>I won&rsquo;t be embedding Disqus for comments, but if you want to chat I&rsquo;m on the <a href="https://bit.ly/rust-community">Rust Community Discord</a> as @ryanisaacg. I&rsquo;d love to hear people&rsquo;s thoughts on the new look, if Quicksilver should be moved to a sub-page of this site, and if State of Quicksilver should be a gist, blog posts here, or some combination.</p>
+]]></content>
+        </item>
         
         <item>
             <title>The State of Quicksilver Feb 2019</title>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="">
+<meta name="description"
+    content="What is Quicksilver? For anyone who doesn&amp;rsquo;t know, Quicksilver is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.
+The State of Rust (WASM) Game Development Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework. Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/" />
+
+
+<title>
+    
+    The State of Quicksilver Feb 2019 :: ryan.isaac.g  — Ryan Goldstein&#39;s Site
+    
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.90c2ccb749fd070585b2c078f9c191463a12d36d2a12780e5a356b3177676334.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="theme-color" content="#252627">
+<meta itemprop="name" content="The State of Quicksilver Feb 2019">
+<meta itemprop="description" content="What is Quicksilver? For anyone who doesn&rsquo;t know, Quicksilver is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.
+The State of Rust (WASM) Game Development Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework. Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc.">
+
+
+<meta itemprop="datePublished" content="2019-02-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-02-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="588">
+
+
+
+<meta itemprop="keywords" content="quicksilver,rust,gamedev," />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.ryanisaacg.com"/>
+
+<meta name="twitter:title" content="The State of Quicksilver Feb 2019"/>
+<meta name="twitter:description" content="What is Quicksilver? For anyone who doesn&rsquo;t know, Quicksilver is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.
+The State of Rust (WASM) Game Development Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework. Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc."/>
+
+
+
+
+<meta property="article:published_time" content="2019-02-04 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$HOME</span>
+            <span class="logo__cursor"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.ryanisaacg.com/about">About</a></li><li><a href="https://www.ryanisaacg.com/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title"><a href="https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/">The State of Quicksilver Feb 2019</a></h1>
+
+            
+
+            <div class="post-content">
+                
+
+<h2 id="what-is-quicksilver">What is Quicksilver?</h2>
+
+<p>For anyone who doesn&rsquo;t know, <a href="https://github.com/ryanisaacg/quicksilver">Quicksilver</a> is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.</p>
+
+<h2 id="the-state-of-rust-wasm-game-development">The State of Rust (WASM) Game Development</h2>
+
+<p>Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework.
+Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc. A pure-Rust game framework is getting easier to make all the time.</p>
+
+<p>However, very few libraries support WASM out of the box. This means Quicksilver and Rust WASM games in general essentially have small implementations of windowing, event handling, sounds, graphics, and input for the web that have not been contributed upstream.</p>
+
+<h2 id="the-framework-problem">The Framework Problem</h2>
+
+<p>Opting to use Quicksilver for some feature (web support, API design, automatic batching) requires opting into <em>all</em> of Quicksilver&rsquo;s features. This isn&rsquo;t necessarily great! Even with compile-time feature flags available, it&rsquo;s hard to do any Quicksilver code without buying into the State trait. This boils down to the vision of Quicksilver as a framework: if you can just plug in Quicksilver and start making a game right away, it needs to be everything to everyone.</p>
+
+<p>Partly this is due to Quicksilver&rsquo;s history as a bit of a learning project for me, which I wanted to build from scratch in as many places as possible. It&rsquo;s also caused by my impatiance: the Rust ecosystem is amazing and featureful, but waiting for every single upstream project to accept changes would mean that Quicksilver could only be developed as fast as its slowest dependency. I tend to have time to work on the project in bursts, when I clear out the bug backlog and implement a few features from the roadmap; this doesn&rsquo;t mesh well with long-running interactions with other projects. The way I&rsquo;ve handled this in the past is writing my own Javascript bindings for each feature, essentially cloning an entire crate.</p>
+
+<h2 id="the-fundamentals">The Fundamentals</h2>
+
+<p>Largely, Quicksilver&rsquo;s API is approaching a state of stability. It accomplishes most of what I want it to, in a way I&rsquo;m largely satisfied with. For end users, the Quicksilver project has been more or less stable for a few months, and no substantial breaking changes are planned for the future.</p>
+
+<p>However, Quicksilver still has quite a few systems implemented by a dependency and an ad-hoc web clone of that dependency. This is what I hope to change, by contributing web backends across the ecosystem. My ideal outcome is that the fundamental multimedia crates (winit, rodio, gilrs, etc.) can run on WASM out-of-the-box.</p>
+
+<h2 id="going-forward">Going Forward</h2>
+
+<p>If it sounds like my current goal is to make Quicksilver obselete, that wouldn&rsquo;t be too far off. Quicksilver&rsquo;s raison d&rsquo;etre is packaging up a bundle of functionality and to provide a single API for both web and native. Moving the ecosystem to support web and native makes this less important. Parts of Quicksilver that I think are particularly useful will probably become their own crates (re-exported in Quicksilver) to allow their use outside the framework. Some future version of Quicksilver may just be entirely a re-export of various crates and types with a consistent organization.</p>
+
+<p>In essence, I want seamless desktop and WASM development to move from a selling point of developing games in Quicksilver to a selling point of developing games in Rust.</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver">quicksilver</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/rust">rust</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/gamedev">gamedev</a></span>
+                </p>
+
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-02-03</p>
+        </div>
+
+        
+
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2019</span>
+            
+            <span></span>
+            <span> <a href="https://www.ryanisaacg.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.9e52e68b082cf2a30a7fead88260edb8818fbd7f7831e39674917d4539ec75df41ba88eaddfbd916594ab4fb2a31913b46cf2d6094cf80381edb8c632512a8ca.js" integrity="sha512-nlLmiwgs8qMKf&#43;rYgmDtuIGPvX94MeOWdJF9RTnsdd9Buojq3fvZFllKtPsqMZE7Rs8tYJTPgDge24xjJRKoyg=="></script>
+
+
+
+    </body>
+</html>

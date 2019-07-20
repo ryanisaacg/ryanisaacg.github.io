@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gamedev on ryan.isaac.g</title>
+    <link>https://www.ryanisaacg.com/tags/gamedev/</link>
+    <description>Recent content in gamedev on ryan.isaac.g</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.ryanisaacg.com/tags/gamedev/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The State of Quicksilver Feb 2019</title>
+      <link>https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</link>
+      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</guid>
+      <description>What is Quicksilver? For anyone who doesn&amp;rsquo;t know, Quicksilver is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.
+The State of Rust (WASM) Game Development Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework. Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc.</description>
+    </item>
+    
+  </channel>
+</rss>

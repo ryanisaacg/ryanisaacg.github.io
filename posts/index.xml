@@ -5,8 +5,36 @@
         <description>Recent content in Posts on ryan.isaac.g</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 22 Nov 2019 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://www.ryanisaacg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Quicksilver Chanukah: Day 1</title>
+            <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</link>
+            <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+            
+            <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</guid>
+            <description>I started this year with a blog post about the state of Quicksilver where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I&amp;rsquo;m happy to update this work (by me and many others!) has been a success, and the core of Rust&amp;rsquo;s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</description>
+            <content type="html"><![CDATA[<p>I started this year with a <a href="../state-of-quicksilver-feb-2019">blog post about the state of Quicksilver</a> where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I&rsquo;m happy to update this work (by me and many others!) has been a success, and the core of Rust&rsquo;s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</p>
+
+<p>Without having to maintain my own set of web bindings for Quicksilver, I was able to start working on significant changes to both the internal and external structure. There are a few entirely unrelated modules in Quicksilver that are all needed for the framework: handling filesystem resources, creating and loading local data, the event loop, the graphics API, and the sound API. It makes sense to allow users to pick and choose these systems, which is the goal of Quicksilver&rsquo;s optional features. However, that still requires depending on Quicksilver, which doesn&rsquo;t make sense for some projects. Instead, I&rsquo;ve created a few new crates that anyone can drop into their project without pulling in any other Quicksilver-related code.</p>
+
+<p>Additionally, a major new Rust feature landed this year: async/await. Quicksilver&rsquo;s asset loading system has been a sticking point, because of its design decisions and the inherent pain of combinator-based <code>Future</code> code. With <code>async</code> and <code>.await</code>, a new asynchronous asset loading API can be almost seamless. Combined with fixes to long-standing graphics API problems, I&rsquo;ve been working on a new major release for Quicksilver (which will be the first breaking change in over a year.)</p>
+
+<p>As <a href="https://en.wikipedia.org/wiki/Hanukkah">Chanukah</a> starts tonight, I&rsquo;m going to share these new crates and big Quicksilver updates over the next eight days. I can&rsquo;t promise I&rsquo;ll actually stick to this schedule, but my goal is:</p>
+
+<ol>
+<li>This post!</li>
+<li><code>platter</code>: An async file-loading API for desktop and web</li>
+<li><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</li>
+<li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
+<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
+<li>Changes to the Quicksilver application lifecycle</li>
+<li>Changes to the Quicskilver graphics API</li>
+<li>An overview of the work on web support this year</li>
+</ol>
+]]></content>
+        </item>
         
         <item>
             <title>Website Makeover</title>

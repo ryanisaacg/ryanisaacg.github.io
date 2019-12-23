@@ -6,10 +6,19 @@
     <description>Recent content on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah: Day 1</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</guid>
+      <description>I started this year with a blog post about the state of Quicksilver where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I&amp;rsquo;m happy to update this work (by me and many others!) has been a success, and the core of Rust&amp;rsquo;s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</description>
+    </item>
     
     <item>
       <title>Website Makeover</title>

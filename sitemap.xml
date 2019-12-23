@@ -3,27 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/posts/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/tags/quicksilver/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/tags/quicksilver-2019/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ryanisaacg.com/tags/</loc>
+    <lastmod>2019-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.ryanisaacg.com/tags/meta/</loc>
     <lastmod>2019-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.ryanisaacg.com/posts/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.ryanisaacg.com/tags/site/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/</loc>
     <lastmod>2019-07-20T00:00:00+00:00</lastmod>
   </url>
   
@@ -34,11 +54,6 @@
   
   <url>
     <loc>https://www.ryanisaacg.com/tags/gamedev/</loc>
-    <lastmod>2019-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/quicksilver/</loc>
     <lastmod>2019-02-04T00:00:00+00:00</lastmod>
   </url>
   

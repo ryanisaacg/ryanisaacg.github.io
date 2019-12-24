@@ -5,8 +5,86 @@
         <description>Recent content in Posts on ryan.isaac.g</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://www.ryanisaacg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Quicksilver Chanukah, Day 2: Platter</title>
+            <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</link>
+            <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+            
+            <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</guid>
+            <description>This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.
+Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</description>
+            <content type="html"><![CDATA[<p>This year saw the release of <code>async/.await</code> in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a <code>Future</code> instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.</p>
+
+<p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
+
+<pre><code class="language-rust">let images = load_file(&quot;my_manifest_path&quot;)
+    .map(parse_file_contents)
+    .and_then(|image_paths| join_all(
+        image_paths
+            .map(load_file)
+            .map(|file| file.and_then(parse_image))
+    );
+
+render_loading();
+loop {
+    // Core application loop
+    if images.is_ready {
+        render_frame(&amp;images);
+    }
+}
+</code></pre>
+
+<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn&rsquo;t even touched error handling.</p>
+
+<p>Introducing <a href="https://crates.io/crates/platter"><code>platter</code></a>, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.</p>
+
+<pre><code class="language-rust">render_loading();
+let contents = load_file(&quot;my_manifest_path&quot;).await?;
+let image_paths = parse_file_contents(contents);
+let images = Vec::new();
+for image_path in image_paths {
+    let image_file = load_file(image_path).await?;
+    images.push(parse_image(image_file)?);
+}
+loop {
+    render_frame(&amp;images);
+}
+</code></pre>
+
+<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it&rsquo;s much clearer:</p>
+
+<pre><code class="language-rust">render_loading();
+let contents = load_file(&quot;my_manifest_path&quot;).await;
+let image_futures = parse_file_contents(contents)
+    .map(load_file);
+let images: Vec&lt;Image&gt; = try_join_all(image_futures)
+    .await?
+    .map(parse_image)
+    .collect()?;
+loop {
+    render_frame(&amp;images);
+}
+</code></pre>
+
+<p><code>platter</code> is small and can be plugged into your own game framework or game project if you want to harness <code>async/await</code> to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!</p>
+
+<p>That&rsquo;s Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
+
+<ol>
+<li><a href="../quicksilver-chanukah-2019">Yesterday&rsquo;s introduction post</a></li>
+<li>This post!</li>
+<li><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</li>
+<li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
+<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
+<li>Changes to the Quicksilver application lifecycle</li>
+<li>Changes to the Quicskilver graphics API</li>
+<li>An overview of the work on web support this yea5</li>
+</ol>
+]]></content>
+        </item>
         
         <item>
             <title>A Quicksilver Chanukah: Day 1</title>
@@ -25,7 +103,7 @@
 
 <ol>
 <li>This post!</li>
-<li><code>platter</code>: An async file-loading API for desktop and web</li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</li>
 <li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
 <li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>

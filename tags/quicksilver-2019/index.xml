@@ -6,10 +6,20 @@
     <description>Recent content in quicksilver-2019 on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/tags/quicksilver-2019/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 2: Platter</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</guid>
+      <description>This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.
+Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah: Day 1</title>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gestalt on ryan.isaac.g</title>
+    <link>https://www.ryanisaacg.com/tags/gestalt/</link>
+    <description>Recent content in gestalt on ryan.isaac.g</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.ryanisaacg.com/tags/gestalt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 3: Gestalt</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-day-3/</link>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-day-3/</guid>
+      <description>Often your application might want to store gamestate or configurations, but the web has no filesystem access. Additionally, you don&amp;rsquo;t want to just dump files in the user&amp;rsquo;s home directory; each desktop operating system has a different preferred location for storing application-specific data, and often different locations for different kinds of data.
+Introducing gestalt, a library that bundles up your data and stores it away so you don&amp;rsquo;t have to. A sample to save some game state:</description>
+    </item>
+    
+  </channel>
+</rss>

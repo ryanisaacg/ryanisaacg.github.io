@@ -6,10 +6,20 @@
     <description>Recent content in quicksilver-2019 on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/tags/quicksilver-2019/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 4: Blinds</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</link>
+      <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</guid>
+      <description>With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn&amp;rsquo;t need to have its own parallel implementation of windowing. However, there is room for an abstraction that&amp;rsquo;s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.
+blinds is based on winit, but focused on Quicksilver&amp;rsquo;s specific use case of single-window games on desktop and web.</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah, Day 3: Gestalt</title>

@@ -5,8 +5,91 @@
         <description>Recent content in Posts on ryan.isaac.g</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 24 Dec 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://www.ryanisaacg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Quicksilver Chanukah, Day 4: Blinds</title>
+            <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</link>
+            <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+            
+            <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</guid>
+            <description>With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn&amp;rsquo;t need to have its own parallel implementation of windowing. However, there is room for an abstraction that&amp;rsquo;s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.
+blinds is based on winit, but focused on Quicksilver&amp;rsquo;s specific use case of single-window games on desktop and web.</description>
+            <content type="html"><![CDATA[<p>With the recent update to <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>, it gained web support! This is great, and it means that Quicksilver doesn&rsquo;t need to have its own parallel implementation of windowing. However, there is room for an abstraction that&rsquo;s a little simpler than Winit, and takes advantage of <code>async/.await</code>, which is where <a href="https://crates.io/crates/blinds"><code>blinds</code></a> comes in.</p>
+
+<p><code>blinds</code> is based on <code>winit</code>, but focused on Quicksilver&rsquo;s specific use case of single-window games on desktop and web. It also integrates <code>gilrs</code> for gamepad support (though this could be provided directly by <code>winit</code> later), without exposing either in its external API. Additionally, <code>blinds</code> has optional support for OpenGL, via <code>glow</code> for uniform bindings across web and desktop.</p>
+
+<p>The <code>async</code> API works via the <code>LocalPool</code> and the <code>winit</code> event loop, allowing you to write code that <em>almost</em> looks like a synchronous event loop.</p>
+
+<pre><code class="language-rust">use blinds::{run, Event, EventStream, Key, Settings, Window};
+
+run(Settings::default(), app);
+
+async fn app(_window: Window, mut events: EventStream) {
+    loop {
+        while let Some(ev) = events.next_event().await {
+            // Process your events here!
+        }
+        // Process your frame here!
+    }
+}
+</code></pre>
+
+<p>The use of <code>.await</code> here is a bit of a hack, as it allows the event loop to wrest control away from the user and return it to the browser without blocking. Compare this to the comparable snippet from the legacy Quicksilver API:</p>
+
+<pre><code class="language-rust">use quicksilver::{
+    Result,
+    geom::Vector,
+    lifecycle::{Event, Settings, State, Window, run},
+};
+
+struct HelloWorld;
+
+impl State for HelloWorld {
+    fn new() -&gt; Result&lt;HelloWorld&gt; {
+        Ok(HelloWorld)
+    }
+    
+    fn event(&amp;mut self, window: &amp;mut Window, event: &amp;Event) -&gt; Result&lt;()&gt; {
+        // Process events here
+        Ok(())
+    }
+    
+    fn update(&amp;mut self, window: &amp;mut Window) -&gt; Result&lt;()&gt; {
+        // Update here
+        Ok(())
+    }
+
+    fn draw(&amp;mut self, window: &amp;mut Window) -&gt; Result&lt;()&gt; {
+        // Draw here
+        Ok(())
+    }
+}
+
+fn main() {
+    run::&lt;HelloWorld&gt;(&quot;Hello World&quot;, Vector::new(800, 600), Settings::default());
+}
+</code></pre>
+
+<p>The <code>async</code> API isn&rsquo;t just way more convenient than the previous, trait-based system. It also allows you to use other <code>async</code> APIs (like <a href="../quicksilver-chanukah-2019-day-2">day 2&rsquo;s <code>platter</code></a>), which is important for web support.</p>
+
+<p><code>blinds</code> isn&rsquo;t quite ready for a full release yet: there are a few more window APIs I do want to expose before it leaves alpha. However, you can still try it out, just be aware that the API is fairly unstable and likely to change between multiple times before the first non-alpha release!</p>
+
+<p>With <code>blinds</code> today, tomorrow will be the last new crate: <code>golem</code>!</p>
+
+<ol>
+<li><a href="../quicksilver-chanukah-2019">Yesterday&rsquo;s introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li>This post!</li>
+<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
+<li>Changes to the Quicksilver application lifecycle</li>
+<li>Changes to the Quicskilver graphics API</li>
+<li>An overview of the work on web support this year</li>
+</ol>
+]]></content>
+        </item>
         
         <item>
             <title>A Quicksilver Chanukah, Day 3: Gestalt</title>
@@ -50,7 +133,7 @@ let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;pl
 <li><a href="../quicksilver-chanukah-2019">Yesterday&rsquo;s introduction post</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li>This post!</li>
-<li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
 <li>Changes to the Quicksilver application lifecycle</li>
 <li>Changes to the Quicskilver graphics API</li>
@@ -128,7 +211,7 @@ loop {
 <li><a href="../quicksilver-chanukah-2019">Yesterday&rsquo;s introduction post</a></li>
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
-<li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
 <li>Changes to the Quicksilver application lifecycle</li>
 <li>Changes to the Quicskilver graphics API</li>
@@ -156,7 +239,7 @@ loop {
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
-<li><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
 <li>Changes to the Quicksilver application lifecycle</li>
 <li>Changes to the Quicskilver graphics API</li>

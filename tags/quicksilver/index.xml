@@ -6,10 +6,21 @@
     <description>Recent content in quicksilver on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/tags/quicksilver/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 5: Golem</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/</link>
+      <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/</guid>
+      <description>What is golem? golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful
+Why golem and not X If you&amp;rsquo;re just interested in what golem is and how it works, feel free to skip this section!
+The previous three days I&amp;rsquo;ve introduced new crates that mostly stood on their own. I&amp;rsquo;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&amp;rsquo;t require much explanation.</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah, Day 4: Blinds</title>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="">
+<meta name="description"
+    content="What is golem? golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful
+Why golem and not X If you&amp;rsquo;re just interested in what golem is and how it works, feel free to skip this section!
+The previous three days I&amp;rsquo;ve introduced new crates that mostly stood on their own. I&amp;rsquo;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&amp;rsquo;t require much explanation." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/" />
+
+
+<title>
+    
+    A Quicksilver Chanukah, Day 5: Golem :: ryan.isaac.g  — Ryan Goldstein&#39;s Site
+    
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.1374b8fbd5959b5f33bc0fbcff7b0184a039f3f1bfff9629df6f04f89dce2279.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="theme-color" content="#252627"><meta itemprop="name" content="A Quicksilver Chanukah, Day 5: Golem">
+<meta itemprop="description" content="What is golem? golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful
+Why golem and not X If you&rsquo;re just interested in what golem is and how it works, feel free to skip this section!
+The previous three days I&rsquo;ve introduced new crates that mostly stood on their own. I&rsquo;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&rsquo;t require much explanation.">
+
+
+<meta itemprop="datePublished" content="2019-12-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1313">
+
+
+
+<meta itemprop="keywords" content="quicksilver,quicksilver-chanukah-2019,quicksilver-2019,golem," />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.ryanisaacg.com"/>
+
+<meta name="twitter:title" content="A Quicksilver Chanukah, Day 5: Golem"/>
+<meta name="twitter:description" content="What is golem? golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful
+Why golem and not X If you&rsquo;re just interested in what golem is and how it works, feel free to skip this section!
+The previous three days I&rsquo;ve introduced new crates that mostly stood on their own. I&rsquo;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&rsquo;t require much explanation."/>
+
+
+
+
+<meta property="article:published_time" content="2019-12-26 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">cd $HOME</span>
+            <span class="logo__cursor"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.ryanisaacg.com/about">About</a></li><li><a href="https://www.ryanisaacg.com/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>7 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title"><a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/">A Quicksilver Chanukah, Day 5: Golem</a></h1>
+
+            
+
+            <div class="post-content">
+                
+
+<h2 id="what-is-golem">What is <code>golem</code>?</h2>
+
+<p><code>golem</code> is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful</p>
+
+<h2 id="why-golem-and-not-x">Why <code>golem</code> and not X</h2>
+
+<p>If you&rsquo;re just interested in what <code>golem</code> is and how it works, feel free to skip this section!</p>
+
+<p>The previous three days I&rsquo;ve introduced new crates that mostly stood on their own. I&rsquo;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&rsquo;t require much explanation. <code>golem</code>, however, is a different story: there aren&rsquo;t exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver&rsquo;s needs, most of which revolve around support for older hardware or older APIs. For brevity, I&rsquo;d recommend you check out <a href="https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019">icefox&rsquo;s guide to the existing graphics options</a>.</p>
+
+<p>I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn&rsquo;t support Vulkan. This eliminates <code>ash</code> and <code>vulkano</code> straight off the bat, and <code>gfx-hal</code> as well. <code>ash</code> and <code>vulkano</code> target Vulkan directly, and <code>gfx-hal</code>&rsquo;s OpenGL backend is not currently reliable enough (though I hope to see that improve!)</p>
+
+<p>I also want to be able to support WebGL 1, but WebGL 1 is not a very modern version of OpenGL. This makes it, for good reaon, unattractive to other libraries (like <code>luminance</code>, which is targeting WebGL 2 in its upcoming web support). However, WebGL 2&rsquo;s <a href="https://caniuse.com/#feat=webgl2">market share</a> still hovers at around 75%, which isn&rsquo;t ideal; notably missing from WebGL 2 support are the current verisons of Edge, Safari, and iOS Safari. Quicksilver recently transitioned to using WebGL 1 for better platform support, and I didn&rsquo;t want to regress by requiring a high version. This rules out <code>luminance</code>, and presumably <code>glium</code> (which has no current development towards web support as far as I&rsquo;m aware.)</p>
+
+<p>With just those two constraints I&rsquo;m out of options, so I decided to write <code>golem</code>.</p>
+
+<h2 id="mostly-safe">Mostly-Safe?</h2>
+
+<p>Where possible, <code>golem</code> handles for you the complex state machine of OpenGL. In other places, it prevents you from using resources that haven&rsquo;t been properly set-up. In these cases, <code>golem</code> is safe with low-overhead, removing footguns from OpenGL without slowing your code down. In others, more overhead would be required to keep the API free of <code>unsafe</code>. Currently only two functions are marked as <code>unsafe</code> in <code>golem</code>&rsquo;s public API, but they are the only functions that draw things to the screen! This means using <code>unsafe</code> code as a consumer of <code>golem</code> is unavoidable, hence &ldquo;mostly-safe.&rdquo;</p>
+
+<h2 id="a-code-snippet">A Code Snippet</h2>
+
+<p>Hopefull if you&rsquo;re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
+
+<pre><code class="language-rust">use blinds::*;
+use golem::{
+    Attribute, AttributeType, Context,
+    Dimension::{D2, D4},
+    ElementBuffer, GeometryMode, GolemError, ShaderDescription, ShaderProgram, VertexBuffer,
+};
+
+// The application loop, powered by the blinds crate
+async fn app(
+    window: Window,
+    ctx: glow::Context,
+    mut events: EventStream,
+) -&gt; Result&lt;(), GolemError&gt; {
+    // Create a context from 'glow', GL On Whatever
+    let ctx = &amp;Context::from_glow(ctx)?;
+
+    #[rustfmt::skip]
+    // This is the data that represents the triangle
+    // It's arranged how it will be passed to the GPU: each position represented as two f32 values,
+    // followed by each color represented as 4 f32 values. The positions are on a scale from -1.0
+    // to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,
+    // on a scale from 0.0 to 1.0
+    let vertices = [
+        // Position         Color
+        -0.5, -0.5,         1.0, 0.0, 0.0, 1.0,
+        0.5, -0.5,          0.0, 1.0, 0.0, 1.0,
+        0.0, 0.5,           0.0, 0.0, 1.0, 1.0
+    ];
+    // This is the data that indicates how to draw the vertices
+    // For a simple example of one triangle, we don't gain much from this. Any order of these three
+    // points will give us the same triangle. However, if we add more points (to draw a square, for
+    // example), then we can write each point once while using it in multiple triangles.
+    let indices = [0, 1, 2];
+
+    // Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how
+    // to turn our vertex data into an actual vertex that GL understands, and how to color each
+    // 'fragment' (essentially a pixel). These are each their own little program, where the
+    // information from the vertex shader is fed into the fragment shader.
+    // For the purposes of making sure the shaders match, and for ensuring compatibility on desktop
+    // and web, the inputs are represented as data structures and then converted to shader
+    // declarations at runtime.
+    // The input to the shader program is fed to the vertex_input, so your vertex data's format
+    // needs to match what you define in vertex_input
+    let mut shader = ShaderProgram::new(
+        ctx,
+        ShaderDescription {
+            // Take in to the shader a position (as a vector with 2 components) and a color (as a
+            // vector with 4 components). This is the same format as 'vertices' above
+            vertex_input: &amp;[
+                Attribute::new(&quot;vert_position&quot;, AttributeType::Vector(D2)),
+                Attribute::new(&quot;vert_color&quot;, AttributeType::Vector(D4)),
+            ],
+            // Pass to the fragment shader the color
+            // OpenGL will actually smoothly interpolate between different vertex values for us, so
+            // a red vertex and a blue vertex will have a gradient between them
+            fragment_input: &amp;[Attribute::new(&quot;frag_color&quot;, AttributeType::Vector(D4))],
+            // Uniforms represent a value that's the same for the entire shader; we don't need any
+            // here. If you're rendering images or applying transformations to your entire draw
+            // call, use uniforms!
+            uniforms: &amp;[],
+            // A program written in GLSL that uses the inputs and outputs defined above
+            // There's also a hard-coded output called gl_Position
+            vertex_shader: r#&quot; void main() {
+            gl_Position = vec4(vert_position, 0, 1);
+            frag_color = vert_color;
+        }&quot;#,
+            // The fragment shader has a hard-coded output: gl_FragColor
+            fragment_shader: r#&quot; void main() {
+            gl_FragColor = frag_color;
+        }&quot;#,
+        },
+    )?;
+
+    // Create buffer objects, which we use to transfer data from the CPU to the GPU
+    let mut vb = VertexBuffer::new(ctx)?;
+    let mut eb = ElementBuffer::new(ctx)?;
+    // Set the data of the buffer to be our vertices and indices from earlier
+    vb.set_data(&amp;vertices);
+    eb.set_data(&amp;indices);
+    // Prepare the shader for operations: shaders will raise errors if you forget to bind them
+    shader.bind();
+    // Clear the screen
+    ctx.clear();
+    unsafe {
+        // Using our buffers, draw our triangle
+        // We could also interpert our indices as Lines or a variety of other shape options:
+        // nothing binds us to necessarily using Triangles, even though they're the most common
+        // shape in graphics
+        shader.draw(&amp;vb, &amp;eb, 0..indices.len(), GeometryMode::Triangles)?;
+    }
+    // Show our data to the window
+    window.present();
+    // Keep the window open and responsive until the user exits
+    loop {
+        events.next_event().await;
+    }
+}
+
+// Run our application!
+fn main() {
+    run_gl(Settings::default(), |window, gfx, events| {
+        async move { app(window, gfx, events).await.unwrap() }
+    });
+}
+</code></pre>
+
+<p>(This is also an example of <a href="../quicksilver-chanukah-2019-day-4">yesterday&rsquo;s <code>blinds</code></a> and its OpenGL support.)</p>
+
+<h2 id="further-development">Further Development</h2>
+
+<p><code>golem</code> is not intended to be a fully-featured wrapper around all of OpenGL. It&rsquo;s intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that&rsquo;s missing! Some of it is documented on the <a href="https://github.com/ryanisaacg/golem/issues">issue tracker</a>, but I&rsquo;m sure that I&rsquo;ve missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.</p>
+
+<p><code>golem</code> is the last new crate to announce, which means tomorrow is about what these crates enable: the new version of Quicksilver.</p>
+
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li>This post!</li>
+<li>Changes to the Quicksilver application lifecycle</li>
+<li>Changes to the Quicskilver graphics API</li>
+<li>An overview of the work on web support this year</li>
+</ol>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver">quicksilver</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019">quicksilver-chanukah-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-2019">quicksilver-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/golem">golem</a></span>
+                </p>
+
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-12-25</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/">
+                                <span class="button__text">A Quicksilver Chanukah, Day 4: Blinds</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2019</span>
+            
+            <span></span>
+            <span> <a href="https://www.ryanisaacg.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.4c3fb12a087ceed4a52cb5d57068a9795c7069617a01ca70f788052ad66e1791779e6c72686e1dc0ca13dc03b0203204b6566bb0dd1ee80de2b7ff4d8fe53db2.js" integrity="sha512-TD&#43;xKgh87tSlLLXVcGipeVxwaWF6Acpw94gFKtZuF5F3nmxyaG4dwMoT3AOwIDIEtlZrsN0e6A3it/9Nj&#43;U9sg=="></script>
+
+
+
+    </body>
+</html>

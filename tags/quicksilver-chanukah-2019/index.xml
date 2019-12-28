@@ -6,10 +6,20 @@
     <description>Recent content in quicksilver-chanukah-2019 on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</guid>
+      <description>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application&amp;rsquo;s core loop and file loading, respectively.
+State is a trait that Quicksilver uses to manage when your code runs. It requires you define the new method, as well as draw.</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah, Day 5: Golem</title>

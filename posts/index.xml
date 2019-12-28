@@ -5,8 +5,100 @@
         <description>Recent content in Posts on ryan.isaac.g</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://www.ryanisaacg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle</title>
+            <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</link>
+            <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+            
+            <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</guid>
+            <description>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application&amp;rsquo;s core loop and file loading, respectively.
+State is a trait that Quicksilver uses to manage when your code runs. It requires you define the new method, as well as draw.</description>
+            <content type="html"><![CDATA[<p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application&rsquo;s core loop and file loading, respectively.</p>
+
+<p><code>State</code> is a trait that Quicksilver uses to manage when your code runs. It requires you define the <code>new</code> method, as well as <code>draw</code>. Optionally you can define <code>update</code>, for a fixed tick rate function, and <code>event</code> for handling individual input events. This type then gets passed as a generic parameter to the <code>run</code> function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)</p>
+
+<p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they&rsquo;re ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There&rsquo;s no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
+
+<p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
+
+<pre><code class="language-rust">struct MyState {
+    images: Asset&lt;Vec&lt;Image&gt;&gt;,
+    game: Game,
+}
+
+impl State for MyState {
+    fn new() -&gt; MyState {
+        MyState {
+            images: Asset::new(join_all(vec![Image::load(&quot;a&quot;), Image::load(&quot;b&quot;), Image::load(&quot;c&quot;)])),
+            game: Game::new()
+        }
+    }
+
+    fn event(&amp;mut self, _win: &amp;mut Window, ev: &amp;Event) {
+        self.images.execute(|images| {
+            self.game.process_event(ev);
+        });
+    }
+
+    fn update(&amp;mut self, _win: &amp;mut Window) {
+        self.images.execute(|images| {
+            self.game.update();
+        });
+    }
+
+    fn draw(&amp;mut self, win: &amp;mut Window) {
+        self.images.execute(|images| {
+            self.game.draw(&amp;images, win);
+        });
+    }
+}
+
+fn main() {
+    run::&lt;MyState&gt;();
+}
+</code></pre>
+
+<p>you could now write something like:</p>
+
+<pre><code class="language-rust">async fn my_game(win: Window, mut gfx: Graphics, events: EventStream) {
+    let mut game = Game::new();
+    let images = join_all(vec![Image::load(&quot;a&quot;), Image::load(&quot;b&quot;), Image::load(&quot;c&quot;)]).await;
+    loop {
+        while let Some(ev) = events.next_event().await {
+            game.process_event(ev);
+        }
+        game.update();
+        game.draw(&amp;mut gfx);
+        gfx.present(&amp;win);
+    }
+}
+
+fn main() {
+    run(my_game);
+}
+</code></pre>
+
+<p>If you want to know more, check out <a href="../quicksilver-chanukah-2019-day-4">my post about blinds</a> for more details on the event loop and <a href="../quicksilver-chanukah-2019-day-2">my post about platter</a> for more details on async file loading.</p>
+
+<p>As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you&rsquo;re in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.</p>
+
+<p>Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I&rsquo;ll go into more depth about tomorrow.</p>
+
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li>This post!</li>
+<li>Changes to the Quicskilver graphics API</li>
+<li>An overview of the work on web support this year</li>
+</ol>
+]]></content>
+        </item>
         
         <item>
             <title>A Quicksilver Chanukah, Day 5: Golem</title>
@@ -163,7 +255,7 @@ fn main() {
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li>This post!</li>
-<li>Changes to the Quicksilver application lifecycle</li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>Changes to the Quicskilver graphics API</li>
 <li>An overview of the work on web support this year</li>
 </ol>
@@ -245,8 +337,8 @@ fn main() {
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li>This post!</li>
-<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
-<li>Changes to the Quicksilver application lifecycle</li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>Changes to the Quicskilver graphics API</li>
 <li>An overview of the work on web support this year</li>
 </ol>
@@ -296,8 +388,8 @@ let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;pl
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
-<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
-<li>Changes to the Quicksilver application lifecycle</li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>Changes to the Quicskilver graphics API</li>
 <li>An overview of the work on web support this yea5</li>
 </ol>
@@ -374,8 +466,8 @@ loop {
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
-<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
-<li>Changes to the Quicksilver application lifecycle</li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>Changes to the Quicskilver graphics API</li>
 <li>An overview of the work on web support this yea5</li>
 </ol>
@@ -402,8 +494,8 @@ loop {
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
-<li><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</li>
-<li>Changes to the Quicksilver application lifecycle</li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>Changes to the Quicskilver graphics API</li>
 <li>An overview of the work on web support this year</li>
 </ol>

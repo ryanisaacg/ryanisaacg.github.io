@@ -6,10 +6,20 @@
     <description>Recent content on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/</link>
+      <pubDate>Sat, 28 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/</guid>
+      <description>The graphics API of Quicksilver isn&amp;rsquo;t as dire need of a rework as the lifecycle APIs, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. In no particular order, they are:
+Low-Level Access As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent.</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle</title>

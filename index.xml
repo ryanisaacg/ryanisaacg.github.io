@@ -6,10 +6,20 @@
     <description>Recent content on ryan.isaac.g</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.ryanisaacg.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Quicksilver Chanukah, Day 8: Rust Gamedev and Web</title>
+      <link>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8/</link>
+      <pubDate>Sun, 29 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8/</guid>
+      <description>This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less &amp;ldquo;for free:&amp;rdquo; most of the foundational crates have available web support, in one way or another.
+Windowing and Input For opening a window and receiving events from it, the Rust ecosystem has winit. Along with Héctor Ramón (hecrj) and and Ben Merritt (blm768), I worked on adding web support.</description>
+    </item>
     
     <item>
       <title>A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics</title>

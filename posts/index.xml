@@ -221,7 +221,7 @@ The previous three days I&amp;rsquo;ve introduced new crates that mostly stood o
 
 <h2 id="a-code-snippet">A Code Snippet</h2>
 
-<p>Hopefull if you&rsquo;re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
+<p>Hopefully if you&rsquo;re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
 
 <pre><code class="language-rust">use blinds::*;
 use golem::{

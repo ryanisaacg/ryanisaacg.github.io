@@ -47,7 +47,7 @@ Windowing and Input For opening a window and receiving events from it, the Rust 
 <li><a href="quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="quicksilver-chanukah-2019-day-7">Changes to the Quicskilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
 <li>This post!</li>
 </ol>
 ]]></content>
@@ -91,7 +91,7 @@ Low-Level Access As it stands, Quicksilver talks to a very specific backend desi
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li>This post!</li>
-<li>An overview of the work on web support this year</li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -182,8 +182,8 @@ fn main() {
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li>This post!</li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this year</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -344,8 +344,8 @@ fn main() {
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this year</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -427,8 +427,8 @@ fn main() {
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this year</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -478,8 +478,8 @@ let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;pl
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this yea5</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -556,8 +556,8 @@ loop {
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this yea5</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>
@@ -584,8 +584,8 @@ loop {
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
 <li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-day-7">Changes to the Quicskilver graphics API</a></li>
-<li>An overview of the work on web support this year</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 ]]></content>
         </item>

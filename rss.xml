@@ -7,7 +7,16 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ryanisaacg.com/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Sun, 29 Dec 2019 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate>
+        
+            <item>
+                <title>Website Makeover, Again</title>
+                <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>
+                <link>https://ryanisaacg.com/posts/new-blog-2/</link>
+                <guid>https://ryanisaacg.com/posts/new-blog-2/</guid>
+                <description>&lt;p&gt;Out with the old, in with the new! After some frustration with Hugo, I&#x27;ve moved to &lt;a href=&quot;https:&#x2F;&#x2F;www.getzola.org&#x2F;&quot;&gt;Zola&lt;&#x2F;a&gt; and some light CSS.&lt;&#x2F;p&gt;
+</description>
+            </item>
         
             <item>
                 <title>A Quicksilver Chanukah, Day 8: Rust Gamedev and the Web</title>

@@ -1,155 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
+        <title> A Quicksilver Chanukah, Day 7: Quicksilver&#x27;s New Graphics :: ryan.isaac.g </title>
+        <link rel="stylesheet" href="/page.css">
         <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="description"
-    content="The graphics API of Quicksilver isn&amp;rsquo;t as dire need of a rework as the lifecycle APIs, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. In no particular order, they are:
-Low-Level Access As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent." />
-<meta name="keywords" content="" />
-<meta name="robots" content="noodp" />
-<link rel="canonical" href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/" />
-
-
-<title>
-    
-    A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics :: ryan.isaac.g  — Ryan Goldstein&#39;s Site
-    
-</title>
-
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
-    type="text/css">
-
-
-
-<link rel="stylesheet" href="/main.min.1374b8fbd5959b5f33bc0fbcff7b0184a039f3f1bfff9629df6f04f89dce2279.css">
-
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
-<link rel="shortcut icon" href="/favicon.ico">
-<meta name="theme-color" content="#252627"><meta itemprop="name" content="A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics">
-<meta itemprop="description" content="The graphics API of Quicksilver isn&rsquo;t as dire need of a rework as the lifecycle APIs, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. In no particular order, they are:
-Low-Level Access As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent.">
-
-
-<meta itemprop="datePublished" content="2019-12-28T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-12-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="480">
-
-
-
-<meta itemprop="keywords" content="quicksilver,quicksilver-chanukah-2019,quicksilver-2019," />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.ryanisaacg.com"/>
-
-<meta name="twitter:title" content="A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics"/>
-<meta name="twitter:description" content="The graphics API of Quicksilver isn&rsquo;t as dire need of a rework as the lifecycle APIs, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. In no particular order, they are:
-Low-Level Access As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent."/>
-
-
-
-
-<meta property="article:published_time" content="2019-12-28 00:00:00 &#43;0000 UTC" />
-
-
-
-
-
-
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__mark">></span>
-            <span class="logo__text">cd $HOME</span>
-            <span class="logo__cursor"></span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.ryanisaacg.com/about">About</a></li><li><a href="https://www.ryanisaacg.com/posts">Blog</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-    <main class="post">
-
-        <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
-
-            
-
-            </p>
-        </div>
-
-        <article>
-            <h1 class="post-title"><a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/">A Quicksilver Chanukah, Day 7: Quicksilver&rsquo;s New Graphics</a></h1>
-
-            
-
-            <div class="post-content">
-                
-
-<p>The graphics API of Quicksilver isn&rsquo;t as dire need of a rework as the <a href="../quicksilver-chanukah-2019-day-6">lifecycle APIs</a>, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. In no particular order, they are:</p>
-
+    <body>
+        <main>
+            <header>
+                <a href="/"> Return Home </a>
+                <h1> A Quicksilver Chanukah, Day 7: Quicksilver&#x27;s New Graphics </h1>
+            </header>
+            <article>
+                <p>The graphics API of Quicksilver isn't as dire need of a rework as the <a href="../quicksilver-chanukah-2019-day-6">lifecycle APIs</a>, but I wanted to take the next breaking change as an opportunity to address some long-standing issues. </p>
+<span id="continue-reading"></span>
+<p>In no particular order, they are:</p>
 <h2 id="low-level-access">Low-Level Access</h2>
-
-<p>As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent. There&rsquo;s no way to expose the raw GL API directly to the user, as the backend talks directly to OpenGL 3.2 and WebGL 1. With <code>glow</code>, we could expose a cross-platform OpenGL context, but there are still differences between desktop and web GL. These problems, like different ways of describing the input and output in GLSL, are addressed by <a href="../quicksilver-chanukah-2019-day-5"><code>golem</code> (see announcement from 2 days ago.)</a>.</p>
-
+<p>As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent. There's no way to expose the raw GL API directly to the user, as the backend talks directly to OpenGL 3.2 and WebGL 1. With <code>glow</code>, we could expose a cross-platform OpenGL context, but there are still differences between desktop and web GL. These problems, like different ways of describing the input and output in GLSL, are addressed by <a href="../quicksilver-chanukah-2019-day-5"><code>golem</code> (see announcement from 2 days ago.)</a>.</p>
 <p>Providing users access to a lower-level graphics API also frees the high-level API from trying to provide custom shader support. A custom shader is best served with custom vertex inputs, which means custom functions to turn high-level draw commands into low-level vertex data. Instead of trying to solve this problem in the general case, Quicksilver can provide the mechanism to solve it yourself.</p>
-
 <h2 id="draw-order">Draw Order</h2>
-
 <p>The previous graphics API aggressively batches draws, including re-ordering <code>draw</code> commands to avoid changing state while rendering. If a <code>z</code> parameter (not included in the default, simple <code>draw</code>) is not provided, anything goes. Hypothetically this leads to faster rendering, but it also means that many users experience unexpected results with basic operations. The new API should be built on a simple draw-order guarantee: the first draw call is drawn furthest back, with each subsequent draw lying on top of the ones before it.</p>
-
 <h2 id="render-to-texture">Render-To-Texture</h2>
-
-<p>The <code>Surface</code> API supports render-to-texture, but it has a few problems. First, the API is unintuitive: rendering to a texture only works within a closure, for example. Also, it&rsquo;s plain buggy. <code>golem</code> provides a harder-to-misuse API for off-screen rendering, which can be used to build a nicer abstraction in Quicksilver itself.</p>
-
+<p>The <code>Surface</code> API supports render-to-texture, but it has a few problems. First, the API is unintuitive: rendering to a texture only works within a closure, for example. Also, it's plain buggy. <code>golem</code> provides a harder-to-misuse API for off-screen rendering, which can be used to build a nicer abstraction in Quicksilver itself.</p>
 <h2 id="screen-resizing-and-projection">Screen Resizing and Projection</h2>
-
-<p>The current version of Quicksilver &ldquo;magically&rdquo; handles the window being resized, as well as projecting and unprojecting between world and screen coordinates. Often this is more trouble than it&rsquo;s worth: you want your UI at one projection and letterbox, and your game content at another. By exposing a few more knobs to the user (like the GL viewport), the <code>ResizeStrategy</code> API can be provided on top of other, orthogonal abstractions.</p>
-
+<p>The current version of Quicksilver &quot;magically&quot; handles the window being resized, as well as projecting and unprojecting between world and screen coordinates. Often this is more trouble than it's worth: you want your UI at one projection and letterbox, and your game content at another. By exposing a few more knobs to the user (like the GL viewport), the <code>ResizeStrategy</code> API can be provided on top of other, orthogonal abstractions.</p>
 <ol>
 <li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
@@ -161,87 +36,7 @@ Low-Level Access As it stands, Quicksilver talks to a very specific backend desi
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 
-            </div>
-        </article>
-
-        <hr />
-
-        <div class="post-info">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver">quicksilver</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019">quicksilver-chanukah-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-2019">quicksilver-2019</a></span>
-                </p>
-
-
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-12-27</p>
-        </div>
-
-        
-            <div class="pagination">
-                <div class="pagination__title">
-                    <span class="pagination__title-h">Read other posts</span>
-                    <hr />
-                </div>
-
-                <div class="pagination__buttons">
-                    
-                        <span class="button previous">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8/">
-                                <span class="button__icon">←</span>
-                                <span class="button__text">A Quicksilver Chanukah, Day 8: Rust Gamedev and Web</span>
-                            </a>
-                        </span>
-                    
-
-                    
-                        <span class="button next">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/">
-                                <span class="button__text">A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle</span>
-                                <span class="button__icon">→</span>
-                            </a>
-                        </span>
-                    
-                </div>
-            </div>
-        
-
-        
-    </main>
-
-            </div>
-
-            
-                <footer class="footer">
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2020</span>
-            
-            <span></span>
-            <span> <a href="https://www.ryanisaacg.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
-        </div>
-    </div>
-</footer>
-
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="/bundle.min.4c3fb12a087ceed4a52cb5d57068a9795c7069617a01ca70f788052ad66e1791779e6c72686e1dc0ca13dc03b0203204b6566bb0dd1ee80de2b7ff4d8fe53db2.js" integrity="sha512-TD&#43;xKgh87tSlLLXVcGipeVxwaWF6Acpw94gFKtZuF5F3nmxyaG4dwMoT3AOwIDIEtlZrsN0e6A3it/9Nj&#43;U9sg=="></script>
-
-
-
+            </article>
+        </main>
     </body>
 </html>

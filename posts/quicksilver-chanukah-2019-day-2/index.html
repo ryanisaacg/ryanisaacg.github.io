@@ -1,192 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
+        <title> A Quicksilver Chanukah, Day 2: Platter :: ryan.isaac.g </title>
+        <link rel="stylesheet" href="/page.css">
         <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="description"
-    content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.
-Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:" />
-<meta name="keywords" content="" />
-<meta name="robots" content="noodp" />
-<link rel="canonical" href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/" />
-
-
-<title>
-    
-    A Quicksilver Chanukah, Day 2: Platter :: ryan.isaac.g  — Ryan Goldstein&#39;s Site
-    
-</title>
-
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
-    type="text/css">
-
-
-
-<link rel="stylesheet" href="/main.min.1374b8fbd5959b5f33bc0fbcff7b0184a039f3f1bfff9629df6f04f89dce2279.css">
-
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
-<link rel="shortcut icon" href="/favicon.ico">
-<meta name="theme-color" content="#252627"><meta itemprop="name" content="A Quicksilver Chanukah, Day 2: Platter">
-<meta itemprop="description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.
-Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:">
-
-
-<meta itemprop="datePublished" content="2019-12-23T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-12-23T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="365">
-
-
-
-<meta itemprop="keywords" content="quicksilver,quicksilver-chanukah-2019,quicksilver-2019,platter," />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.ryanisaacg.com"/>
-
-<meta name="twitter:title" content="A Quicksilver Chanukah, Day 2: Platter"/>
-<meta name="twitter:description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.
-Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:"/>
-
-
-
-
-<meta property="article:published_time" content="2019-12-23 00:00:00 &#43;0000 UTC" />
-
-
-
-
-
-
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__mark">></span>
-            <span class="logo__text">cd $HOME</span>
-            <span class="logo__cursor"></span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.ryanisaacg.com/about">About</a></li><li><a href="https://www.ryanisaacg.com/posts">Blog</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-    <main class="post">
-
-        <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
-
-            
-
-            </p>
-        </div>
-
-        <article>
-            <h1 class="post-title"><a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/">A Quicksilver Chanukah, Day 2: Platter</a></h1>
-
-            
-
-            <div class="post-content">
+    <body>
+        <main>
+            <header>
+                <a href="/"> Return Home </a>
+                <h1> A Quicksilver Chanukah, Day 2: Platter </h1>
+            </header>
+            <article>
                 <p>This year saw the release of <code>async/.await</code> in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a <code>Future</code> instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.</p>
-
+<span id="continue-reading"></span>
 <p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
-
-<pre><code class="language-rust">let images = load_file(&quot;my_manifest_path&quot;)
-    .map(parse_file_contents)
-    .and_then(|image_paths| join_all(
-        image_paths
-            .map(load_file)
-            .map(|file| file.and_then(parse_image))
-    );
-
-render_loading();
-loop {
-    // Core application loop
-    if images.is_ready {
-        render_frame(&amp;images);
-    }
-}
-</code></pre>
-
-<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn&rsquo;t even touched error handling.</p>
-
+<pre style="background-color:#ffffff;">
+<span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">)</span><span style="color:#4d4d4c;">
+    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_file_contents)</span><span style="color:#4d4d4c;">
+    .</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">image_paths</span><span style="color:#4d4d4c;">| </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(</span><span style="color:#4d4d4c;">
+        image_paths</span><span style="color:#4d4d4c;">
+            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file)</span><span style="color:#4d4d4c;">
+            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">file</span><span style="color:#4d4d4c;">| file.</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(parse_image))</span><span style="color:#4d4d4c;">
+    );</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+</span><span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
+    </span><span style="color:#999999;">// Core application loop</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">if</span><span style="color:#4d4d4c;"> images.is_ready {</span><span style="color:#4d4d4c;">
+        </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span></pre>
+<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn't even touched error handling.</p>
 <p>Introducing <a href="https://crates.io/crates/platter"><code>platter</code></a>, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.</p>
-
-<pre><code class="language-rust">render_loading();
-let contents = load_file(&quot;my_manifest_path&quot;).await?;
-let image_paths = parse_file_contents(contents);
-let images = Vec::new();
-for image_path in image_paths {
-    let image_file = load_file(image_path).await?;
-    images.push(parse_image(image_file)?);
-}
-loop {
-    render_frame(&amp;images);
-}
-</code></pre>
-
-<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it&rsquo;s much clearer:</p>
-
-<pre><code class="language-rust">render_loading();
-let contents = load_file(&quot;my_manifest_path&quot;).await;
-let image_futures = parse_file_contents(contents)
-    .map(load_file);
-let images: Vec&lt;Image&gt; = try_join_all(image_futures)
-    .await?
-    .map(parse_image)
-    .collect()?;
-loop {
-    render_frame(&amp;images);
-}
-</code></pre>
-
+<pre style="background-color:#ffffff;">
+<span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_paths </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents);</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">::new();</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">for</span><span style="color:#4d4d4c;"> image_path </span><span style="color:#3e999f;">in</span><span style="color:#4d4d4c;"> image_paths {</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_file </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(image_path).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
+    images.</span><span style="color:#4271ae;">push</span><span style="color:#4d4d4c;">(</span><span style="color:#4271ae;">parse_image</span><span style="color:#4d4d4c;">(image_file)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
+    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span></pre>
+<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it's much clearer:</p>
+<pre style="background-color:#ffffff;">
+<span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await;</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_futures </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents)</span><span style="color:#4d4d4c;">
+    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file);</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images: Vec&lt;Image&gt; </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">try_join_all</span><span style="color:#4d4d4c;">(image_futures)</span><span style="color:#4d4d4c;">
+    .await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">
+    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_image)</span><span style="color:#4d4d4c;">
+    .</span><span style="color:#4271ae;">collect</span><span style="color:#4d4d4c;">()</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
+    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span></pre>
 <p><code>platter</code> is small and can be plugged into your own game framework or game project if you want to harness <code>async/await</code> to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!</p>
-
-<p>That&rsquo;s Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
-
+<p>That's Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
 <ol>
-<li><a href="../quicksilver-chanukah-2019">Yesterday&rsquo;s introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019">Yesterday's introduction post</a></li>
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
@@ -196,87 +75,7 @@ loop {
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 
-            </div>
-        </article>
-
-        <hr />
-
-        <div class="post-info">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver">quicksilver</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019">quicksilver-chanukah-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-2019">quicksilver-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/platter">platter</a></span>
-                </p>
-
-
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-12-22</p>
-        </div>
-
-        
-            <div class="pagination">
-                <div class="pagination__title">
-                    <span class="pagination__title-h">Read other posts</span>
-                    <hr />
-                </div>
-
-                <div class="pagination__buttons">
-                    
-                        <span class="button previous">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-3/">
-                                <span class="button__icon">←</span>
-                                <span class="button__text">A Quicksilver Chanukah, Day 3: Gestalt</span>
-                            </a>
-                        </span>
-                    
-
-                    
-                        <span class="button next">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/">
-                                <span class="button__text">A Quicksilver Chanukah: Day 1</span>
-                                <span class="button__icon">→</span>
-                            </a>
-                        </span>
-                    
-                </div>
-            </div>
-        
-
-        
-    </main>
-
-            </div>
-
-            
-                <footer class="footer">
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2020</span>
-            
-            <span></span>
-            <span> <a href="https://www.ryanisaacg.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
-        </div>
-    </div>
-</footer>
-
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="/bundle.min.4c3fb12a087ceed4a52cb5d57068a9795c7069617a01ca70f788052ad66e1791779e6c72686e1dc0ca13dc03b0203204b6566bb0dd1ee80de2b7ff4d8fe53db2.js" integrity="sha512-TD&#43;xKgh87tSlLLXVcGipeVxwaWF6Acpw94gFKtZuF5F3nmxyaG4dwMoT3AOwIDIEtlZrsN0e6A3it/9Nj&#43;U9sg=="></script>
-
-
-
+            </article>
+        </main>
     </body>
 </html>

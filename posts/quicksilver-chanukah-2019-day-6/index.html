@@ -1,204 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
+        <title> A Quicksilver Chanukah, Day 6: Quicksilver&#x27;s New Lifecycle :: ryan.isaac.g </title>
+        <link rel="stylesheet" href="/page.css">
         <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="description"
-    content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application&amp;rsquo;s core loop and file loading, respectively.
-State is a trait that Quicksilver uses to manage when your code runs. It requires you define the new method, as well as draw." />
-<meta name="keywords" content="" />
-<meta name="robots" content="noodp" />
-<link rel="canonical" href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/" />
-
-
-<title>
-    
-    A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle :: ryan.isaac.g  — Ryan Goldstein&#39;s Site
-    
-</title>
-
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
-    type="text/css">
-
-
-
-<link rel="stylesheet" href="/main.min.1374b8fbd5959b5f33bc0fbcff7b0184a039f3f1bfff9629df6f04f89dce2279.css">
-
-
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
-<link rel="shortcut icon" href="/favicon.ico">
-<meta name="theme-color" content="#252627"><meta itemprop="name" content="A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle">
-<meta itemprop="description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application&rsquo;s core loop and file loading, respectively.
-State is a trait that Quicksilver uses to manage when your code runs. It requires you define the new method, as well as draw.">
-
-
-<meta itemprop="datePublished" content="2019-12-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-12-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="607">
-
-
-
-<meta itemprop="keywords" content="quicksilver,quicksilver-chanukah-2019,quicksilver-2019," />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.ryanisaacg.com"/>
-
-<meta name="twitter:title" content="A Quicksilver Chanukah, Day 6: Quicksilver&#39;s New Lifecycle"/>
-<meta name="twitter:description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application&rsquo;s core loop and file loading, respectively.
-State is a trait that Quicksilver uses to manage when your code runs. It requires you define the new method, as well as draw."/>
-
-
-
-
-<meta property="article:published_time" content="2019-12-27 00:00:00 &#43;0000 UTC" />
-
-
-
-
-
-
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__mark">></span>
-            <span class="logo__text">cd $HOME</span>
-            <span class="logo__cursor"></span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.ryanisaacg.com/about">About</a></li><li><a href="https://www.ryanisaacg.com/posts">Blog</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-    <main class="post">
-
-        <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
-
-            
-
-            </p>
-        </div>
-
-        <article>
-            <h1 class="post-title"><a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/">A Quicksilver Chanukah, Day 6: Quicksilver&rsquo;s New Lifecycle</a></h1>
-
-            
-
-            <div class="post-content">
-                <p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application&rsquo;s core loop and file loading, respectively.</p>
-
+    <body>
+        <main>
+            <header>
+                <a href="/"> Return Home </a>
+                <h1> A Quicksilver Chanukah, Day 6: Quicksilver&#x27;s New Lifecycle </h1>
+            </header>
+            <article>
+                <p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application's core loop and file loading, respectively.</p>
+<span id="continue-reading"></span>
 <p><code>State</code> is a trait that Quicksilver uses to manage when your code runs. It requires you define the <code>new</code> method, as well as <code>draw</code>. Optionally you can define <code>update</code>, for a fixed tick rate function, and <code>event</code> for handling individual input events. This type then gets passed as a generic parameter to the <code>run</code> function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)</p>
-
-<p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they&rsquo;re ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There&rsquo;s no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
-
+<p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they're ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There's no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
 <p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
-
-<pre><code class="language-rust">struct MyState {
-    images: Asset&lt;Vec&lt;Image&gt;&gt;,
-    game: Game,
-}
-
-impl State for MyState {
-    fn new() -&gt; MyState {
-        MyState {
-            images: Asset::new(join_all(vec![Image::load(&quot;a&quot;), Image::load(&quot;b&quot;), Image::load(&quot;c&quot;)])),
-            game: Game::new()
-        }
-    }
-
-    fn event(&amp;mut self, _win: &amp;mut Window, ev: &amp;Event) {
-        self.images.execute(|images| {
-            self.game.process_event(ev);
-        });
-    }
-
-    fn update(&amp;mut self, _win: &amp;mut Window) {
-        self.images.execute(|images| {
-            self.game.update();
-        });
-    }
-
-    fn draw(&amp;mut self, win: &amp;mut Window) {
-        self.images.execute(|images| {
-            self.game.draw(&amp;images, win);
-        });
-    }
-}
-
-fn main() {
-    run::&lt;MyState&gt;();
-}
-</code></pre>
-
+<pre style="background-color:#ffffff;">
+<span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">MyState {</span><span style="color:#4d4d4c;">
+    </span><span style="color:#c82829;">images</span><span style="color:#4d4d4c;">: Asset&lt;Vec&lt;Image&gt;&gt;,</span><span style="color:#4d4d4c;">
+    </span><span style="color:#c82829;">game</span><span style="color:#4d4d4c;">: Game,</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">impl </span><span style="color:#4d4d4c;">State </span><span style="color:#8959a8;">for </span><span style="color:#4d4d4c;">MyState {</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">new</span><span style="color:#4d4d4c;">() -&gt; MyState {</span><span style="color:#4d4d4c;">
+        MyState {</span><span style="color:#4d4d4c;">
+            images: Asset::new(</span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)])),</span><span style="color:#4d4d4c;">
+            game: Game::new()</span><span style="color:#4d4d4c;">
+        }</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">event</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window, </span><span style="color:#f5871f;">ev</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">Event) {</span><span style="color:#4d4d4c;">
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);</span><span style="color:#4d4d4c;">
+        });</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {</span><span style="color:#4d4d4c;">
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
+        });</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {</span><span style="color:#4d4d4c;">
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images, win);</span><span style="color:#4d4d4c;">
+        });</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {</span><span style="color:#4d4d4c;">
+    run::&lt;MyState&gt;();</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span></pre>
 <p>you could now write something like:</p>
-
-<pre><code class="language-rust">async fn my_game(win: Window, mut gfx: Graphics, events: EventStream) {
-    let mut game = Game::new();
-    let images = join_all(vec![Image::load(&quot;a&quot;), Image::load(&quot;b&quot;), Image::load(&quot;c&quot;)]).await;
-    loop {
-        while let Some(ev) = events.next_event().await {
-            game.process_event(ev);
-        }
-        game.update();
-        game.draw(&amp;mut gfx);
-        gfx.present(&amp;win);
-    }
-}
-
-fn main() {
-    run(my_game);
-}
-</code></pre>
-
+<pre style="background-color:#ffffff;">
+<span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">my_game</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">: Graphics, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> game </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">Game::new();</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)]).await;</span><span style="color:#4d4d4c;">
+    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
+        </span><span style="color:#8959a8;">while let </span><span style="color:#c99e00;">Some</span><span style="color:#4d4d4c;">(ev) </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await {</span><span style="color:#4d4d4c;">
+            game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);</span><span style="color:#4d4d4c;">
+        }</span><span style="color:#4d4d4c;">
+        game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
+        game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> gfx);</span><span style="color:#4d4d4c;">
+        gfx.</span><span style="color:#4271ae;">present</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">win);</span><span style="color:#4d4d4c;">
+    }</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span><span style="color:#4d4d4c;">
+</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {</span><span style="color:#4d4d4c;">
+    </span><span style="color:#4271ae;">run</span><span style="color:#4d4d4c;">(my_game);</span><span style="color:#4d4d4c;">
+}</span><span style="color:#4d4d4c;">
+</span></pre>
 <p>If you want to know more, check out <a href="../quicksilver-chanukah-2019-day-4">my post about blinds</a> for more details on the event loop and <a href="../quicksilver-chanukah-2019-day-2">my post about platter</a> for more details on async file loading.</p>
-
-<p>As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you&rsquo;re in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.</p>
-
-<p>Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I&rsquo;ll go into more depth about tomorrow.</p>
-
+<p>As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you're in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.</p>
+<p>Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I'll go into more depth about tomorrow.</p>
 <ol>
 <li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
@@ -210,87 +88,7 @@ fn main() {
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
 
-            </div>
-        </article>
-
-        <hr />
-
-        <div class="post-info">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver">quicksilver</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019">quicksilver-chanukah-2019</a></span><span class="tag"><a href="https://www.ryanisaacg.com/tags/quicksilver-2019">quicksilver-2019</a></span>
-                </p>
-
-
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-12-26</p>
-        </div>
-
-        
-            <div class="pagination">
-                <div class="pagination__title">
-                    <span class="pagination__title-h">Read other posts</span>
-                    <hr />
-                </div>
-
-                <div class="pagination__buttons">
-                    
-                        <span class="button previous">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/">
-                                <span class="button__icon">←</span>
-                                <span class="button__text">A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics</span>
-                            </a>
-                        </span>
-                    
-
-                    
-                        <span class="button next">
-                            <a href="https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/">
-                                <span class="button__text">A Quicksilver Chanukah, Day 5: Golem</span>
-                                <span class="button__icon">→</span>
-                            </a>
-                        </span>
-                    
-                </div>
-            </div>
-        
-
-        
-    </main>
-
-            </div>
-
-            
-                <footer class="footer">
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2020</span>
-            
-            <span></span>
-            <span> <a href="https://www.ryanisaacg.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-
-        </div>
-    </div>
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
-        </div>
-    </div>
-</footer>
-
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="/bundle.min.4c3fb12a087ceed4a52cb5d57068a9795c7069617a01ca70f788052ad66e1791779e6c72686e1dc0ca13dc03b0203204b6566bb0dd1ee80de2b7ff4d8fe53db2.js" integrity="sha512-TD&#43;xKgh87tSlLLXVcGipeVxwaWF6Acpw94gFKtZuF5F3nmxyaG4dwMoT3AOwIDIEtlZrsN0e6A3it/9Nj&#43;U9sg=="></script>
-
-
-
+            </article>
+        </main>
     </body>
 </html>

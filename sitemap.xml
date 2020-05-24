@@ -1,138 +1,84 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/quicksilver/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/quicksilver-2019/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/quicksilver-chanukah-2019/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/winit/</loc>
-    <lastmod>2019-12-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/</loc>
-    <lastmod>2019-12-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</loc>
-    <lastmod>2019-12-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/</loc>
-    <lastmod>2019-12-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/golem/</loc>
-    <lastmod>2019-12-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</loc>
-    <lastmod>2019-12-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/blinds/</loc>
-    <lastmod>2019-12-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-3/</loc>
-    <lastmod>2019-12-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/gestalt/</loc>
-    <lastmod>2019-12-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</loc>
-    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/platter/</loc>
-    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/quicksilver-chanukah-2019/</loc>
-    <lastmod>2019-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/meta/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/site/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/new-blog-debut/</loc>
-    <lastmod>2019-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/gamedev/</loc>
-    <lastmod>2019-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/tags/rust/</loc>
-    <lastmod>2019-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</loc>
-    <lastmod>2019-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/about/</loc>
-  </url>
-  
-  <url>
-    <loc>https://www.ryanisaacg.com/categories/</loc>
-  </url>
-  
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+        <url>
+            <loc>https://ryanisaacg.com/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/new-blog-debut/</loc>
+            
+                <lastmod>2019-07-20</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-2/</loc>
+            
+                <lastmod>2019-12-23</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-4/</loc>
+            
+                <lastmod>2019-12-25</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-5/</loc>
+            
+                <lastmod>2019-12-26</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-6/</loc>
+            
+                <lastmod>2019-12-27</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-7/</loc>
+            
+                <lastmod>2019-12-28</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8/</loc>
+            
+                <lastmod>2019-12-29</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-2019/</loc>
+            
+                <lastmod>2019-12-22</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/quicksilver-chanukah-day-3/</loc>
+            
+                <lastmod>2019-12-24</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://ryanisaacg.com/posts/state-of-quicksilver-feb-2019/</loc>
+            
+                <lastmod>2019-02-04</lastmod>
+            
+        </url>
+    
 </urlset>

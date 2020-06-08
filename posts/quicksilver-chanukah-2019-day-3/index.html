@@ -18,7 +18,7 @@
 <span id="continue-reading"></span>
 <p>A sample to save some game state:</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">gestalt::{Location, save, load};</span><span style="color:#4d4d4c;">
+<code><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">gestalt::{Location, save, load};</span><span style="color:#4d4d4c;">
 </span><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">serde::{Serialize, Deserialize};</span><span style="color:#4d4d4c;">
 </span><span style="color:#4d4d4c;">
 #[</span><span style="color:#c82829;">derive</span><span style="color:#4d4d4c;">(Serialize, Deserialize)]</span><span style="color:#4d4d4c;">
@@ -36,7 +36,7 @@
 </span><span style="color:#999999;">// Now reload.</span><span style="color:#4d4d4c;">
 </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player1 </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">load::&lt;Player&gt;(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player1&quot;</span><span style="color:#4d4d4c;">).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not load Player 1&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
 </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player2 </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">load::&lt;Player&gt;(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player2&quot;</span><span style="color:#4d4d4c;">).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not load Player 2&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-</span></pre>
+</span></code></pre>
 <p>Getsalt creates a Key/Value store, backed by the filesystem on desktop and the web storage API. The key is formed by <code>Location</code>, which determines the kind of data (<code>Location::Cache</code>, <code>Location::Data</code>, and <code>Location::Config</code>), the application name, and a string which identifies the name of the data chunk. The value is anything that implements <code>Serialize</code> from <a href="https://crates.io/crates/serde"><code>serde</code></a>.</p>
 <p><code>Cache</code> is for data that can be cleared between runs of your application; <code>Data</code> is for blobs like save states, and <code>Config</code> is for application settings. <code>gestalt</code> uses <a href="https://crates.io/crates/dirs"><code>dirs</code></a> to ensure that it saves your data in the right place for each, regardless of your user's operating system.</p>
 <p>That's Day 3 done: <code>gestalt</code> is pretty small! Tomorrow's library, <code>blinds</code>, starts to get quite a bit bigger.</p>

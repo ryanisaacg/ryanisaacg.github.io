@@ -17,51 +17,51 @@
 <span id="continue-reading"></span>
 <p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">)</span><span style="color:#4d4d4c;">
-    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_file_contents)</span><span style="color:#4d4d4c;">
-    .</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">image_paths</span><span style="color:#4d4d4c;">| </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(</span><span style="color:#4d4d4c;">
-        image_paths</span><span style="color:#4d4d4c;">
-            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file)</span><span style="color:#4d4d4c;">
-            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">file</span><span style="color:#4d4d4c;">| file.</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(parse_image))</span><span style="color:#4d4d4c;">
-    );</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Core application loop</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">if</span><span style="color:#4d4d4c;"> images.is_ready {</span><span style="color:#4d4d4c;">
-        </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">)
+    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_file_contents)
+    .</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">image_paths</span><span style="color:#4d4d4c;">| </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(
+        image_paths
+            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file)
+            .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">file</span><span style="color:#4d4d4c;">| file.</span><span style="color:#4271ae;">and_then</span><span style="color:#4d4d4c;">(parse_image))
+    );
+
+</span><span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
+    </span><span style="color:#999999;">// Core application loop
+    </span><span style="color:#8959a8;">if</span><span style="color:#4d4d4c;"> images.is_ready {
+        </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);
+    }
+}
+</span></code></pre>
 <p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn't even touched error handling.</p>
 <p>Introducing <a href="https://crates.io/crates/platter"><code>platter</code></a>, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_paths </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents);</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">::new();</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">for</span><span style="color:#4d4d4c;"> image_path </span><span style="color:#3e999f;">in</span><span style="color:#4d4d4c;"> image_paths {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_file </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(image_path).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-    images.</span><span style="color:#4271ae;">push</span><span style="color:#4d4d4c;">(</span><span style="color:#4271ae;">parse_image</span><span style="color:#4d4d4c;">(image_file)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_paths </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents);
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">::new();
+</span><span style="color:#8959a8;">for</span><span style="color:#4d4d4c;"> image_path </span><span style="color:#3e999f;">in</span><span style="color:#4d4d4c;"> image_paths {
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_file </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(image_path).await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+    images.</span><span style="color:#4271ae;">push</span><span style="color:#4d4d4c;">(</span><span style="color:#4271ae;">parse_image</span><span style="color:#4d4d4c;">(image_file)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">);
+}
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
+    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);
+}
+</span></code></pre>
 <p>We can still make use of the combinators in a more functional-programming style if we wish, but now it's much clearer:</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await;</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_futures </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents)</span><span style="color:#4d4d4c;">
-    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file);</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images: Vec&lt;Image&gt; </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">try_join_all</span><span style="color:#4d4d4c;">(image_futures)</span><span style="color:#4d4d4c;">
-    .await</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">
-    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_image)</span><span style="color:#4d4d4c;">
-    .</span><span style="color:#4271ae;">collect</span><span style="color:#4d4d4c;">()</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#4271ae;">render_loading</span><span style="color:#4d4d4c;">();
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> contents </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">load_file</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;my_manifest_path&quot;</span><span style="color:#4d4d4c;">).await;
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> image_futures </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">parse_file_contents</span><span style="color:#4d4d4c;">(contents)
+    .</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(load_file);
+</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images: </span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">&lt;Image&gt; </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">try_join_all</span><span style="color:#4d4d4c;">(image_futures)
+    .await</span><span style="color:#3e999f;">?
+    </span><span style="color:#4d4d4c;">.</span><span style="color:#4271ae;">map</span><span style="color:#4d4d4c;">(parse_image)
+    .</span><span style="color:#4271ae;">collect</span><span style="color:#4d4d4c;">()</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+</span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
+    </span><span style="color:#4271ae;">render_frame</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images);
+}
+</span></code></pre>
 <p><code>platter</code> is small and can be plugged into your own game framework or game project if you want to harness <code>async/await</code> to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!</p>
 <p>That's Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
 <ol>

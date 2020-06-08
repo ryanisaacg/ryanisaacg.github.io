@@ -19,61 +19,61 @@
 <p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they're ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There's no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
 <p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">MyState {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#c82829;">images</span><span style="color:#4d4d4c;">: Asset&lt;Vec&lt;Image&gt;&gt;,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#c82829;">game</span><span style="color:#4d4d4c;">: Game,</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">impl </span><span style="color:#4d4d4c;">State </span><span style="color:#8959a8;">for </span><span style="color:#4d4d4c;">MyState {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">new</span><span style="color:#4d4d4c;">() -&gt; MyState {</span><span style="color:#4d4d4c;">
-        MyState {</span><span style="color:#4d4d4c;">
-            images: Asset::new(</span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)])),</span><span style="color:#4d4d4c;">
-            game: Game::new()</span><span style="color:#4d4d4c;">
-        }</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">event</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window, </span><span style="color:#f5871f;">ev</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">Event) {</span><span style="color:#4d4d4c;">
-        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
-            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);</span><span style="color:#4d4d4c;">
-        });</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {</span><span style="color:#4d4d4c;">
-        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
-            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-        });</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {</span><span style="color:#4d4d4c;">
-        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
-            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images, win);</span><span style="color:#4d4d4c;">
-        });</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {</span><span style="color:#4d4d4c;">
-    run::&lt;MyState&gt;();</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">MyState {
+    </span><span style="color:#c82829;">images</span><span style="color:#4d4d4c;">: Asset&lt;</span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">&lt;Image&gt;&gt;,
+    </span><span style="color:#c82829;">game</span><span style="color:#4d4d4c;">: Game,
+}
+
+</span><span style="color:#8959a8;">impl </span><span style="color:#4d4d4c;">State </span><span style="color:#8959a8;">for </span><span style="color:#4d4d4c;">MyState {
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">new</span><span style="color:#4d4d4c;">() -&gt; MyState {
+        MyState {
+            images: Asset::new(</span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)])),
+            game: Game::new()
+        }
+    }
+
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">event</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window, </span><span style="color:#f5871f;">ev</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">Event) {
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);
+        });
+    }
+
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">_win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();
+        });
+    }
+
+    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) {
+        </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.images.</span><span style="color:#4271ae;">execute</span><span style="color:#4d4d4c;">(|</span><span style="color:#f5871f;">images</span><span style="color:#4d4d4c;">| {
+            </span><span style="color:#c82829;">self</span><span style="color:#4d4d4c;">.game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">images, win);
+        });
+    }
+}
+
+</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {
+    run::&lt;MyState&gt;();
+}
+</span></code></pre>
 <p>you could now write something like:</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">my_game</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">: Graphics, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> game </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">Game::new();</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)]).await;</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-        </span><span style="color:#8959a8;">while let </span><span style="color:#c99e00;">Some</span><span style="color:#4d4d4c;">(ev) </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await {</span><span style="color:#4d4d4c;">
-            game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);</span><span style="color:#4d4d4c;">
-        }</span><span style="color:#4d4d4c;">
-        game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-        game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> gfx);</span><span style="color:#4d4d4c;">
-        gfx.</span><span style="color:#4271ae;">present</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">win);</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#4271ae;">run</span><span style="color:#4d4d4c;">(my_game);</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">my_game</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">: Graphics, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {
+    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> game </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">Game::new();
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)]).await;
+    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
+        </span><span style="color:#8959a8;">while let </span><span style="color:#c99e00;">Some</span><span style="color:#4d4d4c;">(ev) </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await {
+            game.</span><span style="color:#4271ae;">process_event</span><span style="color:#4d4d4c;">(ev);
+        }
+        game.</span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">();
+        game.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> gfx);
+        gfx.</span><span style="color:#4271ae;">present</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">win);
+    }
+}
+
+</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {
+    </span><span style="color:#4271ae;">run</span><span style="color:#4d4d4c;">(my_game);
+}
+</span></code></pre>
 <p>If you want to know more, check out <a href="../quicksilver-chanukah-2019-day-4">my post about blinds</a> for more details on the event loop and <a href="../quicksilver-chanukah-2019-day-2">my post about platter</a> for more details on async file loading.</p>
 <p>As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you're in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.</p>
 <p>Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I'll go into more depth about tomorrow.</p>

@@ -14,8 +14,7 @@
             </header>
             <article>
                 <p><code>golem</code> is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.</p>
-<span id="continue-reading"></span>
-<h2 id="why-golem-and-not-x">Why <code>golem</code> and not X</h2>
+<span id="continue-reading"></span><h2 id="why-golem-and-not-x">Why <code>golem</code> and not X</h2>
 <p>If you're just interested in what <code>golem</code> is and how it works, feel free to skip this section!</p>
 <p>The previous three days I've introduced new crates that mostly stood on their own. I'm not aware of any fleshed-out alternatives, so creating those libraries myself doesn't require much explanation. <code>golem</code>, however, is a different story: there aren't exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver's needs, most of which revolve around support for older hardware or older APIs. For brevity, I'd recommend you check out <a href="https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019">icefox's guide to the existing graphics options</a>.</p>
 <p>I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn't support Vulkan. This eliminates <code>ash</code> and <code>vulkano</code> straight off the bat, and <code>gfx-hal</code> as well. <code>ash</code> and <code>vulkano</code> target Vulkan directly, and <code>gfx-hal</code>'s OpenGL backend is not currently reliable enough (though I hope to see that improve!)</p>
@@ -26,111 +25,111 @@
 <h2 id="a-code-snippet">A Code Snippet</h2>
 <p>Hopefully if you're familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
 <pre style="background-color:#ffffff;">
-<span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">blinds::</span><span style="color:#3e999f;">*</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">golem::{</span><span style="color:#4d4d4c;">
-    Attribute, AttributeType, Context,</span><span style="color:#4d4d4c;">
-    Dimension::{</span><span style="color:#666969;">D2</span><span style="color:#4d4d4c;">, </span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">},</span><span style="color:#4d4d4c;">
-    ElementBuffer, GeometryMode, GolemError, ShaderDescription, ShaderProgram, VertexBuffer,</span><span style="color:#4d4d4c;">
-};</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#999999;">// The application loop, powered by the blinds crate</span><span style="color:#4d4d4c;">
-async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">app</span><span style="color:#4d4d4c;">(</span><span style="color:#4d4d4c;">
-    </span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">: Window,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#f5871f;">ctx</span><span style="color:#4d4d4c;">: glow::Context,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream,</span><span style="color:#4d4d4c;">
-) -&gt; Result&lt;(), GolemError&gt; {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Create a context from &#39;glow&#39;, GL On Whatever</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> ctx </span><span style="color:#3e999f;">= &amp;</span><span style="color:#4d4d4c;">Context::from_glow(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    #[</span><span style="color:#c82829;">rustfmt</span><span style="color:#4d4d4c;">::</span><span style="color:#c82829;">skip</span><span style="color:#4d4d4c;">]</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// This is the data that represents the triangle</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// It&#39;s arranged how it will be passed to the GPU: each position represented as two f32 values,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// followed by each color represented as 4 f32 values. The positions are on a scale from -1.0</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// on a scale from 0.0 to 1.0</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> vertices </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">[</span><span style="color:#4d4d4c;">
-        </span><span style="color:#999999;">// Position         Color</span><span style="color:#4d4d4c;">
-        </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,         </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">,</span><span style="color:#4d4d4c;">
-        </span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,          </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">,</span><span style="color:#4d4d4c;">
-        </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,           </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">
-    ];</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// This is the data that indicates how to draw the vertices</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// For a simple example of one triangle, we don&#39;t gain much from this. Any order of these three</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// points will give us the same triangle. However, if we add more points (to draw a square, for</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// example), then we can write each point once while using it in multiple triangles.</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> indices </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">[</span><span style="color:#f5871f;">0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">2</span><span style="color:#4d4d4c;">];</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// to turn our vertex data into an actual vertex that GL understands, and how to color each</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// &#39;fragment&#39; (essentially a pixel). These are each their own little program, where the</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// information from the vertex shader is fed into the fragment shader.</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// For the purposes of making sure the shaders match, and for ensuring compatibility on desktop</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// and web, the inputs are represented as data structures and then converted to shader</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// declarations at runtime.</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// The input to the shader program is fed to the vertex_input, so your vertex data&#39;s format</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// needs to match what you define in vertex_input</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> shader </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">ShaderProgram::new(</span><span style="color:#4d4d4c;">
-        ctx,</span><span style="color:#4d4d4c;">
-        ShaderDescription {</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// Take in to the shader a position (as a vector with 2 components) and a color (as a</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// vector with 4 components). This is the same format as &#39;vertices&#39; above</span><span style="color:#4d4d4c;">
-            vertex_input: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[</span><span style="color:#4d4d4c;">
-                Attribute::new(</span><span style="color:#718c00;">&quot;vert_position&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D2</span><span style="color:#4d4d4c;">)),</span><span style="color:#4d4d4c;">
-                Attribute::new(</span><span style="color:#718c00;">&quot;vert_color&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">)),</span><span style="color:#4d4d4c;">
-            ],</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// Pass to the fragment shader the color</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// OpenGL will actually smoothly interpolate between different vertex values for us, so</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// a red vertex and a blue vertex will have a gradient between them</span><span style="color:#4d4d4c;">
-            fragment_input: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[Attribute::new(</span><span style="color:#718c00;">&quot;frag_color&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">))],</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// Uniforms represent a value that&#39;s the same for the entire shader; we don&#39;t need any</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// here. If you&#39;re rendering images or applying transformations to your entire draw</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// call, use uniforms!</span><span style="color:#4d4d4c;">
-            uniforms: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[],</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// A program written in GLSL that uses the inputs and outputs defined above</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// There&#39;s also a hard-coded output called gl_Position</span><span style="color:#4d4d4c;">
-            vertex_shader: </span><span style="color:#8959a8;">r</span><span style="color:#718c00;">#&quot; void main() {</span><span style="color:#718c00;">
-            gl_Position = vec4(vert_position, 0, 1);</span><span style="color:#718c00;">
-            frag_color = vert_color;</span><span style="color:#718c00;">
-        }&quot;#</span><span style="color:#4d4d4c;">,</span><span style="color:#4d4d4c;">
-            </span><span style="color:#999999;">// The fragment shader has a hard-coded output: gl_FragColor</span><span style="color:#4d4d4c;">
-            fragment_shader: </span><span style="color:#8959a8;">r</span><span style="color:#718c00;">#&quot; void main() {</span><span style="color:#718c00;">
-            gl_FragColor = frag_color;</span><span style="color:#718c00;">
-        }&quot;#</span><span style="color:#4d4d4c;">,</span><span style="color:#4d4d4c;">
-        },</span><span style="color:#4d4d4c;">
-    )</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Create buffer objects, which we use to transfer data from the CPU to the GPU</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> vb </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">VertexBuffer::new(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> eb </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">ElementBuffer::new(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Set the data of the buffer to be our vertices and indices from earlier</span><span style="color:#4d4d4c;">
-    vb.</span><span style="color:#4271ae;">set_data</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">vertices);</span><span style="color:#4d4d4c;">
-    eb.</span><span style="color:#4271ae;">set_data</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">indices);</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Prepare the shader for operations: shaders will raise errors if you forget to bind them</span><span style="color:#4d4d4c;">
-    shader.</span><span style="color:#4271ae;">bind</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Clear the screen</span><span style="color:#4d4d4c;">
-    ctx.</span><span style="color:#4271ae;">clear</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">unsafe </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-        </span><span style="color:#999999;">// Using our buffers, draw our triangle</span><span style="color:#4d4d4c;">
-        </span><span style="color:#999999;">// We could also interpert our indices as Lines or a variety of other shape options:</span><span style="color:#4d4d4c;">
-        </span><span style="color:#999999;">// nothing binds us to necessarily using Triangles, even though they&#39;re the most common</span><span style="color:#4d4d4c;">
-        </span><span style="color:#999999;">// shape in graphics</span><span style="color:#4d4d4c;">
-        shader.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">vb, </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">eb, </span><span style="color:#f5871f;">0</span><span style="color:#3e999f;">..</span><span style="color:#4d4d4c;">indices.</span><span style="color:#4271ae;">len</span><span style="color:#4d4d4c;">(), GeometryMode::Triangles)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Show our data to the window</span><span style="color:#4d4d4c;">
-    window.</span><span style="color:#4271ae;">present</span><span style="color:#4d4d4c;">();</span><span style="color:#4d4d4c;">
-    </span><span style="color:#999999;">// Keep the window open and responsive until the user exits</span><span style="color:#4d4d4c;">
-    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{</span><span style="color:#4d4d4c;">
-        events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await;</span><span style="color:#4d4d4c;">
-    }</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#999999;">// Run our application!</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#4271ae;">run_gl</span><span style="color:#4d4d4c;">(Settings::default(), |</span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">| {</span><span style="color:#4d4d4c;">
-        async </span><span style="color:#8959a8;">move </span><span style="color:#4d4d4c;">{ </span><span style="color:#4271ae;">app</span><span style="color:#4d4d4c;">(window, gfx, events).await.</span><span style="color:#4271ae;">unwrap</span><span style="color:#4d4d4c;">() }</span><span style="color:#4d4d4c;">
-    });</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span></pre>
+<code><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">blinds::</span><span style="color:#3e999f;">*</span><span style="color:#4d4d4c;">;
+</span><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">golem::{
+    Attribute, AttributeType, Context,
+    Dimension::{</span><span style="color:#666969;">D2</span><span style="color:#4d4d4c;">, </span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">},
+    ElementBuffer, GeometryMode, GolemError, ShaderDescription, ShaderProgram, VertexBuffer,
+};
+
+</span><span style="color:#999999;">// The application loop, powered by the blinds crate
+</span><span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">app</span><span style="color:#4d4d4c;">(
+    </span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">: Window,
+    </span><span style="color:#f5871f;">ctx</span><span style="color:#4d4d4c;">: glow::Context,
+    </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream,
+) -&gt; </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">&lt;(), GolemError&gt; {
+    </span><span style="color:#999999;">// Create a context from &#39;glow&#39;, GL On Whatever
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> ctx </span><span style="color:#3e999f;">= &amp;</span><span style="color:#4d4d4c;">Context::from_glow(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+
+    #[</span><span style="color:#c82829;">rustfmt</span><span style="color:#4d4d4c;">::</span><span style="color:#c82829;">skip</span><span style="color:#4d4d4c;">]
+    </span><span style="color:#999999;">// This is the data that represents the triangle
+    // It&#39;s arranged how it will be passed to the GPU: each position represented as two f32 values,
+    // followed by each color represented as 4 f32 values. The positions are on a scale from -1.0
+    // to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,
+    // on a scale from 0.0 to 1.0
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> vertices </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">[
+        </span><span style="color:#999999;">// Position         Color
+        </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,         </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">,
+        </span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">-</span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,          </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">,
+        </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.5</span><span style="color:#4d4d4c;">,           </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">0.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1.0
+    </span><span style="color:#4d4d4c;">];
+    </span><span style="color:#999999;">// This is the data that indicates how to draw the vertices
+    // For a simple example of one triangle, we don&#39;t gain much from this. Any order of these three
+    // points will give us the same triangle. However, if we add more points (to draw a square, for
+    // example), then we can write each point once while using it in multiple triangles.
+    </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> indices </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">[</span><span style="color:#f5871f;">0</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">1</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">2</span><span style="color:#4d4d4c;">];
+
+    </span><span style="color:#999999;">// Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how
+    // to turn our vertex data into an actual vertex that GL understands, and how to color each
+    // &#39;fragment&#39; (essentially a pixel). These are each their own little program, where the
+    // information from the vertex shader is fed into the fragment shader.
+    // For the purposes of making sure the shaders match, and for ensuring compatibility on desktop
+    // and web, the inputs are represented as data structures and then converted to shader
+    // declarations at runtime.
+    // The input to the shader program is fed to the vertex_input, so your vertex data&#39;s format
+    // needs to match what you define in vertex_input
+    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> shader </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">ShaderProgram::new(
+        ctx,
+        ShaderDescription {
+            </span><span style="color:#999999;">// Take in to the shader a position (as a vector with 2 components) and a color (as a
+            // vector with 4 components). This is the same format as &#39;vertices&#39; above
+</span><span style="color:#4d4d4c;">            vertex_input: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[
+                Attribute::new(</span><span style="color:#718c00;">&quot;vert_position&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D2</span><span style="color:#4d4d4c;">)),
+                Attribute::new(</span><span style="color:#718c00;">&quot;vert_color&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">)),
+            ],
+            </span><span style="color:#999999;">// Pass to the fragment shader the color
+            // OpenGL will actually smoothly interpolate between different vertex values for us, so
+            // a red vertex and a blue vertex will have a gradient between them
+</span><span style="color:#4d4d4c;">            fragment_input: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[Attribute::new(</span><span style="color:#718c00;">&quot;frag_color&quot;</span><span style="color:#4d4d4c;">, AttributeType::Vector(</span><span style="color:#666969;">D4</span><span style="color:#4d4d4c;">))],
+            </span><span style="color:#999999;">// Uniforms represent a value that&#39;s the same for the entire shader; we don&#39;t need any
+            // here. If you&#39;re rendering images or applying transformations to your entire draw
+            // call, use uniforms!
+</span><span style="color:#4d4d4c;">            uniforms: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">[],
+            </span><span style="color:#999999;">// A program written in GLSL that uses the inputs and outputs defined above
+            // There&#39;s also a hard-coded output called gl_Position
+</span><span style="color:#4d4d4c;">            vertex_shader: </span><span style="color:#8959a8;">r</span><span style="color:#718c00;">#&quot; void main() {
+            gl_Position = vec4(vert_position, 0, 1);
+            frag_color = vert_color;
+        }&quot;#</span><span style="color:#4d4d4c;">,
+            </span><span style="color:#999999;">// The fragment shader has a hard-coded output: gl_FragColor
+</span><span style="color:#4d4d4c;">            fragment_shader: </span><span style="color:#8959a8;">r</span><span style="color:#718c00;">#&quot; void main() {
+            gl_FragColor = frag_color;
+        }&quot;#</span><span style="color:#4d4d4c;">,
+        },
+    )</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+
+    </span><span style="color:#999999;">// Create buffer objects, which we use to transfer data from the CPU to the GPU
+    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> vb </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">VertexBuffer::new(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+    </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> eb </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">ElementBuffer::new(ctx)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+    </span><span style="color:#999999;">// Set the data of the buffer to be our vertices and indices from earlier
+</span><span style="color:#4d4d4c;">    vb.</span><span style="color:#4271ae;">set_data</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">vertices);
+    eb.</span><span style="color:#4271ae;">set_data</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">indices);
+    </span><span style="color:#999999;">// Prepare the shader for operations: shaders will raise errors if you forget to bind them
+</span><span style="color:#4d4d4c;">    shader.</span><span style="color:#4271ae;">bind</span><span style="color:#4d4d4c;">();
+    </span><span style="color:#999999;">// Clear the screen
+</span><span style="color:#4d4d4c;">    ctx.</span><span style="color:#4271ae;">clear</span><span style="color:#4d4d4c;">();
+    </span><span style="color:#8959a8;">unsafe </span><span style="color:#4d4d4c;">{
+        </span><span style="color:#999999;">// Using our buffers, draw our triangle
+        // We could also interpert our indices as Lines or a variety of other shape options:
+        // nothing binds us to necessarily using Triangles, even though they&#39;re the most common
+        // shape in graphics
+</span><span style="color:#4d4d4c;">        shader.</span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">vb, </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">eb, </span><span style="color:#f5871f;">0</span><span style="color:#3e999f;">..</span><span style="color:#4d4d4c;">indices.</span><span style="color:#4271ae;">len</span><span style="color:#4d4d4c;">(), GeometryMode::Triangles)</span><span style="color:#3e999f;">?</span><span style="color:#4d4d4c;">;
+    }
+    </span><span style="color:#999999;">// Show our data to the window
+</span><span style="color:#4d4d4c;">    window.</span><span style="color:#4271ae;">present</span><span style="color:#4d4d4c;">();
+    </span><span style="color:#999999;">// Keep the window open and responsive until the user exits
+    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
+        events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await;
+    }
+}
+
+</span><span style="color:#999999;">// Run our application!
+</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {
+    </span><span style="color:#4271ae;">run_gl</span><span style="color:#4d4d4c;">(Settings::default(), |</span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">| {
+        async </span><span style="color:#8959a8;">move </span><span style="color:#4d4d4c;">{ </span><span style="color:#4271ae;">app</span><span style="color:#4d4d4c;">(window, gfx, events).await.</span><span style="color:#4271ae;">unwrap</span><span style="color:#4d4d4c;">() }
+    });
+}
+</span></code></pre>
 <p>(This is also an example of <a href="../quicksilver-chanukah-2019-day-4">yesterday's <code>blinds</code></a> and its OpenGL support.)</p>
 <h2 id="further-development">Further Development</h2>
 <p><code>golem</code> is not intended to be a fully-featured wrapper around all of OpenGL. It's intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that's missing! Some of it is documented on the <a href="https://github.com/ryanisaacg/golem/issues">issue tracker</a>, but I'm sure that I've missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.</p>

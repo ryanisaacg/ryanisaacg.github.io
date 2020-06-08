@@ -14,8 +14,7 @@
             </header>
             <article>
                 <p>This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less &quot;for free:&quot; most of the foundational crates have available web support, in one way or another.</p>
-<span id="continue-reading"></span>
-<h2 id="windowing-and-input">Windowing and Input</h2>
+<span id="continue-reading"></span><h2 id="windowing-and-input">Windowing and Input</h2>
 <p>For opening a window and receiving events from it, the Rust ecosystem has <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>. Along with <a href="https://github.com/hecrj">Héctor Ramón (hecrj)</a> and and <a href="https://github.com/blm768">Ben Merritt (blm768)</a>, I worked on adding web support. <a href="https://users.rust-lang.org/t/winit-0-20-and-web-support/36155">It has been merged and released</a>, and is used in <a href="https://github.com/hecrj/coffee">coffee</a> and <a href="https://github.com/ryanisaacg/blinds">blinds</a>. While using <code>winit</code> directly does require some glue code to plug your canvas into the webpage, intermediate layers like game frameworks can take care of the details.</p>
 <p>While <code>winit</code> doesn't currently provide gamepad events, <a href="https://gitlab.com/gilrs-project/gilrs"><code>gilrs</code></a> fills that gap nicely. In the beginning of the year I added web support via stdweb, which should translate to <code>wasm-bindgen</code> when necessary. Unlike <code>winit</code>, which requires a little glue code to connect to your webpage, <code>gilrs</code> Just Works. It functions nearly the same as the desktop version, with the only limitations being those the web platform imposes.</p>
 <h2 id="graphics">Graphics</h2>

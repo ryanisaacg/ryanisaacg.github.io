@@ -19,7 +19,7 @@
 <p><code>blinds</code> is based on <code>winit</code>, but focused on Quicksilver's specific use case of single-window games on desktop and web. It also integrates <code>gilrs</code> for gamepad support (though this could be provided directly by <code>winit</code> later), without exposing either in its external API. Additionally, <code>blinds</code> has optional support for OpenGL, via <code>glow</code> for uniform bindings across web and desktop.</p>
 <p>The <code>async</code> API works via the <code>LocalPool</code> and the <code>winit</code> event loop, allowing you to write code that <em>almost</em> looks like a synchronous event loop.</p>
 <pre style="background-color:#ffffff;">
-<code><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">blinds::{run, Event, EventStream, Key, Settings, Window};
+<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">blinds::{run, Event, EventStream, Key, Settings, Window};
 
 </span><span style="color:#4271ae;">run</span><span style="color:#4d4d4c;">(Settings::default(), app);
 
@@ -34,7 +34,7 @@ async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;"
 </span></code></pre>
 <p>The use of <code>.await</code> here is a bit of a hack, as it allows the event loop to wrest control away from the user and return it to the browser without blocking. Compare this to the comparable snippet from the legacy Quicksilver API:</p>
 <pre style="background-color:#ffffff;">
-<code><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">quicksilver::{
+<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">quicksilver::{
     </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">,
     geom::Vector,
     lifecycle::{Event, Settings, State, Window, run},

@@ -20,7 +20,7 @@
 <p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they're ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There's no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
 <p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
 <pre style="background-color:#ffffff;">
-<code><span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">MyState {
+<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">MyState {
     </span><span style="color:#c82829;">images</span><span style="color:#4d4d4c;">: Asset&lt;</span><span style="color:#c99e00;">Vec</span><span style="color:#4d4d4c;">&lt;Image&gt;&gt;,
     </span><span style="color:#c82829;">game</span><span style="color:#4d4d4c;">: Game,
 }
@@ -58,7 +58,7 @@
 </span></code></pre>
 <p>you could now write something like:</p>
 <pre style="background-color:#ffffff;">
-<code><span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">my_game</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">: Graphics, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {
+<code class="language-rust" data-lang="rust"><span style="color:#4d4d4c;">async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">my_game</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">win</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">gfx</span><span style="color:#4d4d4c;">: Graphics, </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {
     </span><span style="color:#8959a8;">let mut</span><span style="color:#4d4d4c;"> game </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">Game::new();
     </span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> images </span><span style="color:#3e999f;">= </span><span style="color:#4271ae;">join_all</span><span style="color:#4d4d4c;">(vec![Image::load(</span><span style="color:#718c00;">&quot;a&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;b&quot;</span><span style="color:#4d4d4c;">), Image::load(</span><span style="color:#718c00;">&quot;c&quot;</span><span style="color:#4d4d4c;">)]).await;
     </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{

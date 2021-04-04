@@ -18,55 +18,53 @@
 <span id="continue-reading"></span>
 <p><code>blinds</code> is based on <code>winit</code>, but focused on Quicksilver's specific use case of single-window games on desktop and web. It also integrates <code>gilrs</code> for gamepad support (though this could be provided directly by <code>winit</code> later), without exposing either in its external API. Additionally, <code>blinds</code> has optional support for OpenGL, via <code>glow</code> for uniform bindings across web and desktop.</p>
 <p>The <code>async</code> API works via the <code>LocalPool</code> and the <code>winit</code> event loop, allowing you to write code that <em>almost</em> looks like a synchronous event loop.</p>
-<pre style="background-color:#ffffff;">
-<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">blinds::{run, Event, EventStream, Key, Settings, Window};
+<pre><code class="language-rust" data-lang="rust">use blinds::{run, Event, EventStream, Key, Settings, Window};
 
-</span><span style="color:#4271ae;">run</span><span style="color:#4d4d4c;">(Settings::default(), app);
+run(Settings::default(), app);
 
-async </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">app</span><span style="color:#4d4d4c;">(</span><span style="color:#f5871f;">_window</span><span style="color:#4d4d4c;">: Window, </span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">events</span><span style="color:#4d4d4c;">: EventStream) {
-    </span><span style="color:#8959a8;">loop </span><span style="color:#4d4d4c;">{
-        </span><span style="color:#8959a8;">while let </span><span style="color:#c99e00;">Some</span><span style="color:#4d4d4c;">(ev) </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> events.</span><span style="color:#4271ae;">next_event</span><span style="color:#4d4d4c;">().await {
-            </span><span style="color:#999999;">// Process your events here!
-        </span><span style="color:#4d4d4c;">}
-        </span><span style="color:#999999;">// Process your frame here!
-    </span><span style="color:#4d4d4c;">}
+async fn app(_window: Window, mut events: EventStream) {
+    loop {
+        while let Some(ev) = events.next_event().await {
+            // Process your events here!
+        }
+        // Process your frame here!
+    }
 }
-</span></code></pre>
+</code></pre>
 <p>The use of <code>.await</code> here is a bit of a hack, as it allows the event loop to wrest control away from the user and return it to the browser without blocking. Compare this to the comparable snippet from the legacy Quicksilver API:</p>
-<pre style="background-color:#ffffff;">
-<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">quicksilver::{
-    </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">,
+<pre><code class="language-rust" data-lang="rust">use quicksilver::{
+    Result,
     geom::Vector,
     lifecycle::{Event, Settings, State, Window, run},
 };
 
-</span><span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">HelloWorld;
+struct HelloWorld;
 
-</span><span style="color:#8959a8;">impl </span><span style="color:#4d4d4c;">State </span><span style="color:#8959a8;">for </span><span style="color:#4d4d4c;">HelloWorld {
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">new</span><span style="color:#4d4d4c;">() -&gt; </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">&lt;HelloWorld&gt; {
-        </span><span style="color:#c99e00;">Ok</span><span style="color:#4d4d4c;">(HelloWorld)
+impl State for HelloWorld {
+    fn new() -&gt; Result&lt;HelloWorld&gt; {
+        Ok(HelloWorld)
     }
     
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">event</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window, </span><span style="color:#f5871f;">event</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">Event) -&gt; </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">&lt;()&gt; {
-        </span><span style="color:#999999;">// Process events here
-        </span><span style="color:#c99e00;">Ok</span><span style="color:#4d4d4c;">(())
+    fn event(&amp;mut self, window: &amp;mut Window, event: &amp;Event) -&gt; Result&lt;()&gt; {
+        // Process events here
+        Ok(())
     }
     
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">update</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) -&gt; </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">&lt;()&gt; {
-        </span><span style="color:#999999;">// Update here
-        </span><span style="color:#c99e00;">Ok</span><span style="color:#4d4d4c;">(())
+    fn update(&amp;mut self, window: &amp;mut Window) -&gt; Result&lt;()&gt; {
+        // Update here
+        Ok(())
     }
 
-    </span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">draw</span><span style="color:#4d4d4c;">(</span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut </span><span style="color:#f5871f;">self</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">window</span><span style="color:#4d4d4c;">: </span><span style="color:#3e999f;">&amp;</span><span style="color:#8959a8;">mut</span><span style="color:#4d4d4c;"> Window) -&gt; </span><span style="color:#c99e00;">Result</span><span style="color:#4d4d4c;">&lt;()&gt; {
-        </span><span style="color:#999999;">// Draw here
-        </span><span style="color:#c99e00;">Ok</span><span style="color:#4d4d4c;">(())
+    fn draw(&amp;mut self, window: &amp;mut Window) -&gt; Result&lt;()&gt; {
+        // Draw here
+        Ok(())
     }
 }
 
-</span><span style="color:#8959a8;">fn </span><span style="color:#4271ae;">main</span><span style="color:#4d4d4c;">() {
-    run::&lt;HelloWorld&gt;(</span><span style="color:#718c00;">&quot;Hello World&quot;</span><span style="color:#4d4d4c;">, Vector::new(</span><span style="color:#f5871f;">800</span><span style="color:#4d4d4c;">, </span><span style="color:#f5871f;">600</span><span style="color:#4d4d4c;">), Settings::default());
+fn main() {
+    run::&lt;HelloWorld&gt;(&quot;Hello World&quot;, Vector::new(800, 600), Settings::default());
 }
-</span></code></pre>
+</code></pre>
 <p>The <code>async</code> API isn't just way more convenient than the previous, trait-based system. It also allows you to use other <code>async</code> APIs (like <a href="../quicksilver-chanukah-2019-day-2">day 2's <code>platter</code></a>), which is important for web support.</p>
 <p><code>blinds</code> isn't quite ready for a full release yet: there are a few more window APIs I do want to expose before it leaves alpha. However, you can still try it out, just be aware that the API is fairly unstable and likely to change between multiple times before the first non-alpha release!</p>
 <p>With <code>blinds</code> today, tomorrow will be the last new crate: <code>golem</code>!</p>

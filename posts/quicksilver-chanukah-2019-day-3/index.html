@@ -18,26 +18,25 @@
 <p>Introducing <a href="https://crates.io/crates/gestalt"><code>gestalt</code></a>, a library that bundles up your data and stores it away so you don't have to.</p>
 <span id="continue-reading"></span>
 <p>A sample to save some game state:</p>
-<pre style="background-color:#ffffff;">
-<code class="language-rust" data-lang="rust"><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">gestalt::{Location, save, load};</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">use </span><span style="color:#4d4d4c;">serde::{Serialize, Deserialize};</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-#[</span><span style="color:#c82829;">derive</span><span style="color:#4d4d4c;">(Serialize, Deserialize)]</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">struct </span><span style="color:#4d4d4c;">Player {</span><span style="color:#4d4d4c;">
-    </span><span style="color:#c82829;">name</span><span style="color:#4d4d4c;">: String,</span><span style="color:#4d4d4c;">
-    </span><span style="color:#c82829;">score</span><span style="color:#4d4d4c;">: </span><span style="color:#8959a8;">u32</span><span style="color:#4d4d4c;">
-}</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player1 </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> Player { name: </span><span style="color:#718c00;">&quot;Bob&quot;</span><span style="color:#4d4d4c;">.</span><span style="color:#4271ae;">to_string</span><span style="color:#4d4d4c;">(), score: </span><span style="color:#f5871f;">21 </span><span style="color:#4d4d4c;">};</span><span style="color:#4d4d4c;">
-</span><span style="color:#4271ae;">save</span><span style="color:#4d4d4c;">(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player1&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">player1).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not save Player 1&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player2 </span><span style="color:#3e999f;">=</span><span style="color:#4d4d4c;"> Player { name: </span><span style="color:#718c00;">&quot;Alice&quot;</span><span style="color:#4d4d4c;">.</span><span style="color:#4271ae;">to_string</span><span style="color:#4d4d4c;">(), score: </span><span style="color:#f5871f;">200 </span><span style="color:#4d4d4c;">};</span><span style="color:#4d4d4c;">
-</span><span style="color:#4271ae;">save</span><span style="color:#4d4d4c;">(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player2&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#3e999f;">&amp;</span><span style="color:#4d4d4c;">player2).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not save Player 2&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-</span><span style="color:#4d4d4c;">
-</span><span style="color:#999999;">// Now reload.</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player1 </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">load::&lt;Player&gt;(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player1&quot;</span><span style="color:#4d4d4c;">).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not load Player 1&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-</span><span style="color:#8959a8;">let</span><span style="color:#4d4d4c;"> player2 </span><span style="color:#3e999f;">= </span><span style="color:#4d4d4c;">load::&lt;Player&gt;(Location::Cache, </span><span style="color:#718c00;">&quot;mygame&quot;</span><span style="color:#4d4d4c;">, </span><span style="color:#718c00;">&quot;player2&quot;</span><span style="color:#4d4d4c;">).</span><span style="color:#4271ae;">expect</span><span style="color:#4d4d4c;">(</span><span style="color:#718c00;">&quot;Could not load Player 2&quot;</span><span style="color:#4d4d4c;">);</span><span style="color:#4d4d4c;">
-</span></code></pre>
+<pre><code class="language-rust" data-lang="rust">use gestalt::{Location, save, load};
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+struct Player {
+    name: String,
+    score: u32
+}
+
+let player1 = Player { name: &quot;Bob&quot;.to_string(), score: 21 };
+save(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;, &amp;player1).expect(&quot;Could not save Player 1&quot;);
+
+let player2 = Player { name: &quot;Alice&quot;.to_string(), score: 200 };
+save(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;, &amp;player2).expect(&quot;Could not save Player 2&quot;);
+
+// Now reload.
+let player1 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;).expect(&quot;Could not load Player 1&quot;);
+let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;).expect(&quot;Could not load Player 2&quot;);
+</code></pre>
 <p>Getsalt creates a Key/Value store, backed by the filesystem on desktop and the web storage API. The key is formed by <code>Location</code>, which determines the kind of data (<code>Location::Cache</code>, <code>Location::Data</code>, and <code>Location::Config</code>), the application name, and a string which identifies the name of the data chunk. The value is anything that implements <code>Serialize</code> from <a href="https://crates.io/crates/serde"><code>serde</code></a>.</p>
 <p><code>Cache</code> is for data that can be cleared between runs of your application; <code>Data</code> is for blobs like save states, and <code>Config</code> is for application settings. <code>gestalt</code> uses <a href="https://crates.io/crates/dirs"><code>dirs</code></a> to ensure that it saves your data in the right place for each, regardless of your user's operating system.</p>
 <p>That's Day 3 done: <code>gestalt</code> is pretty small! Tomorrow's library, <code>blinds</code>, starts to get quite a bit bigger.</p>

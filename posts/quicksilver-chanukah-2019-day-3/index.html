@@ -18,7 +18,7 @@
 <p>Introducing <a href="https://crates.io/crates/gestalt"><code>gestalt</code></a>, a library that bundles up your data and stores it away so you don't have to.</p>
 <span id="continue-reading"></span>
 <p>A sample to save some game state:</p>
-<pre><code class="language-rust" data-lang="rust">use gestalt::{Location, save, load};
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use gestalt::{Location, save, load};
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize)]
@@ -33,7 +33,7 @@ save(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;, &amp;player1).exp
 let player2 = Player { name: &quot;Alice&quot;.to_string(), score: 200 };
 save(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;, &amp;player2).expect(&quot;Could not save Player 2&quot;);
 
-// Now reload.
+&#x2F;&#x2F; Now reload.
 let player1 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;).expect(&quot;Could not load Player 1&quot;);
 let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;).expect(&quot;Could not load Player 2&quot;);
 </code></pre>

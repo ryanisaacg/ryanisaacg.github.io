@@ -19,7 +19,7 @@
 <p><code>State</code> is a trait that Quicksilver uses to manage when your code runs. It requires you define the <code>new</code> method, as well as <code>draw</code>. Optionally you can define <code>update</code>, for a fixed tick rate function, and <code>event</code> for handling individual input events. This type then gets passed as a generic parameter to the <code>run</code> function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)</p>
 <p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they're ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There's no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
 <p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
-<pre><code class="language-rust" data-lang="rust">struct MyState {
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">struct MyState {
     images: Asset&lt;Vec&lt;Image&gt;&gt;,
     game: Game,
 }
@@ -56,7 +56,7 @@ fn main() {
 }
 </code></pre>
 <p>you could now write something like:</p>
-<pre><code class="language-rust" data-lang="rust">async fn my_game(win: Window, mut gfx: Graphics, events: EventStream) {
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">async fn my_game(win: Window, mut gfx: Graphics, events: EventStream) {
     let mut game = Game::new();
     let images = join_all(vec![Image::load(&quot;a&quot;), Image::load(&quot;b&quot;), Image::load(&quot;c&quot;)]).await;
     loop {

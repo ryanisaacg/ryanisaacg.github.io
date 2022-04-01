@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> A Quicksilver Chanukah, Day 5: Golem :: ryan.isaac.g </title>
+        <link rel="stylesheet" href="/page.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <main>
+            <header>
+                
+<div class="page-header">
+    <b>ryan.isaac.g</b>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/code">/code</a>
+        <a href="/tabletop">/tabletop</a>
+    </div>
+</div>
+
+                <h1> A Quicksilver Chanukah, Day 5: Golem </h1>
+                <small> 2019-12-26 </small>
+            </header>
+            <article>
+                <p><code>golem</code> is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.</p>
+<span id="continue-reading"></span><h2 id="why-golem-and-not-x">Why <code>golem</code> and not X</h2>
+<p>If you're just interested in what <code>golem</code> is and how it works, feel free to skip this section!</p>
+<p>The previous three days I've introduced new crates that mostly stood on their own. I'm not aware of any fleshed-out alternatives, so creating those libraries myself doesn't require much explanation. <code>golem</code>, however, is a different story: there aren't exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver's needs, most of which revolve around support for older hardware or older APIs. For brevity, I'd recommend you check out <a href="https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019">icefox's guide to the existing graphics options</a>.</p>
+<p>I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn't support Vulkan. This eliminates <code>ash</code> and <code>vulkano</code> straight off the bat, and <code>gfx-hal</code> as well. <code>ash</code> and <code>vulkano</code> target Vulkan directly, and <code>gfx-hal</code>'s OpenGL backend is not currently reliable enough (though I hope to see that improve!)</p>
+<p>I also want to be able to support WebGL 1, but WebGL 1 is not a very modern version of OpenGL. This makes it, for good reaon, unattractive to other libraries (like <code>luminance</code>, which is targeting WebGL 2 in its upcoming web support). However, WebGL 2's <a href="https://caniuse.com/#feat=webgl2">market share</a> still hovers at around 75%, which isn't ideal; notably missing from WebGL 2 support are the current verisons of Edge, Safari, and iOS Safari. Quicksilver recently transitioned to using WebGL 1 for better platform support, and I didn't want to regress by requiring a high version. This rules out <code>luminance</code>, and presumably <code>glium</code> (which has no current development towards web support as far as I'm aware.)</p>
+<p>With just those two constraints I'm out of options, so I decided to write <code>golem</code>.</p>
+<h2 id="mostly-safe">Mostly-Safe?</h2>
+<p>Where possible, <code>golem</code> handles for you the complex state machine of OpenGL. In other places, it prevents you from using resources that haven't been properly set-up. In these cases, <code>golem</code> is safe with low-overhead, removing footguns from OpenGL without slowing your code down. In others, more overhead would be required to keep the API free of <code>unsafe</code>. Currently only two functions are marked as <code>unsafe</code> in <code>golem</code>'s public API, but they are the only functions that draw things to the screen! This means using <code>unsafe</code> code as a consumer of <code>golem</code> is unavoidable, hence &quot;mostly-safe.&quot;</p>
+<h2 id="a-code-snippet">A Code Snippet</h2>
+<p>Hopefully if you're familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use blinds::*;
+use golem::{
+    Attribute, AttributeType, Context,
+    Dimension::{D2, D4},
+    ElementBuffer, GeometryMode, GolemError, ShaderDescription, ShaderProgram, VertexBuffer,
+};
+
+&#x2F;&#x2F; The application loop, powered by the blinds crate
+async fn app(
+    window: Window,
+    ctx: glow::Context,
+    mut events: EventStream,
+) -&gt; Result&lt;(), GolemError&gt; {
+    &#x2F;&#x2F; Create a context from &#x27;glow&#x27;, GL On Whatever
+    let ctx = &amp;Context::from_glow(ctx)?;
+
+    #[rustfmt::skip]
+    &#x2F;&#x2F; This is the data that represents the triangle
+    &#x2F;&#x2F; It&#x27;s arranged how it will be passed to the GPU: each position represented as two f32 values,
+    &#x2F;&#x2F; followed by each color represented as 4 f32 values. The positions are on a scale from -1.0
+    &#x2F;&#x2F; to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,
+    &#x2F;&#x2F; on a scale from 0.0 to 1.0
+    let vertices = [
+        &#x2F;&#x2F; Position         Color
+        -0.5, -0.5,         1.0, 0.0, 0.0, 1.0,
+        0.5, -0.5,          0.0, 1.0, 0.0, 1.0,
+        0.0, 0.5,           0.0, 0.0, 1.0, 1.0
+    ];
+    &#x2F;&#x2F; This is the data that indicates how to draw the vertices
+    &#x2F;&#x2F; For a simple example of one triangle, we don&#x27;t gain much from this. Any order of these three
+    &#x2F;&#x2F; points will give us the same triangle. However, if we add more points (to draw a square, for
+    &#x2F;&#x2F; example), then we can write each point once while using it in multiple triangles.
+    let indices = [0, 1, 2];
+
+    &#x2F;&#x2F; Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how
+    &#x2F;&#x2F; to turn our vertex data into an actual vertex that GL understands, and how to color each
+    &#x2F;&#x2F; &#x27;fragment&#x27; (essentially a pixel). These are each their own little program, where the
+    &#x2F;&#x2F; information from the vertex shader is fed into the fragment shader.
+    &#x2F;&#x2F; For the purposes of making sure the shaders match, and for ensuring compatibility on desktop
+    &#x2F;&#x2F; and web, the inputs are represented as data structures and then converted to shader
+    &#x2F;&#x2F; declarations at runtime.
+    &#x2F;&#x2F; The input to the shader program is fed to the vertex_input, so your vertex data&#x27;s format
+    &#x2F;&#x2F; needs to match what you define in vertex_input
+    let mut shader = ShaderProgram::new(
+        ctx,
+        ShaderDescription {
+            &#x2F;&#x2F; Take in to the shader a position (as a vector with 2 components) and a color (as a
+            &#x2F;&#x2F; vector with 4 components). This is the same format as &#x27;vertices&#x27; above
+            vertex_input: &amp;[
+                Attribute::new(&quot;vert_position&quot;, AttributeType::Vector(D2)),
+                Attribute::new(&quot;vert_color&quot;, AttributeType::Vector(D4)),
+            ],
+            &#x2F;&#x2F; Pass to the fragment shader the color
+            &#x2F;&#x2F; OpenGL will actually smoothly interpolate between different vertex values for us, so
+            &#x2F;&#x2F; a red vertex and a blue vertex will have a gradient between them
+            fragment_input: &amp;[Attribute::new(&quot;frag_color&quot;, AttributeType::Vector(D4))],
+            &#x2F;&#x2F; Uniforms represent a value that&#x27;s the same for the entire shader; we don&#x27;t need any
+            &#x2F;&#x2F; here. If you&#x27;re rendering images or applying transformations to your entire draw
+            &#x2F;&#x2F; call, use uniforms!
+            uniforms: &amp;[],
+            &#x2F;&#x2F; A program written in GLSL that uses the inputs and outputs defined above
+            &#x2F;&#x2F; There&#x27;s also a hard-coded output called gl_Position
+            vertex_shader: r#&quot; void main() {
+            gl_Position = vec4(vert_position, 0, 1);
+            frag_color = vert_color;
+        }&quot;#,
+            &#x2F;&#x2F; The fragment shader has a hard-coded output: gl_FragColor
+            fragment_shader: r#&quot; void main() {
+            gl_FragColor = frag_color;
+        }&quot;#,
+        },
+    )?;
+
+    &#x2F;&#x2F; Create buffer objects, which we use to transfer data from the CPU to the GPU
+    let mut vb = VertexBuffer::new(ctx)?;
+    let mut eb = ElementBuffer::new(ctx)?;
+    &#x2F;&#x2F; Set the data of the buffer to be our vertices and indices from earlier
+    vb.set_data(&amp;vertices);
+    eb.set_data(&amp;indices);
+    &#x2F;&#x2F; Prepare the shader for operations: shaders will raise errors if you forget to bind them
+    shader.bind();
+    &#x2F;&#x2F; Clear the screen
+    ctx.clear();
+    unsafe {
+        &#x2F;&#x2F; Using our buffers, draw our triangle
+        &#x2F;&#x2F; We could also interpert our indices as Lines or a variety of other shape options:
+        &#x2F;&#x2F; nothing binds us to necessarily using Triangles, even though they&#x27;re the most common
+        &#x2F;&#x2F; shape in graphics
+        shader.draw(&amp;vb, &amp;eb, 0..indices.len(), GeometryMode::Triangles)?;
+    }
+    &#x2F;&#x2F; Show our data to the window
+    window.present();
+    &#x2F;&#x2F; Keep the window open and responsive until the user exits
+    loop {
+        events.next_event().await;
+    }
+}
+
+&#x2F;&#x2F; Run our application!
+fn main() {
+    run_gl(Settings::default(), |window, gfx, events| {
+        async move { app(window, gfx, events).await.unwrap() }
+    });
+}
+</code></pre>
+<p>(This is also an example of <a href="../quicksilver-chanukah-2019-day-4">yesterday's <code>blinds</code></a> and its OpenGL support.)</p>
+<h2 id="further-development">Further Development</h2>
+<p><code>golem</code> is not intended to be a fully-featured wrapper around all of OpenGL. It's intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that's missing! Some of it is documented on the <a href="https://github.com/ryanisaacg/golem/issues">issue tracker</a>, but I'm sure that I've missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.</p>
+<p><code>golem</code> is the last new crate to announce, which means tomorrow is about what these crates enable: the new version of Quicksilver.</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+            </article>
+        </main>
+    </body>
+</html>

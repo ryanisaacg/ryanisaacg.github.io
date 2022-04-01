@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> A Quicksilver Chanukah, Day 3: Gestalt :: ryan.isaac.g </title>
+        <link rel="stylesheet" href="/page.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <main>
+            <header>
+                
+<div class="page-header">
+    <b>ryan.isaac.g</b>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/code">/code</a>
+        <a href="/tabletop">/tabletop</a>
+    </div>
+</div>
+
+                <h1> A Quicksilver Chanukah, Day 3: Gestalt </h1>
+                <small> 2019-12-24 </small>
+            </header>
+            <article>
+                <p>Often your application might want to store gamestate or configurations, but the web has no filesystem access. Additionally, you don't want to just dump files in the user's home directory; each desktop operating system has a different preferred location for storing application-specific data, and often different locations for different kinds of data.</p>
+<p>Introducing <a href="https://crates.io/crates/gestalt"><code>gestalt</code></a>, a library that bundles up your data and stores it away so you don't have to.</p>
+<span id="continue-reading"></span>
+<p>A sample to save some game state:</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use gestalt::{Location, save, load};
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+struct Player {
+    name: String,
+    score: u32
+}
+
+let player1 = Player { name: &quot;Bob&quot;.to_string(), score: 21 };
+save(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;, &amp;player1).expect(&quot;Could not save Player 1&quot;);
+
+let player2 = Player { name: &quot;Alice&quot;.to_string(), score: 200 };
+save(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;, &amp;player2).expect(&quot;Could not save Player 2&quot;);
+
+&#x2F;&#x2F; Now reload.
+let player1 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player1&quot;).expect(&quot;Could not load Player 1&quot;);
+let player2 = load::&lt;Player&gt;(Location::Cache, &quot;mygame&quot;, &quot;player2&quot;).expect(&quot;Could not load Player 2&quot;);
+</code></pre>
+<p>Getsalt creates a Key/Value store, backed by the filesystem on desktop and the web storage API. The key is formed by <code>Location</code>, which determines the kind of data (<code>Location::Cache</code>, <code>Location::Data</code>, and <code>Location::Config</code>), the application name, and a string which identifies the name of the data chunk. The value is anything that implements <code>Serialize</code> from <a href="https://crates.io/crates/serde"><code>serde</code></a>.</p>
+<p><code>Cache</code> is for data that can be cleared between runs of your application; <code>Data</code> is for blobs like save states, and <code>Config</code> is for application settings. <code>gestalt</code> uses <a href="https://crates.io/crates/dirs"><code>dirs</code></a> to ensure that it saves your data in the right place for each, regardless of your user's operating system.</p>
+<p>That's Day 3 done: <code>gestalt</code> is pretty small! Tomorrow's library, <code>blinds</code>, starts to get quite a bit bigger.</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+            </article>
+        </main>
+    </body>
+</html>

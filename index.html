@@ -2,28 +2,39 @@
 <html>
     <head>
         <title> ryan.isaac.g </title>
-        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="/home.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <main>
             <header>
-                <h1> ryan.isaac.g </h1>
+                
+<div class="page-header">
+    <h1>ryan.isaac.g</h1>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/code">/code</a>
+        <a href="/tabletop">/tabletop</a>
+    </div>
+</div>
+
             </header>
             <article>
                 <h2 id="wave-hi-i-m-ryan">👋 Hi, I'm Ryan</h2>
 <p>My pronouns are they/them or he/him (no preference).
 I'm a software engineer and a hobbyist game developer/writer.</p>
 <p>My open-source projects are available on <a href="https://github.com/ryanisaacg/">GitHub</a>;
-I sometimes talk about them <a href="posts/">here on my blog.</a> My focus used to be game development; I developed and maintain a game framework called <a href="https://github.com/ryanisaacg/quicksilver">Quicksilver</a>, a library for writing <a href="https://rust-lang.org">Rust</a> games for desktop and web. I've also made a handful of <a href="https://github.com/ryanisaacg/rebound">small</a> <a href="https://github.com/ryanisaacg/hellevator">video</a> <a href="https://github.com/ryanisaacg/interplanet">games</a>.</p>
-<p>In my spare time, I write <a href="https://en.wikipedia.org/wiki/Tabletop_role-playing_game">table-top roleplaying / pen and paper games</a>. Head over to <a href="https://ryanisaacg.itch.io">my itch.io page</a> to check out and download them!</p>
+I sometimes talk about them <a href="code/">here on my blog.</a> I developed and maintained a game framework called <a href="https://github.com/ryanisaacg/quicksilver">Quicksilver</a>, a library for writing <a href="https://rust-lang.org">Rust</a> games for desktop and web. I've also made a handful of <a href="https://github.com/ryanisaacg/rebound">small</a> <a href="https://github.com/ryanisaacg/hellevator">video</a> <a href="https://github.com/ryanisaacg/interplanet">games</a>.</p>
+<p>In my spare time, I write <a href="https://en.wikipedia.org/wiki/Tabletop_role-playing_game">table-top roleplaying / pen and paper games</a>. Sometimes I write about them <a href="tabletop/">here</a>. Head over to <a href="https://ryanisaacg.itch.io">my itch.io page</a> to check out and download them!</p>
 <p>If you want to get in contact, you can reach me <a href="mailto:ryan@ryanisaacg.com">via email</a>.</p>
 <h2 id="blog-posts">Blog Posts</h2>
 <!-- Blog posts go here -->
 
                 
-    
+                
+                
+                
     
     
         
@@ -31,11 +42,22 @@ I sometimes talk about them <a href="posts/">here on my blog.</a> My focus used 
     
         <section>
             <header>
-                <p> 2021-04-04 </p>
-                </p>
-                <a href="https://ryanisaacg.com/posts/dark-mode">
+                <a href="https://ryanisaacg.com/tabletop/game-a-month">
+                    <h3> A Game Every Month </h3>
+                </a>
+                <p> tabletop - 2021-06-10 </p>
+            </header>
+            <p>For the past couple years I've been playing around with tabeletop RPG design. My goal was to make a comprehensive hack of a game like <a href="https://bladesinthedark.com/greetings-scoundrel"><em>Blades in the Dark</em></a> or <a href="https://rowanrookanddecard.com/product/spire-rpg/"><em>Spire: The City Must Fall</em></a>,
+but none of my attempts panned out. I found myself caught in a rut of moving from big project to big project as they collapsed under their own weight. To break the cycle, I set myself a challenge: make an RPG (or at least <em>something</em> RPG-related) every month of 2021.</p>
+
+        </section>
+    
+        <section>
+            <header>
+                <a href="https://ryanisaacg.com/code/dark-mode">
                     <h3> Dark Mode! </h3>
                 </a>
+                <p> code - 2021-04-04 </p>
             </header>
             <p>If your browser is set to dark mode by default, you've probably noticed the site looks different! I now have some dark mode CSS, so this blog isn't eye-searingly white if everything else is dark on your screen.</p>
 
@@ -43,11 +65,10 @@ I sometimes talk about them <a href="posts/">here on my blog.</a> My focus used 
     
         <section>
             <header>
-                <p> 2020-10-13 </p>
-                </p>
-                <a href="https://ryanisaacg.com/posts/quicksilver-goodbye">
+                <a href="https://ryanisaacg.com/code/quicksilver-goodbye">
                     <h3> Quicksilver and Open Source </h3>
                 </a>
+                <p> code - 2020-10-13 </p>
             </header>
             <p>So this is a post that's been bouncing around my head for a while, in one form or another. I created and maintain <a href="https://github.com/ryanisaacg/quicksilver">Quicksilver</a>, a 2D game framework for creating games for desktop and the web. The reason I'm writing this post is that I also haven't <em>used</em> Quicksilver to make anything for over a year.</p>
 
@@ -55,11 +76,10 @@ I sometimes talk about them <a href="posts/">here on my blog.</a> My focus used 
     
         <section>
             <header>
-                <p> 2020-07-10 </p>
-                </p>
-                <a href="https://ryanisaacg.com/posts/announcing-elefont">
+                <a href="https://ryanisaacg.com/code/announcing-elefont">
                     <h3> A New Quicksilver Crate, Elefont </h3>
                 </a>
+                <p> code - 2020-07-10 </p>
             </header>
             <p>This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil <code>elefont</code>, a crate that I've developed for font caching.</p>
 
@@ -67,25 +87,12 @@ I sometimes talk about them <a href="posts/">here on my blog.</a> My focus used 
     
         <section>
             <header>
-                <p> 2020-05-24 </p>
-                </p>
-                <a href="https://ryanisaacg.com/posts/new-blog-2">
+                <a href="https://ryanisaacg.com/code/new-blog-2">
                     <h3> Website Makeover, Again </h3>
                 </a>
+                <p> code - 2020-05-24 </p>
             </header>
             <p>Out with the old, in with the new! After some frustration with Hugo, I've moved to <a href="https://www.getzola.org/">Zola</a> and some light CSS.</p>
-
-        </section>
-    
-        <section>
-            <header>
-                <p> 2019-12-29 </p>
-                </p>
-                <a href="https://ryanisaacg.com/posts/quicksilver-chanukah-2019-day-8">
-                    <h3> A Quicksilver Chanukah, Day 8: Rust Gamedev and the Web </h3>
-                </a>
-            </header>
-            <p>This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less &quot;for free:&quot; most of the foundational crates have available web support, in one way or another.</p>
 
         </section>
     

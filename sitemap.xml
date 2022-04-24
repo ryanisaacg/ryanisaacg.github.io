@@ -15,6 +15,10 @@
         <lastmod>2021-04-04</lastmod>
     </url>
     <url>
+        <loc>https://ryanisaacg.com/code/my-coding-setup/</loc>
+        <lastmod>2022-04-23</lastmod>
+    </url>
+    <url>
         <loc>https://ryanisaacg.com/code/new-blog-2/</loc>
         <lastmod>2020-05-24</lastmod>
     </url>
@@ -63,10 +67,21 @@
         <lastmod>2019-02-04</lastmod>
     </url>
     <url>
+        <loc>https://ryanisaacg.com/posts/</loc>
+    </url>
+    <url>
         <loc>https://ryanisaacg.com/tabletop/</loc>
+    </url>
+    <url>
+        <loc>https://ryanisaacg.com/tabletop/a-game-can-be-a-blog-post/</loc>
+        <lastmod>2022-04-16</lastmod>
     </url>
     <url>
         <loc>https://ryanisaacg.com/tabletop/game-a-month/</loc>
         <lastmod>2021-06-10</lastmod>
+    </url>
+    <url>
+        <loc>https://ryanisaacg.com/tabletop/the-channeler/</loc>
+        <lastmod>2022-04-16</lastmod>
     </url>
 </urlset>

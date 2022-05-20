@@ -5,13 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-    <title> Falling in love with bisecting :: ryan.isaac.g </title>
+    <title> Falling in love with git bisect :: ryan.isaac.g </title>
 
-    <meta property="og:title" content="Falling in love with bisecting :: ryan.isaac.g">
-    <meta name="description" content="&lt;p&gt;Hunting down the source of a bug can be tricky. Often I find myself relying less on my actual knowledge and tools and more on my intuition. There is, of course, a better way and recently I&#x27;ve embraced it wholeheartedly. And that better way is built right into git!&lt;&#x2F;p&gt;
-">
-    <meta property="og:description" content="&lt;p&gt;Hunting down the source of a bug can be tricky. Often I find myself relying less on my actual knowledge and tools and more on my intuition. There is, of course, a better way and recently I&#x27;ve embraced it wholeheartedly. And that better way is built right into git!&lt;&#x2F;p&gt;
-">
+    <meta property="og:title" content="Falling in love with git bisect :: ryan.isaac.g">
+    <meta name="description" content="">
+    <meta property="og:description" content="">
     <!-- Keep synced with link color in site.scss -->
     <meta name="theme-color" content="#4c4edd">
     
@@ -31,28 +29,28 @@
     </div>
 </div>
 
-                <h1> Falling in love with bisecting </h1>
-                <small> 2022-05-07 </small>
+                <h1> Falling in love with git bisect </h1>
+                <small> 2022-05-19 </small>
             </header>
             <article>
-                <p>Hunting down the source of a bug can be tricky. Often I find myself relying less on my actual knowledge and tools and more on my intuition. There is, of course, a better way and recently I've embraced it wholeheartedly. And that better way is built right into git!</p>
-<span id="continue-reading"></span><h2 id="the-concept">The Concept</h2>
-<p>Don't get me wrong: intuition has great value. In my experience, even a few months of study can help to build a mental model of a system such that I can guess where bugs originate before touching the code. Even in cases with high familiarity, however, we are working the realm of guesswork and hypothesis. If my first guess is wrong, I find it easy to chase my tail as I track down false lead after false lead, and can miss what's right in front of me. When I feel this happening, I turn to <code>git bisect</code>.</p>
-<p><code>bisect</code>, in the style of all things git, is slightly arcane and clunky but incredibly powerful. All you have to do* is tell git a commit known to be good and a commit known to be bad, and it will guide you through an efficient exploration of your repository's history. At each step of the process, <code>bisect</code> presents you with a commit and asks &quot;is this commit good, or bad?&quot; A quick test of your system and you can produce the answer (failing tests, incorrect behavior, broken build, what have you) and inform git; it can then continue with a binary search to find the offending change.</p>
+                <p>Recently I found myself tracking down a handful of regressions: bugs I knew hadn't existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with <code>git bisect</code>.</p>
+<p><code>bisect</code>, in the style of all things git, is slightly arcane and clunky but incredibly powerful. All you have to do is tell git a commit known to be good and a commit known to be bad, and it will guide you through an efficient exploration of your repository's history. At each step of the process, <code>bisect</code> presents you with a commit and asks &quot;is this commit good, or bad?&quot; A quick test of your system and you can produce the answer (failing tests, incorrect behavior, broken build, what have you) and inform git; it can then continue with a binary search to find the offending change.</p>
 <aside>
-<p>In case your runtime analysis skills are a little dusty, a binary search has an O(log(N)) runtime to find its result. Even with 10,000 commits between your good and bad state, at most you'll have to inspect 13 to find the culprit.</p>
+<p>In case your runtime analysis skills are a little dusty, a binary search has an <code>O(log N)</code> runtime to find its result. Even with 10,000 commits between your good and bad state, at most you'll have to inspect 13 to find the culprit.</p>
 </aside>
-<h2 id="the-interface">The Interface</h2>
-<p>Git, of course, is a viper's nest full of nightmares. Even with a decent understanding of what's happening under the hood, I am terrified of git's interface. <code>git bisect</code> can be a little tricky, but in my experience mastery is rewarded. You can initiate bisect with</p>
+<p>Like a lot of git's interface, <code>git bisect</code> can be tricky and unintiuitive. For example, you'll need to run all these commands from the top level of your repository. You can initiate bisect with</p>
 <p><code>git bisect start</code></p>
 <p>At any time, you can bail out of this operation with</p>
 <p><code>git bisect reset</code></p>
-<p>which is good to keep in mind if you find yourself tangled. After you've started the bisect, provide a commit with the &quot;new&quot; state of your repository (where the bug is present, when the performance improved, etc) and any commit that you know to be the &quot;old&quot; state (where the bug is absent, where the performance had not yet improved). These commands used to be called &quot;good&quot; and &quot;bad&quot; but have been generalized; when bug-hunting I often use &quot;good&quot; and &quot;bad&quot; because I find them clearer.</p>
-<p><code>git bisect new my-good-commit</code> and <code>git bisect old my-bad-commit</code> (or <code>git bisect good my-good-commit</code> and <code>git bisect bad my-bad-commit</code> )</p>
-<p>After you've specified your commits, git will check out the midpoint and ask you to evaluate it. Do whatever you need (run tests, inspect an app, check benchmarks) and then inform git that this commit is using the <code>new</code> or <code>old</code> behavior (or that it is <code>good</code> or <code>bad</code>) with a simple <code>git bisect new/old/good/bad</code> as desired. The process will repeat a few times until you find what you're looking for!</p>
+<p>which is good to keep in mind if you find yourself tangled. Now that you've started the bisect, define the bounds by picking a commit that has &quot;good&quot; state and a commit that has &quot;bad&quot; state:</p>
+<p><code>git bisect good my-good-commit</code></p>
+<p>and</p>
+<p><code>git bisect bad my-bad-commit</code></p>
 <aside>
-<p>This is where we come to a crucial caveat: what your history looks like. I find that it's best to keep git commits in the main branch to be a series of atomic changes from one good, working state to another, with intermediate development changes rolled up and squashed down (via rebase or squash-merges). It aids in history explorations like this one, instead of fighting through broken builds. However, if you find yourself confronted with a commit that you cannot test, <code>git bisect skip</code> is your friend.</p>
+<p>Git has introduced new aliases for <code>good</code> and <code>bad</code>: <code>new</code> and <code>old</code>, to allow for value-neutral bisects (like tracking down a performance improvement). I find <code>good</code> and <code>bad</code> to be much stronger pnuemonics, so I use them, but it's good to know about the other options.</p>
 </aside>
+<p>After you've specified your commits, git will check out the midpoint and ask you to evaluate it. Do whatever you need (run tests, inspect an app, check benchmarks) and then inform git that this commit is <code>good</code> or <code>bad</code> with a simple <code>git bisect good/bad</code> as desired. The process will repeat a few times until you find what you're looking for!</p>
+<p>This is where we come to a crucial caveat: your git history. I find that it's best to squash intermediary commits when merging, resulting in a clean list of working commits. It aids in history explorations like this one, and means you don't have to fight through a flurry of &quot;wip: temp&quot; and &quot;fix lint&quot; garbage commits. However, if you find yourself confronted with a commit that you cannot test, <code>git bisect skip</code> is your friend.</p>
 <p>If you'd like to learn more, the <a href="https://git-scm.com/docs/git-bisect">git bisect docs</a> have more detail and even explore the topic of automatic bisecting. Happy hacking!</p>
 
             </article>

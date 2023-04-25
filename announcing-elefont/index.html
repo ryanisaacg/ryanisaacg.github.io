@@ -1,6 +1,61 @@
-<!doctype html>
-<meta charset="utf-8">
-<link rel="canonical" href="https://ryanisaacg.com/code/announcing-elefont/">
-<meta http-equiv="refresh" content="0; url=https://ryanisaacg.com/code/announcing-elefont/">
-<title>Redirect</title>
-<p><a href="https://ryanisaacg.com/code/announcing-elefont/">Click here</a> to be redirected.</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> A New Quicksilver Crate, Elefont :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="A New Quicksilver Crate, Elefont :: ryan.isaac.g">
+    <meta name="description" content="<p>This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil <code>elefont</code>, a crate that I've developed for font caching.</p>
+">
+    <meta property="og:description" content="<p>This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil <code>elefont</code>, a crate that I've developed for font caching.</p>
+">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+  <link rel="stylesheet" href="/_astro/_...alias_.a264a228.css" />
+<link rel="stylesheet" href="/_astro/_...alias_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+            <a href="/code" class="astro-3EF6KSR2">/code</a>
+            <a href="/tabletop" class="astro-3EF6KSR2">/tabletop</a>
+        </div>
+    </div>
+    
+        <h1>A New Quicksilver Crate, Elefont</h1>
+        <small>2020-07-10</small>
+    
+</header>
+    <article>
+        <p>This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil <code>elefont</code>, a crate that I’ve developed for font caching.</p>
+<!-- more -->
+<h2 id="what-is-elefont">What is Elefont?</h2>
+<p>Elefont is a glyph caching layer, intended to reduce round-trips to the GPU when rendering text.
+When a glyph is sent to the GPU, it is stored on a texture and re-used until the cache needs to be refreshed.
+Elefont is also designed to support many different font providers, and many different graphics backends: you can currently choose to render with <a href="https://gitlab.redox-os.org/redox-os/rusttype">rusttype</a> or <a href="https://github.com/mooman219/fontdue/">fontdue</a>, and there are plans to <a href="https://github.com/ryanisaacg/elefont/issues/5">support bitmap fonts</a> and <a href="https://github.com/ryanisaacg/elefont/issues/3">operating-system-specific font toolkits via font_kit</a>.
+It is designed for use primarily in games, because it was written for Quicksilver, and the design reflects that. A GUI toolkit can probably choose a specific font rendering toolkit and use it throughout, but games tend to have more idiosyncratic text requirements (like bitmap fonts.)</p>
+<h2 id="what-is-glyph-caching">What is Glyph Caching?</h2>
+<p>Glyph caching is an approach to font rendering that stores each “glyph” (font image) on the GPU.</p>
+<aside>
+<p>Human writing is vast and complex, and so are the systems we have built to digitize it. A “glyph” is not the same as a “character;” this may surprise people who exclusively use Latin script. For example, Unicode emoji support <a href="https://emojipedia.org/emoji-modifier-sequence/">skin-tone modifiers</a>. These are separate Unicode code-points that are placed <em>after</em> the emoji code-point, and modify the image that is produced. Other familiar examples include all-caps fonts: ‘A’ and ‘a’ are different characters, but may be represented by the same glyph. For more on the complexity of text rendering, see <a href="https://gankra.github.io/blah/text-hates-you/">Text Rendering Hates You</a>.</p>
+</aside>
+<p>Most fonts are stored in files like ‘TTF’ or ‘OTF’. These are called ‘vector fonts,’ because the glyphs are stored as a series of strokes; similar technology powers SVG images or Adobe Flash graphics. Every time you render a glyph from one of these fonts, the font system uses a ‘rasterizer’ to turn the strokes of the glyph into a grid of pixel color values. This is a fairly expensive operation, so glyph caches store this resulting bitmap instead of re-generating it every time the character is used. Elefont helps in this case by keeping track of a map of glyphs to their rendered counterparts.</p>
+<p>Even if you’re using a “bitmap font” (a font defined by pixel image data instead of vector graphics), you still have to send that image data to the GPU. With the machinery already in place to map from glyphs to rendered images, Elefont can help in this case by keeping track of a map of glyphs to their GPU-side counterparts. This is a high priority for a future version, but isn’t written yet.</p>
+<h2 id="why-not-use-x">Why not use X?</h2>
+<p>Initially, I didn’t expect to write Elefont or anything similar. I knew that Quicksilver 0.4 would need glyph caching, because fonts and text were a significant pain point in Quicksilver 0.3. What I did not find was anything that fit my requirements:</p>
+<ol>
+<li>Work with any graphics backend. Quicksilver uses <code>golem</code>, my abstraction layer over OpenGL, so being tied to another graphics library was a no-go</li>
+<li>Work with any font provider. Users may have bitmap fonts or vector fonts; they may want system-native font rendering (with some web fallback); they may want the more mature rusttype or the more ambitious fontdue, etc.</li>
+</ol>
+<p>There were other options that pass requirement 1, chief among them <a href="https://crates.io/crates/glyph-brush">glyph_brush</a>. However, glyph_brush is tied into rusttype, and doesn’t seem to be interested in supporting bitmap fonts or other rasterizers. For many uses, glyph_brush is the right choice! However, it just couldn’t fit my needs. Bitmap fonts are a fairly common request when rendering for games, and a design that precludes them is a missed opportunity.</p>
+<h2 id="what-comes-next">What Comes Next?</h2>
+<p>(Hopefully soon) I’ll be putting out a State of Quicksilver update, that generally addresses progress the project has made this year!</p>
+    </article>
+
+  </body></html>

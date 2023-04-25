@@ -1,53 +1,6 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> A Quicksilver Chanukah: Day 1 :: ryan.isaac.g </title>
-
-    <meta property="og:title" content="A Quicksilver Chanukah: Day 1 :: ryan.isaac.g">
-    <meta name="description" content="<p>I started this year with a <a href=&#34;../state-of-quicksilver-feb-2019&#34;>blog post about the state of Quicksilver</a> where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I'm happy to update this work (by me and many others!) has been a success, and the core of Rust's game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</p>
-">
-    <meta property="og:description" content="<p>I started this year with a <a href=&#34;../state-of-quicksilver-feb-2019&#34;>blog post about the state of Quicksilver</a> where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I'm happy to update this work (by me and many others!) has been a success, and the core of Rust's game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</p>
-">
-    <!-- Keep synced with link color in site.scss -->
-    <meta name="theme-color" content="#4c4edd">
-    
-    
-  <link rel="stylesheet" href="/_astro/_...alias_.a264a228.css" />
-<link rel="stylesheet" href="/_astro/_...alias_.75727b75.css" /></head>
-  <body>
-    
-    <header class="astro-3EF6KSR2">
-    <div class="page-header astro-3EF6KSR2">
-        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
-        <div class="header-links astro-3EF6KSR2">
-            <a href="/" class="astro-3EF6KSR2">/home</a>
-            <a href="/code" class="astro-3EF6KSR2">/code</a>
-            <a href="/tabletop" class="astro-3EF6KSR2">/tabletop</a>
-        </div>
-    </div>
-    
-        <h1>A Quicksilver Chanukah: Day 1</h1>
-        <small>2019-12-22</small>
-    
-</header>
-    <article>
-        <p>I started this year with a <a href="../state-of-quicksilver-feb-2019">blog post about the state of Quicksilver</a> where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I’m happy to update this work (by me and many others!) has been a success, and the core of Rust’s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.</p>
-<!-- more -->
-<p>Without having to maintain my own set of web bindings for Quicksilver, I was able to start working on significant changes to both the internal and external structure. There are a few entirely unrelated modules in Quicksilver that are all needed for the framework: handling filesystem resources, creating and loading local data, the event loop, the graphics API, and the sound API. It makes sense to allow users to pick and choose these systems, which is the goal of Quicksilver’s optional features. However, that still requires depending on Quicksilver, which doesn’t make sense for some projects. Instead, I’ve created a few new crates that anyone can drop into their project without pulling in any other Quicksilver-related code.</p>
-<p>Additionally, a major new Rust feature landed this year: async/await. Quicksilver’s asset loading system has been a sticking point, because of its design decisions and the inherent pain of combinator-based <code>Future</code> code. With <code>async</code> and <code>.await</code>, a new asynchronous asset loading API can be almost seamless. Combined with fixes to long-standing graphics API problems, I’ve been working on a new major release for Quicksilver (which will be the first breaking change in over a year.)</p>
-<p>As <a href="https://en.wikipedia.org/wiki/Hanukkah">Chanukah</a> starts tonight, I’m going to share these new crates and big Quicksilver updates over the next eight days. I can’t promise I’ll actually stick to this schedule, but my goal is:</p>
-<ol>
-<li>This post!</li>
-<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
-<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
-</ol>
-    </article>
-
-  </body></html>
+<meta charset="utf-8">
+<link rel="canonical" href="code/quicksilver-chanukah-2019">
+<meta http-equiv="refresh" content="0; url=code/quicksilver-chanukah-2019" ">
+<title>Redirect</title>
+<p><a href="code/quicksilver-chanukah-2019">Click here</a> to be redirected.</p>

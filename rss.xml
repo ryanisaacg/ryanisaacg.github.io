@@ -541,6 +541,80 @@ It is designed for use primarily in games, because it was written for Quicksilve
 &lt;p&gt;After you&apos;ve specified your commits, git will check out the midpoint and ask you to evaluate it. Do whatever you need (run tests, inspect an app, check benchmarks) and then inform git that this commit is &lt;code&gt;good&lt;/code&gt; or &lt;code&gt;bad&lt;/code&gt; with a simple &lt;code&gt;git bisect good/bad&lt;/code&gt; as desired. The process will repeat a few times until you find what you&apos;re looking for!&lt;/p&gt;
 &lt;p&gt;This is where we come to a crucial caveat: your git history. I find that it&apos;s best to squash intermediary commits when merging, resulting in a clean list of working commits. It aids in history explorations like this one, and means you don&apos;t have to fight through a flurry of &amp;quot;wip: temp&amp;quot; and &amp;quot;fix lint&amp;quot; garbage commits. However, if you find yourself confronted with a commit that you cannot test, &lt;code&gt;git bisect skip&lt;/code&gt; is your friend.&lt;/p&gt;
 &lt;p&gt;If you&apos;d like to learn more, the &lt;a href=&quot;https://git-scm.com/docs/git-bisect&quot;&gt;git bisect docs&lt;/a&gt; have more detail and even explore the topic of automatic bisecting. Happy hacking!&lt;/p&gt;
+</content:encoded></item><item><title>Using Neovim with Unity</title><link>https://ryanisaacg.com/code/nvim-and-unity/</link><guid>https://ryanisaacg.com/code/nvim-and-unity/</guid><description>&lt;p&gt;In the last few years I&apos;ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor&apos;s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.&lt;/p&gt;
+</description><pubDate>Fri, 28 Apr 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In the last few years I&apos;ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor&apos;s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;I started off by searching around for other people&apos;s experience using Neovim with Unity, and found &lt;a href=&quot;https://chrislabarge.com/posts/neovim-unity-engine/&quot;&gt;a decent blog post&lt;/a&gt; that walked me through the basic steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Configure Unity to send a message over a Unix socket to neovim when you want to open a file&lt;/li&gt;
+&lt;li&gt;Create a script to launch neovim listening to that Unix socket&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I didn&apos;t end up using exactly the solution they provide (&lt;code&gt;nvr&lt;/code&gt; doesn&apos;t seem to be available as part of my neovim install) but after reading the documentation for nvim&apos;s &lt;code&gt;--remote&lt;/code&gt; option I was able to set up this part of the ingration fine. When I opened a file in Unity, it would pop open in my vim session.&lt;/p&gt;
+&lt;p&gt;The logical next step is some sort of LSP integration. I went for the officially-supported omnisharp-roslyn and installed it on my system. The nvim-lsp documentation recommended the &lt;code&gt;omnisharp_extended&lt;/code&gt; plugin for handling go-to-definition, so I added that to my config as well. My config ended up looking like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;omnisharp = {
+    cmd = {
+        &amp;quot;mono&amp;quot;,
+        &amp;quot;/Users/ryanisaacg/bin/omnisharp-osx/omnisharp/OmniSharp.exe&amp;quot;,
+        &amp;quot;--languageserver&amp;quot;,
+        &amp;quot;--hostPID&amp;quot;,
+        tostring(pid),
+    },
+    handlers = {
+        [&amp;quot;textDocument/definition&amp;quot;] = require(&apos;omnisharp_extended&apos;).handler,
+    },
+
+    -- Enables support for reading code style, naming convention and analyzer
+    -- settings from .editorconfig.
+    enable_editorconfig_support = true,
+
+    -- If true, MSBuild project system will only load projects for files that
+    -- were opened in the editor. This setting is useful for big C# codebases
+    -- and allows for faster initialization of code navigation features only
+    -- for projects that are relevant to code that is being edited. With this
+    -- setting enabled OmniSharp may load fewer projects and may thus display
+    -- incomplete reference lists for symbols.
+    enable_ms_build_load_projects_on_demand = false,
+
+    -- Enables support for roslyn analyzers, code fixes and rulesets.
+    enable_roslyn_analyzers = false,
+
+    -- Specifies whether &apos;using&apos; directives should be grouped and sorted during
+    -- document formatting.
+    organize_imports_on_format = false,
+
+    -- Enables support for showing unimported types and unimported extension
+    -- methods in completion lists. When committed, the appropriate using
+    -- directive will be added at the top of the current file. This option can
+    -- have a negative impact on initial completion responsiveness,
+    -- particularly for the first few completion sessions after opening a
+    -- solution.
+    enable_import_completion = false,
+
+    -- Specifies whether to include preview versions of the .NET SDK when
+    -- determining which version to use for project loading.
+    sdk_include_prereleases = true,
+
+    -- Only run analyzers against open files when &apos;enableRoslynAnalyzers&apos; is
+    -- true
+    analyze_open_documents_only = false,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and it worked pretty well! I could open up my files from Unity, have them pop open in Neovim, and they were properly integrated with the C# LSP. Unfortunately omnisharp apparently won&apos;t search your PATH for &lt;code&gt;OmniSharp.exe&lt;/code&gt;, which means that this part of my config isn&apos;t portable to other machines. Other than that, everything seemed just fine.&lt;/p&gt;
+&lt;p&gt;After using this setup for a few days I ran into a problem. Whenever I created a new C# file, omnisharp would be completely borked: anything it defined was unavailable in other files and all of the imports in the new file would be marked as unresolved. I could fix the problems by restarting my entire editor, but omnisharp&apos;s long boot time makes that painful. At this point I thought was defeated and started to configure VSCode for C#. Fortunately, a new update to Neovim saved the day! In the GitHub issue someone pointed out that the issue was the LSP client not properly handling the &lt;code&gt;didChangeWatchedFiles&lt;/code&gt; message from the server. Last week Neovim added experimental support for handling this in its LSP, so once you &lt;a href=&quot;https://github.com/OmniSharp/omnisharp-roslyn/issues/2250#issuecomment-1499726992&quot;&gt;enable it in the LSP capabilities&lt;/a&gt; the new-file-problem goes away!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;local capabilities = vim.tbl_deep_extend(
+    &amp;quot;force&amp;quot;,
+    require(&apos;cmp_nvim_lsp&apos;).default_capabilities(),
+    {
+        workspace = {
+            didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            },
+        },
+    }
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Upgrading Neovim, however, introduced a new problem. It seems like omnisharp-roslyn reports invalid tokens for the LSP semantic-highlighting feature, which trips up nvim. There&apos;s a hacky workaround I&apos;m using (that I found &lt;a href=&quot;https://nicolaiarocci.com/making-csharp-and-omnisharp-play-well-with-neovim/&quot;&gt;in a blog post&lt;/a&gt;) which manually fixes the invalid tokens; hopefully omnisharp fixes the issue upstream soon.&lt;/p&gt;
+&lt;p&gt;That&apos;s essentially where I&apos;m leaving things for now: there are some hacks underlying my setup, but day-to-day everything works fine. I have a newfound appreciation for web dev tooling and the Rust project; this was definitely the most fiddly thing I&apos;ve done with my editor in quite some time.&lt;/p&gt;
 </content:encoded></item><item><title>A Game Every Month</title><link>https://ryanisaacg.com/tabletop/game-a-month/</link><guid>https://ryanisaacg.com/tabletop/game-a-month/</guid><description>&lt;p&gt;For the past couple years I&apos;ve been playing around with tabletop RPG design. My goal was to make a comprehensive hack of a game like &lt;a href=&quot;https://bladesinthedark.com/greetings-scoundrel&quot;&gt;&lt;em&gt;Blades in the Dark&lt;/em&gt;&lt;/a&gt; or &lt;a href=&quot;https://rowanrookanddecard.com/product/spire-rpg/&quot;&gt;&lt;em&gt;Spire: The City Must Fall&lt;/em&gt;&lt;/a&gt;,
 but none of my attempts panned out. I found myself caught in a rut of moving from big project to big project as they collapsed under their own weight. To break the cycle, I set myself a challenge: make an RPG (or at least &lt;em&gt;something&lt;/em&gt; RPG-related) every month of 2021.&lt;/p&gt;
 </description><pubDate>Thu, 10 Jun 2021 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;For the past couple years I&apos;ve been playing around with tabletop RPG design. My goal was to make a comprehensive hack of a game like &lt;a href=&quot;https://bladesinthedark.com/greetings-scoundrel&quot;&gt;&lt;em&gt;Blades in the Dark&lt;/em&gt;&lt;/a&gt; or &lt;a href=&quot;https://rowanrookanddecard.com/product/spire-rpg/&quot;&gt;&lt;em&gt;Spire: The City Must Fall&lt;/em&gt;&lt;/a&gt;,

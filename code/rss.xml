@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Ryan’s Software Blog</title><description>My posts about programming and software engineering</description><link>https://ryanisaacg.com/</link><language>en-us</language><item><title>The State of Quicksilver Feb 2019</title><link>https://ryanisaacg.com/code/state-of-quicksilver-feb-2019/</link><guid>https://ryanisaacg.com/code/state-of-quicksilver-feb-2019/</guid><description>&lt;p&gt;For anyone who doesn&apos;t know, &lt;a href=&quot;https://github.com/ryanisaacg/quicksilver&quot;&gt;Quicksilver&lt;/a&gt; is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.&lt;/p&gt;
+&lt;p&gt;Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework.
+Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc. A pure-Rust game framework is getting easier to make all the time.&lt;/p&gt;
+</description><pubDate>Mon, 04 Feb 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;For anyone who doesn&apos;t know, &lt;a href=&quot;https://github.com/ryanisaacg/quicksilver&quot;&gt;Quicksilver&lt;/a&gt; is my 2D game framework that targets desktop and web. It is a pure-Rust library that focuses on ergonomics and simplicity.&lt;/p&gt;
+&lt;p&gt;Quicksilver is part of a small (but growing) set of Rust game engines. Notable are the Amethyst project, an open-source game engine, and ggez, a LOVE-inspired 2D game framework.
+Increasingly it is practical to build an entire game with only the Rust toolchain: winit provides windowing, a variety of crates allow access to platform graphics APIs, rodio provides sound, rusttype for font rendering, etc. A pure-Rust game framework is getting easier to make all the time.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;However, very few libraries support WASM out of the box. This means Quicksilver and Rust WASM games in general essentially have small implementations of windowing, event handling, sounds, graphics, and input for the web that have not been contributed upstream.&lt;/p&gt;
+&lt;h2&gt;The Framework Problem&lt;/h2&gt;
+&lt;p&gt;Opting to use Quicksilver for some feature (web support, API design, automatic batching) requires opting into &lt;em&gt;all&lt;/em&gt; of Quicksilver&apos;s features. This isn&apos;t necessarily great! Even with compile-time feature flags available, it&apos;s hard to do any Quicksilver code without buying into the State trait. This boils down to the vision of Quicksilver as a framework: if you can just plug in Quicksilver and start making a game right away, it needs to be everything to everyone.&lt;/p&gt;
+&lt;p&gt;Partly this is due to Quicksilver&apos;s history as a bit of a learning project for me, which I wanted to build from scratch in as many places as possible. It&apos;s also caused by my impatience: the Rust ecosystem is amazing and featureful, but waiting for every single upstream project to accept changes would mean that Quicksilver could only be developed as fast as its slowest dependency. I tend to have time to work on the project in bursts, when I clear out the bug backlog and implement a few features from the roadmap; this doesn&apos;t mesh well with long-running interactions with other projects. The way I&apos;ve handled this in the past is writing my own Javascript bindings for each feature, essentially cloning an entire crate.&lt;/p&gt;
+&lt;h2&gt;The Fundamentals&lt;/h2&gt;
+&lt;p&gt;Largely, Quicksilver&apos;s API is approaching a state of stability. It accomplishes most of what I want it to, in a way I&apos;m largely satisfied with. For end users, the Quicksilver project has been more or less stable for a few months, and no substantial breaking changes are planned for the future.&lt;/p&gt;
+&lt;p&gt;However, Quicksilver still has quite a few systems implemented by a dependency and an ad-hoc web clone of that dependency. This is what I hope to change, by contributing web backends across the ecosystem. My ideal outcome is that the fundamental multimedia crates (winit, rodio, gilrs, etc.) can run on WASM out-of-the-box.&lt;/p&gt;
+&lt;h2&gt;Going Forward&lt;/h2&gt;
+&lt;p&gt;If it sounds like my current goal is to make Quicksilver obsolete, that wouldn&apos;t be too far off. Quicksilver&apos;s raison d&apos;etre is packaging up a bundle of functionality and to provide a single API for both web and native. Moving the ecosystem to support web and native makes this less important. Parts of Quicksilver that I think are particularly useful will probably become their own crates (re-exported in Quicksilver) to allow their use outside the framework. Some future version of Quicksilver may just be entirely a re-export of various crates and types with a consistent organization.&lt;/p&gt;
+&lt;p&gt;In essence, I want seamless desktop and WASM development to move from a selling point of developing games in Quicksilver to a selling point of developing games in Rust.&lt;/p&gt;
+</content:encoded></item><item><title>Website Makeover</title><link>https://ryanisaacg.com/code/new-blog-debut/</link><guid>https://ryanisaacg.com/code/new-blog-debut/</guid><description>&lt;p&gt;So www.ryanisaacg.com has a very new look, powered by Hugo and my (fairly small) fork of the &lt;a href=&quot;https://github.com/rhazdon/hugo-theme-hello-friend-ng&quot;&gt;hello-friend-ng&lt;/a&gt; theme.&lt;/p&gt;
+</description><pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;So www.ryanisaacg.com has a very new look, powered by Hugo and my (fairly small) fork of the &lt;a href=&quot;https://github.com/rhazdon/hugo-theme-hello-friend-ng&quot;&gt;hello-friend-ng&lt;/a&gt; theme.
+&amp;lt;!-- more --&amp;gt;
+Partly the site will be dedicated to a bit of a professional showcase / bio for myself, but also with added blog functionality I can communicate in a more public way about my plans for my open source projects.&lt;/p&gt;
+&lt;p&gt;The State of Quicksilver that I wrote earlier this year has moved from its previous home as Github gist to retroactively being a post here, as I feel more comfortable linking to my writing in a domain that I control and can ensure the links stay live. The Quicksilver website itself is still hosted within the Quicksilver repo, partially for ease of version control (if a commit changes code, it can change the website docs in lockstep) and partially because I&apos;m not sure how much I want to present Quicksilver as being &lt;em&gt;my project&lt;/em&gt; versus the &lt;em&gt;Quicksilver project&lt;/em&gt;. I&apos;m too cheap and lazy to buy a quicksilver domain, so the URL still contains my screen name, but the website is independent of the rest of ryanisaacg.com. Future State-Of-Quicksilver posts will also live on this blog though, as my personal plans for the project and my work for the Rust ecosystem feel out-of-band for the actual Quicksilver site.&lt;/p&gt;
+&lt;p&gt;I won&apos;t be embedding Disqus for comments, but if you want to chat I&apos;m on the &lt;a href=&quot;https://bit.ly/rust-community&quot;&gt;Rust Community Discord&lt;/a&gt; as @ryanisaacg. I&apos;d love to hear people&apos;s thoughts on the new look, if Quicksilver should be moved to a sub-page of this site, and if State of Quicksilver should be a gist, blog posts here, or some combination.&lt;/p&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah: Day 1</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019/</guid><description>&lt;p&gt;I started this year with a &lt;a href=&quot;../state-of-quicksilver-feb-2019&quot;&gt;blog post about the state of Quicksilver&lt;/a&gt; where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I&apos;m happy to update this work (by me and many others!) has been a success, and the core of Rust&apos;s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.&lt;/p&gt;
+</description><pubDate>Sun, 22 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I started this year with a &lt;a href=&quot;../state-of-quicksilver-feb-2019&quot;&gt;blog post about the state of Quicksilver&lt;/a&gt; where I set a goal for myself: get web support for important game development crates upstreamed. At the end of the year, I&apos;m happy to update this work (by me and many others!) has been a success, and the core of Rust&apos;s game ecosystem is now-web enabled. In the future, I want to write a brief overview of those changes, but for now I want to focus on their relevance to Quicksilver.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;Without having to maintain my own set of web bindings for Quicksilver, I was able to start working on significant changes to both the internal and external structure. There are a few entirely unrelated modules in Quicksilver that are all needed for the framework: handling filesystem resources, creating and loading local data, the event loop, the graphics API, and the sound API. It makes sense to allow users to pick and choose these systems, which is the goal of Quicksilver&apos;s optional features. However, that still requires depending on Quicksilver, which doesn&apos;t make sense for some projects. Instead, I&apos;ve created a few new crates that anyone can drop into their project without pulling in any other Quicksilver-related code.&lt;/p&gt;
+&lt;p&gt;Additionally, a major new Rust feature landed this year: async/await. Quicksilver&apos;s asset loading system has been a sticking point, because of its design decisions and the inherent pain of combinator-based &lt;code&gt;Future&lt;/code&gt; code. With &lt;code&gt;async&lt;/code&gt; and &lt;code&gt;.await&lt;/code&gt;, a new asynchronous asset loading API can be almost seamless. Combined with fixes to long-standing graphics API problems, I&apos;ve been working on a new major release for Quicksilver (which will be the first breaking change in over a year.)&lt;/p&gt;
+&lt;p&gt;As &lt;a href=&quot;https://en.wikipedia.org/wiki/Hanukkah&quot;&gt;Chanukah&lt;/a&gt; starts tonight, I&apos;m going to share these new crates and big Quicksilver updates over the next eight days. I can&apos;t promise I&apos;ll actually stick to this schedule, but my goal is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 2: Platter</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-2/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-2/</guid><description>&lt;p&gt;This year saw the release of &lt;code&gt;async/.await&lt;/code&gt; in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a &lt;code&gt;Future&lt;/code&gt; instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.&lt;/p&gt;
+</description><pubDate>Mon, 23 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This year saw the release of &lt;code&gt;async/.await&lt;/code&gt; in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a &lt;code&gt;Future&lt;/code&gt; instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;let images: load_file(&amp;quot;my_manifest_path&amp;quot;)
+    .map(parse_file_contents)
+    .and_then(|image_paths| join_all(
+        image_paths
+            .map(load_file)
+            .map(|file| file.and_then(parse_image))
+    );
+
+render_loading();
+loop {
+    // Core application loop
+    if images.is_ready {
+        render_frame(&amp;amp;images);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn&apos;t even touched error handling.&lt;/p&gt;
+&lt;p&gt;Introducing &lt;a href=&quot;https://crates.io/crates/platter&quot;&gt;&lt;code&gt;platter&lt;/code&gt;&lt;/a&gt;, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;render_loading();
+let contents: load_file(&amp;quot;my_manifest_path&amp;quot;).await?;
+let image_paths: parse_file_contents(contents);
+let images: Vec::new();
+for image_path in image_paths {
+    let image_file: load_file(image_path).await?;
+    images.push(parse_image(image_file)?);
+}
+loop {
+    render_frame(&amp;amp;images);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can still make use of the combinators in a more functional-programming style if we wish, but now it&apos;s much clearer:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;render_loading();
+let contents: load_file(&amp;quot;my_manifest_path&amp;quot;).await;
+let image_futures: parse_file_contents(contents)
+    .map(load_file);
+let images: Vec&amp;lt;Image&amp;gt;: try_join_all(image_futures)
+    .await?
+    .map(parse_image)
+    .collect()?;
+loop {
+    render_frame(&amp;amp;images);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;platter&lt;/code&gt; is small and can be plugged into your own game framework or game project if you want to harness &lt;code&gt;async/await&lt;/code&gt; to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!&lt;/p&gt;
+&lt;p&gt;That&apos;s Day 2 down, but there are 6 more days of Quicksilver Chanukah:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;Yesterday&apos;s introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 3: Gestalt</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-3/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-3/</guid><description>&lt;p&gt;Often your application might want to store gamestate or configurations, but the web has no filesystem access. Additionally, you don&apos;t want to just dump files in the user&apos;s home directory; each desktop operating system has a different preferred location for storing application-specific data, and often different locations for different kinds of data.&lt;/p&gt;
+&lt;p&gt;Introducing &lt;a href=&quot;https://crates.io/crates/gestalt&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;&lt;/a&gt;, a library that bundles up your data and stores it away so you don&apos;t have to.&lt;/p&gt;
+</description><pubDate>Tue, 24 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Often your application might want to store gamestate or configurations, but the web has no filesystem access. Additionally, you don&apos;t want to just dump files in the user&apos;s home directory; each desktop operating system has a different preferred location for storing application-specific data, and often different locations for different kinds of data.&lt;/p&gt;
+&lt;p&gt;Introducing &lt;a href=&quot;https://crates.io/crates/gestalt&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;&lt;/a&gt;, a library that bundles up your data and stores it away so you don&apos;t have to.
+&amp;lt;!-- more --&amp;gt;
+A sample to save some game state:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;use gestalt::{Location, save, load};
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+struct Player {
+    name: String,
+    score: u32
+}
+
+let player1 = Player { name: &amp;quot;Bob&amp;quot;.to_string(), score: 21 };
+save(Location::Cache, &amp;quot;mygame&amp;quot;, &amp;quot;player1&amp;quot;, &amp;amp;player1).expect(&amp;quot;Could not save Player 1&amp;quot;);
+
+let player2 = Player { name: &amp;quot;Alice&amp;quot;.to_string(), score: 200 };
+save(Location::Cache, &amp;quot;mygame&amp;quot;, &amp;quot;player2&amp;quot;, &amp;amp;player2).expect(&amp;quot;Could not save Player 2&amp;quot;);
+
+// Now reload.
+let player1 = load::&amp;lt;Player&amp;gt;(Location::Cache, &amp;quot;mygame&amp;quot;, &amp;quot;player1&amp;quot;).expect(&amp;quot;Could not load Player 1&amp;quot;);
+let player2 = load::&amp;lt;Player&amp;gt;(Location::Cache, &amp;quot;mygame&amp;quot;, &amp;quot;player2&amp;quot;).expect(&amp;quot;Could not load Player 2&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Getsalt creates a Key/Value store, backed by the filesystem on desktop and the web storage API. The key is formed by &lt;code&gt;Location&lt;/code&gt;, which determines the kind of data (&lt;code&gt;Location::Cache&lt;/code&gt;, &lt;code&gt;Location::Data&lt;/code&gt;, and &lt;code&gt;Location::Config&lt;/code&gt;), the application name, and a string which identifies the name of the data chunk. The value is anything that implements &lt;code&gt;Serialize&lt;/code&gt; from &lt;a href=&quot;https://crates.io/crates/serde&quot;&gt;&lt;code&gt;serde&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Cache&lt;/code&gt; is for data that can be cleared between runs of your application; &lt;code&gt;Data&lt;/code&gt; is for blobs like save states, and &lt;code&gt;Config&lt;/code&gt; is for application settings. &lt;code&gt;gestalt&lt;/code&gt; uses &lt;a href=&quot;https://crates.io/crates/dirs&quot;&gt;&lt;code&gt;dirs&lt;/code&gt;&lt;/a&gt; to ensure that it saves your data in the right place for each, regardless of your user&apos;s operating system.&lt;/p&gt;
+&lt;p&gt;That&apos;s Day 3 done: &lt;code&gt;gestalt&lt;/code&gt; is pretty small! Tomorrow&apos;s library, &lt;code&gt;blinds&lt;/code&gt;, starts to get quite a bit bigger.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 4: Blinds</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-4/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-4/</guid><description>&lt;p&gt;With the recent update to &lt;a href=&quot;https://github.com/rust-windowing/winit&quot;&gt;&lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;, it gained web support! This is great, and it means that Quicksilver doesn&apos;t need to have its own parallel implementation of windowing. However, there is room for an abstraction that&apos;s a little simpler than Winit, and takes advantage of &lt;code&gt;async/.await&lt;/code&gt;, which is where &lt;a href=&quot;https://crates.io/crates/blinds&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;&lt;/a&gt; comes in.&lt;/p&gt;
+</description><pubDate>Wed, 25 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;With the recent update to &lt;a href=&quot;https://github.com/rust-windowing/winit&quot;&gt;&lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;, it gained web support! This is great, and it means that Quicksilver doesn&apos;t need to have its own parallel implementation of windowing. However, there is room for an abstraction that&apos;s a little simpler than Winit, and takes advantage of &lt;code&gt;async/.await&lt;/code&gt;, which is where &lt;a href=&quot;https://crates.io/crates/blinds&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;&lt;/a&gt; comes in.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;blinds&lt;/code&gt; is based on &lt;code&gt;winit&lt;/code&gt;, but focused on Quicksilver&apos;s specific use case of single-window games on desktop and web. It also integrates &lt;code&gt;gilrs&lt;/code&gt; for gamepad support (though this could be provided directly by &lt;code&gt;winit&lt;/code&gt; later), without exposing either in its external API. Additionally, &lt;code&gt;blinds&lt;/code&gt; has optional support for OpenGL, via &lt;code&gt;glow&lt;/code&gt; for uniform bindings across web and desktop.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;async&lt;/code&gt; API works via the &lt;code&gt;LocalPool&lt;/code&gt; and the &lt;code&gt;winit&lt;/code&gt; event loop, allowing you to write code that &lt;em&gt;almost&lt;/em&gt; looks like a synchronous event loop.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;use blinds::{run, Event, EventStream, Key, Settings, Window};
+
+run(Settings::default(), app);
+
+async fn app(_window: Window, mut events: EventStream) {
+    loop {
+        while let Some(ev): events.next_event().await {
+            // Process your events here!
+        }
+        // Process your frame here!
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The use of &lt;code&gt;.await&lt;/code&gt; here is a bit of a hack, as it allows the event loop to wrest control away from the user and return it to the browser without blocking. Compare this to the comparable snippet from the legacy Quicksilver API:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;use quicksilver::{
+    Result,
+    geom::Vector,
+    lifecycle::{Event, Settings, State, Window, run},
+};
+
+struct HelloWorld;
+
+impl State for HelloWorld {
+    fn new() -&amp;gt; Result&amp;lt;HelloWorld&amp;gt; {
+        Ok(HelloWorld)
+    }
+    
+    fn event(&amp;amp;mut self, window: &amp;amp;mut Window, event: &amp;amp;Event) -&amp;gt; Result&amp;lt;()&amp;gt; {
+        // Process events here
+        Ok(())
+    }
+    
+    fn update(&amp;amp;mut self, window: &amp;amp;mut Window) -&amp;gt; Result&amp;lt;()&amp;gt; {
+        // Update here
+        Ok(())
+    }
+
+    fn draw(&amp;amp;mut self, window: &amp;amp;mut Window) -&amp;gt; Result&amp;lt;()&amp;gt; {
+        // Draw here
+        Ok(())
+    }
+}
+
+fn main() {
+    run::&amp;lt;HelloWorld&amp;gt;(&amp;quot;Hello World&amp;quot;, Vector::new(800, 600), Settings::default());
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;async&lt;/code&gt; API isn&apos;t just way more convenient than the previous, trait-based system. It also allows you to use other &lt;code&gt;async&lt;/code&gt; APIs (like &lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;day 2&apos;s &lt;code&gt;platter&lt;/code&gt;&lt;/a&gt;), which is important for web support.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;blinds&lt;/code&gt; isn&apos;t quite ready for a full release yet: there are a few more window APIs I do want to expose before it leaves alpha. However, you can still try it out, just be aware that the API is fairly unstable and likely to change between multiple times before the first non-alpha release!&lt;/p&gt;
+&lt;p&gt;With &lt;code&gt;blinds&lt;/code&gt; today, tomorrow will be the last new crate: &lt;code&gt;golem&lt;/code&gt;!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 5: Golem</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-5/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-5/</guid><description>&lt;p&gt;&lt;code&gt;golem&lt;/code&gt; is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.&lt;/p&gt;
+</description><pubDate>Thu, 26 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code&gt;golem&lt;/code&gt; is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;h2&gt;Why &lt;code&gt;golem&lt;/code&gt; and not X&lt;/h2&gt;
+&lt;p&gt;If you&apos;re just interested in what &lt;code&gt;golem&lt;/code&gt; is and how it works, feel free to skip this section!&lt;/p&gt;
+&lt;p&gt;The previous three days I&apos;ve introduced new crates that mostly stood on their own. I&apos;m not aware of any fleshed-out alternatives, so creating those libraries myself doesn&apos;t require much explanation. &lt;code&gt;golem&lt;/code&gt;, however, is a different story: there aren&apos;t exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver&apos;s needs, most of which revolve around support for older hardware or older APIs. For brevity, I&apos;d recommend you check out &lt;a href=&quot;https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019&quot;&gt;icefox&apos;s guide to the existing graphics options&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn&apos;t support Vulkan. This eliminates &lt;code&gt;ash&lt;/code&gt; and &lt;code&gt;vulkano&lt;/code&gt; straight off the bat, and &lt;code&gt;gfx-hal&lt;/code&gt; as well. &lt;code&gt;ash&lt;/code&gt; and &lt;code&gt;vulkano&lt;/code&gt; target Vulkan directly, and &lt;code&gt;gfx-hal&lt;/code&gt;&apos;s OpenGL backend is not currently reliable enough (though I hope to see that improve!)&lt;/p&gt;
+&lt;p&gt;I also want to be able to support WebGL 1, but WebGL 1 is not a very modern version of OpenGL. This makes it, for good reaon, unattractive to other libraries (like &lt;code&gt;luminance&lt;/code&gt;, which is targeting WebGL 2 in its upcoming web support). However, WebGL 2&apos;s &lt;a href=&quot;https://caniuse.com/#feat=webgl2&quot;&gt;market share&lt;/a&gt; still hovers at around 75%, which isn&apos;t ideal; notably missing from WebGL 2 support are the current verisons of Edge, Safari, and iOS Safari. Quicksilver recently transitioned to using WebGL 1 for better platform support, and I didn&apos;t want to regress by requiring a high version. This rules out &lt;code&gt;luminance&lt;/code&gt;, and presumably &lt;code&gt;glium&lt;/code&gt; (which has no current development towards web support as far as I&apos;m aware.)&lt;/p&gt;
+&lt;p&gt;With just those two constraints I&apos;m out of options, so I decided to write &lt;code&gt;golem&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Mostly-Safe?&lt;/h2&gt;
+&lt;p&gt;Where possible, &lt;code&gt;golem&lt;/code&gt; handles for you the complex state machine of OpenGL. In other places, it prevents you from using resources that haven&apos;t been properly set-up. In these cases, &lt;code&gt;golem&lt;/code&gt; is safe with low-overhead, removing footguns from OpenGL without slowing your code down. In others, more overhead would be required to keep the API free of &lt;code&gt;unsafe&lt;/code&gt;. Currently only two functions are marked as &lt;code&gt;unsafe&lt;/code&gt; in &lt;code&gt;golem&lt;/code&gt;&apos;s public API, but they are the only functions that draw things to the screen! This means using &lt;code&gt;unsafe&lt;/code&gt; code as a consumer of &lt;code&gt;golem&lt;/code&gt; is unavoidable, hence &amp;quot;mostly-safe.&amp;quot;&lt;/p&gt;
+&lt;h2&gt;A Code Snippet&lt;/h2&gt;
+&lt;p&gt;Hopefully if you&apos;re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;use blinds::*;
+use golem::{
+    Attribute, AttributeType, Context,
+    Dimension::{D2, D4},
+    ElementBuffer, GeometryMode, GolemError, ShaderDescription, ShaderProgram, VertexBuffer,
+};
+
+// The application loop, powered by the blinds crate
+async fn app(
+    window: Window,
+    ctx: glow::Context,
+    mut events: EventStream,
+) -&amp;gt; Result&amp;lt;(), GolemError&amp;gt; {
+    // Create a context from &apos;glow&apos;, GL On Whatever
+    let ctx = &amp;amp;Context::from_glow(ctx)?;
+
+    #[rustfmt::skip]
+    // This is the data that represents the triangle
+    // It&apos;s arranged how it will be passed to the GPU: each position represented as two f32 values,
+    // followed by each color represented as 4 f32 values. The positions are on a scale from -1.0
+    // to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,
+    // on a scale from 0.0 to 1.0
+    let vertices = [
+        // Position         Color
+        -0.5, -0.5,         1.0, 0.0, 0.0, 1.0,
+        0.5, -0.5,          0.0, 1.0, 0.0, 1.0,
+        0.0, 0.5,           0.0, 0.0, 1.0, 1.0
+    ];
+    // This is the data that indicates how to draw the vertices
+    // For a simple example of one triangle, we don&apos;t gain much from this. Any order of these three
+    // points will give us the same triangle. However, if we add more points (to draw a square, for
+    // example), then we can write each point once while using it in multiple triangles.
+    let indices = [0, 1, 2];
+
+    // Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how
+    // to turn our vertex data into an actual vertex that GL understands, and how to color each
+    // &apos;fragment&apos; (essentially a pixel). These are each their own little program, where the
+    // information from the vertex shader is fed into the fragment shader.
+    // For the purposes of making sure the shaders match, and for ensuring compatibility on desktop
+    // and web, the inputs are represented as data structures and then converted to shader
+    // declarations at runtime.
+    // The input to the shader program is fed to the vertex_input, so your vertex data&apos;s format
+    // needs to match what you define in vertex_input
+    let mut shader = ShaderProgram::new(
+        ctx,
+        ShaderDescription {
+            // Take in to the shader a position (as a vector with 2 components) and a color (as a
+            // vector with 4 components). This is the same format as &apos;vertices&apos; above
+            vertex_input: &amp;amp;[
+                Attribute::new(&amp;quot;vert_position&amp;quot;, AttributeType::Vector(D2)),
+                Attribute::new(&amp;quot;vert_color&amp;quot;, AttributeType::Vector(D4)),
+            ],
+            // Pass to the fragment shader the color
+            // OpenGL will actually smoothly interpolate between different vertex values for us, so
+            // a red vertex and a blue vertex will have a gradient between them
+            fragment_input: &amp;amp;[Attribute::new(&amp;quot;frag_color&amp;quot;, AttributeType::Vector(D4))],
+            // Uniforms represent a value that&apos;s the same for the entire shader; we don&apos;t need any
+            // here. If you&apos;re rendering images or applying transformations to your entire draw
+            // call, use uniforms!
+            uniforms: &amp;amp;[],
+            // A program written in GLSL that uses the inputs and outputs defined above
+            // There&apos;s also a hard-coded output called gl_Position
+            vertex_shader: r#&amp;quot; void main() {
+            gl_Position = vec4(vert_position, 0, 1);
+            frag_color = vert_color;
+        }&amp;quot;#,
+            // The fragment shader has a hard-coded output: gl_FragColor
+            fragment_shader: r#&amp;quot; void main() {
+            gl_FragColor = frag_color;
+        }&amp;quot;#,
+        },
+    )?;
+
+    // Create buffer objects, which we use to transfer data from the CPU to the GPU
+    let mut vb = VertexBuffer::new(ctx)?;
+    let mut eb = ElementBuffer::new(ctx)?;
+    // Set the data of the buffer to be our vertices and indices from earlier
+    vb.set_data(&amp;amp;vertices);
+    eb.set_data(&amp;amp;indices);
+    // Prepare the shader for operations: shaders will raise errors if you forget to bind them
+    shader.bind();
+    // Clear the screen
+    ctx.clear();
+    unsafe {
+        // Using our buffers, draw our triangle
+        // We could also interpert our indices as Lines or a variety of other shape options:
+        // nothing binds us to necessarily using Triangles, even though they&apos;re the most common
+        // shape in graphics
+        shader.draw(&amp;amp;vb, &amp;amp;eb, 0..indices.len(), GeometryMode::Triangles)?;
+    }
+    // Show our data to the window
+    window.present();
+    // Keep the window open and responsive until the user exits
+    loop {
+        events.next_event().await;
+    }
+}
+
+// Run our application!
+fn main() {
+    run_gl(Settings::default(), |window, gfx, events| {
+        async move { app(window, gfx, events).await.unwrap() }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(This is also an example of &lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;yesterday&apos;s &lt;code&gt;blinds&lt;/code&gt;&lt;/a&gt; and its OpenGL support.)&lt;/p&gt;
+&lt;h2&gt;Further Development&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;golem&lt;/code&gt; is not intended to be a fully-featured wrapper around all of OpenGL. It&apos;s intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that&apos;s missing! Some of it is documented on the &lt;a href=&quot;https://github.com/ryanisaacg/golem/issues&quot;&gt;issue tracker&lt;/a&gt;, but I&apos;m sure that I&apos;ve missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;golem&lt;/code&gt; is the last new crate to announce, which means tomorrow is about what these crates enable: the new version of Quicksilver.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 6: Quicksilver&apos;s New Lifecycle</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-6/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-6/</guid><description>&lt;p&gt;Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the &lt;code&gt;State&lt;/code&gt; and &lt;code&gt;Asset&lt;/code&gt; APIs, for managing your application&apos;s core loop and file loading, respectively.&lt;/p&gt;
+</description><pubDate>Fri, 27 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the &lt;code&gt;State&lt;/code&gt; and &lt;code&gt;Asset&lt;/code&gt; APIs, for managing your application&apos;s core loop and file loading, respectively.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;State&lt;/code&gt; is a trait that Quicksilver uses to manage when your code runs. It requires you define the &lt;code&gt;new&lt;/code&gt; method, as well as &lt;code&gt;draw&lt;/code&gt;. Optionally you can define &lt;code&gt;update&lt;/code&gt;, for a fixed tick rate function, and &lt;code&gt;event&lt;/code&gt; for handling individual input events. This type then gets passed as a generic parameter to the &lt;code&gt;run&lt;/code&gt; function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Asset&lt;/code&gt; is a wrapper around &lt;code&gt;Future&lt;/code&gt;, which is an asychronous action in Rust. The point of the &lt;code&gt;Asset&lt;/code&gt; API was to avoid users having to manually poll their futures to check if they&apos;re ready: just use an &lt;code&gt;Asset&lt;/code&gt; and its execute method, which will run a closure if its &lt;code&gt;Future&lt;/code&gt; is completed. Unfortunately, this turns out not to be very ergonomic. &lt;code&gt;Asset&lt;/code&gt; is a pain to use, and a point of confusion for most users. There&apos;s no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.&lt;/p&gt;
+&lt;p&gt;Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: &lt;code&gt;blinds&lt;/code&gt; to address &lt;code&gt;State&lt;/code&gt; and &lt;code&gt;platter&lt;/code&gt; to address &lt;code&gt;Asset&lt;/code&gt;. Where before, you might write something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;struct MyState {
+    images: Asset&amp;lt;Vec&amp;lt;Image&amp;gt;&amp;gt;,
+    game: Game,
+}
+
+impl State for MyState {
+    fn new() -&amp;gt; MyState {
+        MyState {
+            images: Asset::new(join_all(vec![Image::load(&amp;quot;a&amp;quot;), Image::load(&amp;quot;b&amp;quot;), Image::load(&amp;quot;c&amp;quot;)])),
+            game: Game::new()
+        }
+    }
+
+    fn event(&amp;amp;mut self, _win: &amp;amp;mut Window, ev: &amp;amp;Event) {
+        self.images.execute(|images| {
+            self.game.process_event(ev);
+        });
+    }
+
+    fn update(&amp;amp;mut self, _win: &amp;amp;mut Window) {
+        self.images.execute(|images| {
+            self.game.update();
+        });
+    }
+
+    fn draw(&amp;amp;mut self, win: &amp;amp;mut Window) {
+        self.images.execute(|images| {
+            self.game.draw(&amp;amp;images, win);
+        });
+    }
+}
+
+fn main() {
+    run::&amp;lt;MyState&amp;gt;();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;you could now write something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;async fn my_game(win: Window, mut gfx: Graphics, events: EventStream) {
+    let mut game = Game::new();
+    let images = join_all(vec![Image::load(&amp;quot;a&amp;quot;), Image::load(&amp;quot;b&amp;quot;), Image::load(&amp;quot;c&amp;quot;)]).await;
+    loop {
+        while let Some(ev) = events.next_event().await {
+            game.process_event(ev);
+        }
+        game.update();
+        game.draw(&amp;amp;mut gfx);
+        gfx.present(&amp;amp;win);
+    }
+}
+
+fn main() {
+    run(my_game);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to know more, check out &lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;my post about blinds&lt;/a&gt; for more details on the event loop and &lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;my post about platter&lt;/a&gt; for more details on async file loading.&lt;/p&gt;
+&lt;p&gt;As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you&apos;re in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.&lt;/p&gt;
+&lt;p&gt;Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I&apos;ll go into more depth about tomorrow.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 7: Quicksilver&apos;s New Graphics</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-7/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-7/</guid><description>&lt;p&gt;The graphics API of Quicksilver isn&apos;t as dire need of a rework as the &lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;lifecycle APIs&lt;/a&gt;, but I wanted to take the next breaking change as an opportunity to address some long-standing issues.&lt;/p&gt;
+</description><pubDate>Sat, 28 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The graphics API of Quicksilver isn&apos;t as dire need of a rework as the &lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;lifecycle APIs&lt;/a&gt;, but I wanted to take the next breaking change as an opportunity to address some long-standing issues.
+&amp;lt;!-- more --&amp;gt;
+In no particular order, they are:&lt;/p&gt;
+&lt;h2&gt;Low-Level Access&lt;/h2&gt;
+&lt;p&gt;As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent. There&apos;s no way to expose the raw GL API directly to the user, as the backend talks directly to OpenGL 3.2 and WebGL 1. With &lt;code&gt;glow&lt;/code&gt;, we could expose a cross-platform OpenGL context, but there are still differences between desktop and web GL. These problems, like different ways of describing the input and output in GLSL, are addressed by &lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt; (see announcement from 2 days ago.)&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Providing users access to a lower-level graphics API also frees the high-level API from trying to provide custom shader support. A custom shader is best served with custom vertex inputs, which means custom functions to turn high-level draw commands into low-level vertex data. Instead of trying to solve this problem in the general case, Quicksilver can provide the mechanism to solve it yourself.&lt;/p&gt;
+&lt;h2&gt;Draw Order&lt;/h2&gt;
+&lt;p&gt;The previous graphics API aggressively batches draws, including re-ordering &lt;code&gt;draw&lt;/code&gt; commands to avoid changing state while rendering. If a &lt;code&gt;z&lt;/code&gt; parameter (not included in the default, simple &lt;code&gt;draw&lt;/code&gt;) is not provided, anything goes. Hypothetically this leads to faster rendering, but it also means that many users experience unexpected results with basic operations. The new API should be built on a simple draw-order guarantee: the first draw call is drawn furthest back, with each subsequent draw lying on top of the ones before it.&lt;/p&gt;
+&lt;h2&gt;Render-To-Texture&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Surface&lt;/code&gt; API supports render-to-texture, but it has a few problems. First, the API is unintuitive: rendering to a texture only works within a closure, for example. Also, it&apos;s plain buggy. &lt;code&gt;golem&lt;/code&gt; provides a harder-to-misuse API for off-screen rendering, which can be used to build a nicer abstraction in Quicksilver itself.&lt;/p&gt;
+&lt;h2&gt;Screen Resizing and Projection&lt;/h2&gt;
+&lt;p&gt;The current version of Quicksilver &amp;quot;magically&amp;quot; handles the window being resized, as well as projecting and unprojecting between world and screen coordinates. Often this is more trouble than it&apos;s worth: you want your UI at one projection and letterbox, and your game content at another. By exposing a few more knobs to the user (like the GL viewport), the &lt;code&gt;ResizeStrategy&lt;/code&gt; API can be provided on top of other, orthogonal abstractions.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-8&quot;&gt;An overview of the work on web support this year&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>A Quicksilver Chanukah, Day 8: Rust Gamedev and the Web</title><link>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-8/</link><guid>https://ryanisaacg.com/code/quicksilver-chanukah-2019-day-8/</guid><description>&lt;p&gt;This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less &amp;quot;for free:&amp;quot; most of the foundational crates have available web support, in one way or another.&lt;/p&gt;
+</description><pubDate>Sun, 29 Dec 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less &amp;quot;for free:&amp;quot; most of the foundational crates have available web support, in one way or another.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;h2&gt;Windowing and Input&lt;/h2&gt;
+&lt;p&gt;For opening a window and receiving events from it, the Rust ecosystem has &lt;a href=&quot;https://github.com/rust-windowing/winit&quot;&gt;&lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;. Along with &lt;a href=&quot;https://github.com/hecrj&quot;&gt;Héctor Ramón (hecrj)&lt;/a&gt; and and &lt;a href=&quot;https://github.com/blm768&quot;&gt;Ben Merritt (blm768)&lt;/a&gt;, I worked on adding web support. &lt;a href=&quot;https://users.rust-lang.org/t/winit-0-20-and-web-support/36155&quot;&gt;It has been merged and released&lt;/a&gt;, and is used in &lt;a href=&quot;https://github.com/hecrj/coffee&quot;&gt;coffee&lt;/a&gt; and &lt;a href=&quot;https://github.com/ryanisaacg/blinds&quot;&gt;blinds&lt;/a&gt;. While using &lt;code&gt;winit&lt;/code&gt; directly does require some glue code to plug your canvas into the webpage, intermediate layers like game frameworks can take care of the details.&lt;/p&gt;
+&lt;p&gt;While &lt;code&gt;winit&lt;/code&gt; doesn&apos;t currently provide gamepad events, &lt;a href=&quot;https://gitlab.com/gilrs-project/gilrs&quot;&gt;&lt;code&gt;gilrs&lt;/code&gt;&lt;/a&gt; fills that gap nicely. In the beginning of the year I added web support via stdweb, which should translate to &lt;code&gt;wasm-bindgen&lt;/code&gt; when necessary. Unlike &lt;code&gt;winit&lt;/code&gt;, which requires a little glue code to connect to your webpage, &lt;code&gt;gilrs&lt;/code&gt; Just Works. It functions nearly the same as the desktop version, with the only limitations being those the web platform imposes.&lt;/p&gt;
+&lt;h2&gt;Graphics&lt;/h2&gt;
+&lt;p&gt;When it comes to graphics on the web, there are two APIs to keep in mind. One is WebGL, which is the current way of writing graphics code for the web. The other is WebGPU, an evolving standard based on newer, more modern APIs that will be the way forward. Currently WebGPU is just in the draft phase, so we can&apos;t target it just yet. Targeting WebGL directly is an option, but it seems like a waste to write OpenGL code for desktop and then again for web. Enter &lt;a href=&quot;https://github.com/grovesNL/glow&quot;&gt;&lt;code&gt;glow&lt;/code&gt;&lt;/a&gt;, which brings a unified API across destop and WebGL.&lt;/p&gt;
+&lt;p&gt;Built on top of &lt;code&gt;glow&lt;/code&gt; is &lt;code&gt;gfx-backend-gl&lt;/code&gt;, which brings &lt;a href=&quot;https://github.com/gfx-rs/gfx&quot;&gt;&lt;code&gt;gfx-hal&lt;/code&gt;&lt;/a&gt; to desktop GL and web. By extension comes &lt;a href=&quot;https://github.com/gfx-rs/wgpu-rs&quot;&gt;&lt;code&gt;wgpu&lt;/code&gt;&lt;/a&gt;, an idiomatic Rust implementation of the upcoming WebGPU specification. It uses WebGL for now, but when WebGPU is stabilization and available, we&apos;ll have a modern graphics API that works seamlessly across desktop and web.&lt;/p&gt;
+&lt;h2&gt;Audio&lt;/h2&gt;
+&lt;p&gt;The audio story for Rust on the web is not there yet, unfortunately. &lt;a href=&quot;https://github.com/RustAudio/cpal&quot;&gt;&lt;code&gt;cpal&lt;/code&gt;&lt;/a&gt;, a cross-platform library for Rust audio, doesn&apos;t have web support yet. However, there is hope! &lt;a href=&quot;https://nannou.cc/posts/moss_grant_announce&quot;&gt;Mozilla announced a grant to Nannou&lt;/a&gt; that includes web support in &lt;code&gt;cpal&lt;/code&gt; as a core goal. The relevant issue is &lt;a href=&quot;https://github.com/RustAudio/cpal/issues/212&quot;&gt;cpal #212&lt;/a&gt;, which will hopefully yield some information early next year.&lt;/p&gt;
+&lt;p&gt;That&apos;s it for my updates! This was a good year for Rust on the web, and laid the groundwork for the changes I&apos;ve talked about in Quicksilver. I&apos;ll be back in the new year with a State of Quicksilver 2020, which should come along with an alpha release of the new Quicksilver version.&lt;/p&gt;
+&lt;p&gt;If you&apos;re interested in updates from other places in the Rust ecosystem, check out the &lt;a href=&quot;https://wiki.alopex.li/TheStateOfGGEZ2020&quot;&gt;State of GGEZ 2020&lt;/a&gt; and the &lt;a href=&quot;https://rust-gamedev.github.io/&quot;&gt;Rust Gamedev Working Group&apos;s newsletters&lt;/a&gt;. See you in the new year!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019&quot;&gt;The introduction post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019-day-2&quot;&gt;&lt;code&gt;platter&lt;/code&gt;: An async file-loading API for desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019-day-3&quot;&gt;&lt;code&gt;gestalt&lt;/code&gt;: An API to manage bundling and saving data locally on desktop and web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019-day-4&quot;&gt;&lt;code&gt;blinds&lt;/code&gt;: An easy-to-use async wrapper of &lt;code&gt;winit&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019-day-5&quot;&gt;&lt;code&gt;golem&lt;/code&gt;: An opinionated mostly-safe graphics library for desktop and web GL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;quicksilver-chanukah-2019-day-6&quot;&gt;Changes to the Quicksilver application lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019-day-7&quot;&gt;Changes to the Quicksilver graphics API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This post!&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>Website Makeover, Again</title><link>https://ryanisaacg.com/code/new-blog-2/</link><guid>https://ryanisaacg.com/code/new-blog-2/</guid><description>&lt;p&gt;Out with the old, in with the new! After some frustration with Hugo, I&apos;ve moved to &lt;a href=&quot;https://www.getzola.org/&quot;&gt;Zola&lt;/a&gt; and some light CSS.&lt;/p&gt;
+</description><pubDate>Sun, 24 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Out with the old, in with the new! After some frustration with Hugo, I&apos;ve moved to &lt;a href=&quot;https://www.getzola.org/&quot;&gt;Zola&lt;/a&gt; and some light CSS.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;I wanted to write a new blog post regarding &lt;a href=&quot;https://github.com/ryanisaacg/elefont&quot;&gt;elefont&lt;/a&gt; and Quicksilver&apos;s new text rendering system, but I  was dreading making a post on the site. Hugo had proved opaque and fragile for me, and its blizzard of configuration options wasn&apos;t making things much easier. Plus, something small broke when I tried to use the latest Hugo version on Windows to re-build the site. I wasn&apos;t much interested in tracking down a changelog and bringing my blog up to the latest version, so I decided Hugo had to go.&lt;/p&gt;
+&lt;p&gt;Initially I considered writing my own static site generator. &lt;em&gt;How hard could it be?&lt;/em&gt; I asked myself. Then I thought about generating an RSS feed, and parsing front-matter, and maybe setting up a SASS compilation pipeline. &lt;em&gt;No thanks!&lt;/em&gt; I instead settled on Zola, primarily because it seems to be the right combination of simple and expressive. Secondarily, it&apos;s written in Rust, which I appreciate. Using Zola has been very nice so far; I feel more like I&apos;m programming a little language designed to make website-making easy. Previous experiences with Hugo and Jekyll felt more like wrestling the generator into doing what I wanted; Zola is a breath of fresh air by comparison.&lt;/p&gt;
+&lt;p&gt;Currently the site is very light on styling. So far I like the look of it, but for how long is anyone&apos;s guess.&lt;/p&gt;
+&lt;p&gt;I hope this means I can get some posts up about Quicksilver soon; there&apos;s been a lot of evolution since the end of last year, when I was just starting on the new alpha versions. I ended up forgoing a State of Quicksilver 2020, for a few reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;../quicksilver-chanukah-2019&quot;&gt;The Quicksilver Chanukah posts&lt;/a&gt; covered a lot of my plans&lt;/li&gt;
+&lt;li&gt;I wanted to wait until the 0.4 release is closer to feature-complete&lt;/li&gt;
+&lt;li&gt;And mostly, I&apos;ve been very busy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Post-script update, as of June 8th 2020: The blog is a bit more automatic! Previously I was just pushing up new built versions of the site to Github Pages, but that gets tedious. I set up Github Actions to run on any push to ryanisaacg/blog on master; now the blog is automatically built and deployed.&lt;/p&gt;
+</content:encoded></item><item><title>A New Quicksilver Crate, Elefont</title><link>https://ryanisaacg.com/code/announcing-elefont/</link><guid>https://ryanisaacg.com/code/announcing-elefont/</guid><description>&lt;p&gt;This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil &lt;code&gt;elefont&lt;/code&gt;, a crate that I&apos;ve developed for font caching.&lt;/p&gt;
+</description><pubDate>Fri, 10 Jul 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This blog post has been a long time delayed, but late is better than never! The Quicksilver alpha is humming along, with bugs and API problems being addressed. While that work continues, I want to unveil &lt;code&gt;elefont&lt;/code&gt;, a crate that I&apos;ve developed for font caching.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;h2&gt;What is Elefont?&lt;/h2&gt;
+&lt;p&gt;Elefont is a glyph caching layer, intended to reduce round-trips to the GPU when rendering text.
+When a glyph is sent to the GPU, it is stored on a texture and re-used until the cache needs to be refreshed.
+Elefont is also designed to support many different font providers, and many different graphics backends: you can currently choose to render with &lt;a href=&quot;https://gitlab.redox-os.org/redox-os/rusttype&quot;&gt;rusttype&lt;/a&gt; or &lt;a href=&quot;https://github.com/mooman219/fontdue/&quot;&gt;fontdue&lt;/a&gt;, and there are plans to &lt;a href=&quot;https://github.com/ryanisaacg/elefont/issues/5&quot;&gt;support bitmap fonts&lt;/a&gt; and &lt;a href=&quot;https://github.com/ryanisaacg/elefont/issues/3&quot;&gt;operating-system-specific font toolkits via font_kit&lt;/a&gt;.
+It is designed for use primarily in games, because it was written for Quicksilver, and the design reflects that. A GUI toolkit can probably choose a specific font rendering toolkit and use it throughout, but games tend to have more idiosyncratic text requirements (like bitmap fonts.)&lt;/p&gt;
+&lt;h2&gt;What is Glyph Caching?&lt;/h2&gt;
+&lt;p&gt;Glyph caching is an approach to font rendering that stores each &amp;quot;glyph&amp;quot; (font image) on the GPU.&lt;/p&gt;
+&lt;p&gt;&amp;lt;aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;Human writing is vast and complex, and so are the systems we have built to digitize it. A &amp;quot;glyph&amp;quot; is not the same as a &amp;quot;character;&amp;quot; this may surprise people who exclusively use Latin script. For example, Unicode emoji support &lt;a href=&quot;https://emojipedia.org/emoji-modifier-sequence/&quot;&gt;skin-tone modifiers&lt;/a&gt;. These are separate Unicode code-points that are placed &lt;em&gt;after&lt;/em&gt; the emoji code-point, and modify the image that is produced. Other familiar examples include all-caps fonts: &apos;A&apos; and &apos;a&apos; are different characters, but may be represented by the same glyph. For more on the complexity of text rendering, see &lt;a href=&quot;https://gankra.github.io/blah/text-hates-you/&quot;&gt;Text Rendering Hates You&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&amp;lt;/aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;Most fonts are stored in files like &apos;TTF&apos; or &apos;OTF&apos;. These are called &apos;vector fonts,&apos; because the glyphs are stored as a series of strokes; similar technology powers SVG images or Adobe Flash graphics. Every time you render a glyph from one of these fonts, the font system uses a &apos;rasterizer&apos; to turn the strokes of the glyph into a grid of pixel color values. This is a fairly expensive operation, so glyph caches store this resulting bitmap instead of re-generating it every time the character is used. Elefont helps in this case by keeping track of a map of glyphs to their rendered counterparts.&lt;/p&gt;
+&lt;p&gt;Even if you&apos;re using a &amp;quot;bitmap font&amp;quot; (a font defined by pixel image data instead of vector graphics), you still have to send that image data to the GPU. With the machinery already in place to map from glyphs to rendered images, Elefont can help in this case by keeping track of a map of glyphs to their GPU-side counterparts. This is a high priority for a future version, but isn&apos;t written yet.&lt;/p&gt;
+&lt;h2&gt;Why not use X?&lt;/h2&gt;
+&lt;p&gt;Initially, I didn&apos;t expect to write Elefont or anything similar. I knew that Quicksilver 0.4 would need glyph caching, because fonts and text were a significant pain point in Quicksilver 0.3. What I did not find was anything that fit my requirements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Work with any graphics backend. Quicksilver uses &lt;code&gt;golem&lt;/code&gt;, my abstraction layer over OpenGL, so being tied to another graphics library was a no-go&lt;/li&gt;
+&lt;li&gt;Work with any font provider. Users may have bitmap fonts or vector fonts; they may want system-native font rendering (with some web fallback); they may want the more mature rusttype or the more ambitious fontdue, etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There were other options that pass requirement 1, chief among them &lt;a href=&quot;https://crates.io/crates/glyph-brush&quot;&gt;glyph_brush&lt;/a&gt;. However, glyph_brush is tied into rusttype, and doesn&apos;t seem to be interested in supporting bitmap fonts or other rasterizers. For many uses, glyph_brush is the right choice! However, it just couldn&apos;t fit my needs. Bitmap fonts are a fairly common request when rendering for games, and a design that precludes them is a missed opportunity.&lt;/p&gt;
+&lt;h2&gt;What Comes Next?&lt;/h2&gt;
+&lt;p&gt;(Hopefully soon) I&apos;ll be putting out a State of Quicksilver update, that generally addresses progress the project has made this year!&lt;/p&gt;
+</content:encoded></item><item><title>Quicksilver and Open Source</title><link>https://ryanisaacg.com/code/quicksilver-goodbye/</link><guid>https://ryanisaacg.com/code/quicksilver-goodbye/</guid><description>&lt;p&gt;So this is a post that&apos;s been bouncing around my head for a while, in one form or another. I created and maintain &lt;a href=&quot;https://github.com/ryanisaacg/quicksilver&quot;&gt;Quicksilver&lt;/a&gt;, a 2D game framework for creating games for desktop and the web. The reason I&apos;m writing this post is that I also haven&apos;t &lt;em&gt;used&lt;/em&gt; Quicksilver to make anything for over a year.&lt;/p&gt;
+</description><pubDate>Tue, 13 Oct 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;So this is a post that&apos;s been bouncing around my head for a while, in one form or another. I created and maintain &lt;a href=&quot;https://github.com/ryanisaacg/quicksilver&quot;&gt;Quicksilver&lt;/a&gt;, a 2D game framework for creating games for desktop and the web. The reason I&apos;m writing this post is that I also haven&apos;t &lt;em&gt;used&lt;/em&gt; Quicksilver to make anything for over a year.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;TL;DR: Quicksilver has been a source of great joy and frustration for me, and was my first real experience with open source. I&apos;m still committed to maintaining it, but I don&apos;t think I&apos;ll be actively improving or working on it going forward.&lt;/p&gt;
+&lt;h2&gt;The Project&apos;s Beginning&lt;/h2&gt;
+&lt;p&gt;&amp;lt;aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;What follows is a quick history of Quicksilver, and why I wanted to make it. I&apos;ve never written it all down in one place before, and I figured now was a good opportunity. If you just want the details on what&apos;s next, feel free to &lt;a href=&quot;#so-long&quot;&gt;skip this section.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;/aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;From the start of my game-making hobby, I wanted a few things: to make small games, to be able to run them on low-powered hardware, and to be able to share them on the web. This was the beginning of my troubles.&lt;/p&gt;
+&lt;p&gt;First I tried game engines, like GameMaker (which was actually my first programming environment), Unity, and later Godot. A few things about them frustrated me: the closed-source nature of Unity, Godot&apos;s idiosyncratic custom scripting language (I understand this has improved), and being forced to lay my code out the way the engine wanted it. Ideally I would write the core of the gameplay code however I liked, and then add hooks to use for the engine tools. The paradigm of a game engine (a tool designed for teams, not soloists) wanted the opposite: everything should flow from the engine itself. To each their own, I guess.&lt;/p&gt;
+&lt;p&gt;Game frameworks fared better, but inevitably something bothered me enough to switch. When I was using LibGDX and Java, distributing the Java binaries was a struggle. When I was using MonoGame and C#, cross-platform development on Linux was painful. Any dynamically typed programming language would eventually push me away after hours wasted tracking down a trivial bug. Even when I found a satisfactory programming language, often the game development ecosystem was sorely lacking (this is what drove me from D). And after all that, most game frameworks didn&apos;t support sharing my game on the web.&lt;/p&gt;
+&lt;p&gt;I tried developing for the web directly, rather than relying on translation layers or compilation steps. I made a few little things, but I never really could commit. This was before I was a web programmer by trade, so I spent a lot of time confused and annoyed. In the five or so years since Javascript has become a joy to use, as long as you&apos;re willing to put up with byzantine build tools. Without these niceties I found it to be a pain; modularity didn&apos;t exist (just link the script files into your HTML), odd typing decisions constantly bit me (did you know that the Canvas 2D API treats NaN as 0 when drawing?), and I missed something about having a native executable build I could email someone, and run with a single click.&lt;/p&gt;
+&lt;p&gt;In mid-2017, Rust was where I finally settled, because it gave me two things: easy native-executable distribution, and a web compilation option. At the time, web compilation was unstable and no-one was really using it to make games; people who did tended to write bindings to the webpage by hand. Pulling in the venerable &lt;code&gt;glutin&lt;/code&gt; library for windowing on the desktop, I hand-wrote the Quicksilver-to-JS bindings for WebAssembly and got busy developing. It was buggy, it was a pain in the ass to use, and it was an absolute delight. Finally, native code running in the browser! I published my new library in the beginning of 2018, and slowly other people started to use it in their own work.&lt;/p&gt;
+&lt;p&gt;Maintaining the JS bindings by hand was an absolute disaster. In June of 2018, I worked up the energy to switch to a library to handle the browser interactions for me. This was well before the &lt;code&gt;web-sys&lt;/code&gt; project, a comprehensive set of bindings to every browser API imaginable. When I was looking, I had two options. &lt;code&gt;stdweb&lt;/code&gt;, an ambitious project with plans to bind every single browser API to an idiomatic Rust wrapper, and &lt;code&gt;wasm-bindgen&lt;/code&gt;, a more efficient option with more maintainers, that required you to write the bindings yourself. I picked &lt;code&gt;stdweb&lt;/code&gt; for its ergonomics (much to my future dismay) and continued on, now with a much-improved workflow and a great deal more stability.&lt;/p&gt;
+&lt;p&gt;At some point I realized things had to change. There were problems in the API maybe one in five new users would trip over, the backend graphics code was terrifying and unmaintainable, and &lt;code&gt;async/await&lt;/code&gt; was just around the corner. I could free myself and my users from callback hell! I set about plans for a major new API revision, and got to work. Over the summer of 2019 I laid the foundation for a set of new libraries, to abstract out the parts of Quicksilver that could live separately. By the end of the year they were pretty much all ready; over the course of Chanukah I put out a few blog updates describing them. The next big version of Quicksilver was in sight: all I had to do was re-write the entire thing to use my new foundational libraries.&lt;/p&gt;
+&lt;p&gt;This year has not been a good year for progress. If I push myself, I can imagine in the next few months I could finish the API revision I started last year. Lots of things have contributed to this slowdown, and sapped my energy: a global pandemic, a move from a full-time student to a full-time worker, the worsening political situation in the United States. But I haven&apos;t lost the energy to work on side projects entirely. I&apos;m playing, running, and writing tabletop role-playing games, I&apos;m reading more than I used to, and I&apos;m playing around a little with some other hobby software. I just haven&apos;t been making games, or using Quicksilver.&lt;/p&gt;
+&lt;p&gt;The work that&apos;s left isn&apos;t particularly exciting either. I need to switch away from &lt;code&gt;stdweb&lt;/code&gt; (the maintainer seems to have silently disappeared), I need to write boatloads of documentation, I need to investigate and triage a handful of bug reports, and I need to write a library to support audio on desktop and web.&lt;/p&gt;
+&lt;h2&gt;So Long...&lt;/h2&gt;
+&lt;p&gt;To be frank, I didn&apos;t get into open source to write software &lt;em&gt;for&lt;/em&gt; other people. If other people want software from me, they can pay me for it (which is quite literally my career). I got into open source because I was writing software for myself, and I figured other people might want to check it out. Sure, I &lt;em&gt;wanted&lt;/em&gt; people to check it out or use it. It felt great when people started using Quicksilver or posting bugs with projects they were working on. Out of all the game frameworks in the world, someone decided to use mine. How exciting!&lt;/p&gt;
+&lt;p&gt;Over time my interests have drifted away from game development. I don&apos;t keep up with the indie game scene, I don&apos;t enter game jams, I don&apos;t make little weekend projects. I&apos;m not longer writing Quicksilver for myself, but I still work on it. For a while (most of last year, in fact), working on the framework was a hobby unto itself. I was solving fun new challenges, and it was great! As the fun new challenges got solved, I became less and less interested, and the things that had been tiny pain points before became less and less bearable.&lt;/p&gt;
+&lt;p&gt;What makes it all worse is that Quicksilver will never be &lt;em&gt;done.&lt;/em&gt; There will always be one more feature, one more request, one more corner to polish. This summer, I was realizing that, and open source burnout was finally catching up with me. Every time I opened the issue tracker or my own notes I would feel dread, and close it without writing a line of code. The abstract idea of happy users was no longer enough to sustain me. I still haven&apos;t even reached feature parity with the old, non-async version of Quicksilver, and I&apos;m not sure I ever will.&lt;/p&gt;
+&lt;p&gt;At some point it struck me: over three years, I had slowly moved from writing software that I was sharing with other people to writing software for other people. Unless things change, I don&apos;t see myself writing more features for Quicksilver. I can&apos;t promise sound support, or new documentation, or a smooth migration from &lt;code&gt;stdweb&lt;/code&gt; to &lt;code&gt;web-sys&lt;/code&gt;. If I can find the time and energy, I might package up the current alpha into an actual release, but I won&apos;t promise that either.&lt;/p&gt;
+&lt;p&gt;For now, I have no problem &lt;em&gt;maintaining&lt;/em&gt; software. I&apos;ll be sticking around to triage bug reports, review pull requests, and cut releases (on Quicksilver, all its associated libraries, and Winit). Quicksilver isn&apos;t going anywhere- but it&apos;s important I make this explicit. It&apos;s also not &lt;em&gt;going anywhere&lt;/em&gt;. I have no plans to fix the handful of outstanding bugs, or the feature requests, or upstream improvements to other projects.&lt;/p&gt;
+&lt;p&gt;Here it is important to mention &lt;a href=&quot;https://en.wikipedia.org/wiki/Bus_factor&quot;&gt;the Bus Factor&lt;/a&gt;. Essentially: how many people have to get hit by a bus for your project to completely grind to a halt? In the case of Quicksilver, it has always been 1. Don&apos;t get me wrong, other people have certainly contributed! Every well-crafted bug report or pull request has great value. At the end of the day, however, I&apos;m still the single point of failure. That was never going to be a sustainable project structure, and I urge people to consider this concept in open source more generally.&lt;/p&gt;
+&lt;h2&gt;...And Thanks for all the Fish&lt;/h2&gt;
+&lt;p&gt;I don&apos;t want to give the impression that I regret the project, or wish I hadn&apos;t done it. Quicksilver was a great project for me to hold on to throughout my time as an undergraduate, and I hope it as brought other people a little bit of the joy it brought me. It couldn&apos;t have gotten where it was without the Rust community; thank you to the 40 (!) other people who contributed commits, the countless people who filed bugs, and everyone who said kind things online. From the bottom of my heart: thank you.&lt;/p&gt;
+&lt;p&gt;If you&apos;re using Quicksilver and it works for you, rock on. If you&apos;re looking for something else in light of this, I totally understand. For all the reasons mentioned above, I&apos;m not really plugged in to what the best game-development alternatives are, though I&apos;ve heard &lt;a href=&quot;https://github.com/bevyengine/bevy&quot;&gt;bevy&lt;/a&gt; is doing exciting new things.&lt;/p&gt;
+&lt;p&gt;Good luck, have fun, and make great things.&lt;/p&gt;
+</content:encoded></item><item><title>Dark Mode!</title><link>https://ryanisaacg.com/code/dark-mode/</link><guid>https://ryanisaacg.com/code/dark-mode/</guid><description>&lt;p&gt;If your browser is set to dark mode by default, you&apos;ve probably noticed the site looks different! I now have some dark mode CSS, so this blog isn&apos;t eye-searingly white if everything else is dark on your screen.&lt;/p&gt;
+</description><pubDate>Sun, 04 Apr 2021 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;If your browser is set to dark mode by default, you&apos;ve probably noticed the site looks different! I now have some dark mode CSS, so this blog isn&apos;t eye-searingly white if everything else is dark on your screen.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;Under the hood I&apos;m using a neat CSS feature called &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties&quot;&gt;CSS variables&lt;/a&gt; to switch the colors.&lt;/p&gt;
+&lt;p&gt;Unfortunately this means old posts with syntax highlighting have lost syntax highlighting, because setting up theme-specific highlights looked a little annoying. That&apos;s not really a big deal to me, but I might fix it eventually.&lt;/p&gt;
+</content:encoded></item><item><title>Falling in love with git bisect</title><link>https://ryanisaacg.com/code/git-bisect/</link><guid>https://ryanisaacg.com/code/git-bisect/</guid><description>&lt;p&gt;Recently I found myself tracking down a handful of regressions: bugs I knew hadn&apos;t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with &lt;code&gt;git bisect&lt;/code&gt;.&lt;/p&gt;
+</description><pubDate>Sun, 29 May 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Recently I found myself tracking down a handful of regressions: bugs I knew hadn&apos;t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with &lt;code&gt;git bisect&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bisect&lt;/code&gt;, in the style of all things git, is slightly arcane and clunky but powerful nonetheless. All you have to do is tell git a known-good commit and a known-bad commit, and it will guide you through an efficient exploration of your repository&apos;s history. At each step of the process, &lt;code&gt;bisect&lt;/code&gt; presents you with a commit and asks &amp;quot;is this commit good, or bad?&amp;quot; A quick test of your system and you can produce the answer (failing tests, incorrect behavior, broken build, what have you) and inform git; it can then continue with a binary search to find the offending change.&lt;/p&gt;
+&lt;p&gt;&amp;lt;aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;In case your runtime analysis skills are a little dusty, a binary search has an &lt;code&gt;O(log N)&lt;/code&gt; runtime to find its result. Even with 10,000 commits between your good and bad state, at most you&apos;ll have to inspect 13 to find the culprit.&lt;/p&gt;
+&lt;p&gt;&amp;lt;/aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;You can initiate bisect with&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git bisect start&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;At any time, you can bail out of this operation with&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git bisect reset&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;which is good to keep in mind if you find yourself tangled. Now that you&apos;ve started the bisect, define the bounds by picking a commit that has &amp;quot;good&amp;quot; state and a commit that has &amp;quot;bad&amp;quot; state:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git bisect good my-good-commit&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git bisect bad my-bad-commit&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;Git has introduced new aliases for &lt;code&gt;good&lt;/code&gt; and &lt;code&gt;bad&lt;/code&gt;: &lt;code&gt;new&lt;/code&gt; and &lt;code&gt;old&lt;/code&gt;, to allow for value-neutral bisects (like tracking down a performance improvement). I find &lt;code&gt;good&lt;/code&gt; and &lt;code&gt;bad&lt;/code&gt; to be much stronger pnuemonics, so I use them, but it&apos;s good to know about the other options.&lt;/p&gt;
+&lt;p&gt;&amp;lt;/aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;After you&apos;ve specified your commits, git will check out the midpoint and ask you to evaluate it. Do whatever you need (run tests, inspect an app, check benchmarks) and then inform git that this commit is &lt;code&gt;good&lt;/code&gt; or &lt;code&gt;bad&lt;/code&gt; with a simple &lt;code&gt;git bisect good/bad&lt;/code&gt; as desired. The process will repeat a few times until you find what you&apos;re looking for!&lt;/p&gt;
+&lt;p&gt;This is where we come to a crucial caveat: your git history. I find that it&apos;s best to squash intermediary commits when merging, resulting in a clean list of working commits. It aids in history explorations like this one, and means you don&apos;t have to fight through a flurry of &amp;quot;wip: temp&amp;quot; and &amp;quot;fix lint&amp;quot; garbage commits. However, if you find yourself confronted with a commit that you cannot test, &lt;code&gt;git bisect skip&lt;/code&gt; is your friend.&lt;/p&gt;
+&lt;p&gt;If you&apos;d like to learn more, the &lt;a href=&quot;https://git-scm.com/docs/git-bisect&quot;&gt;git bisect docs&lt;/a&gt; have more detail and even explore the topic of automatic bisecting. Happy hacking!&lt;/p&gt;
+</content:encoded></item><item><title>Using Neovim with Unity</title><link>https://ryanisaacg.com/code/nvim-and-unity/</link><guid>https://ryanisaacg.com/code/nvim-and-unity/</guid><description>&lt;p&gt;In the last few years I&apos;ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor&apos;s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.&lt;/p&gt;
+</description><pubDate>Wed, 26 Apr 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In the last few years I&apos;ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor&apos;s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- more --&amp;gt;&lt;/p&gt;
+&lt;p&gt;I started off by searching around for other people&apos;s experience using Neovim with Unity, and found &lt;a href=&quot;https://chrislabarge.com/posts/neovim-unity-engine/&quot;&gt;a decent blog post&lt;/a&gt; that walked me through the basic steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Configure Unity to send a message over a Unix socket to neovim when you want to open a file&lt;/li&gt;
+&lt;li&gt;Create a script to launch neovim listening to that Unix socket&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I didn&apos;t end up using exactly the solution they provide (&lt;code&gt;nvr&lt;/code&gt; doesn&apos;t seem to be available as part of my neovim install) but after reading the documentation for nvim&apos;s &lt;code&gt;--remote&lt;/code&gt; option I was able to set up this part of the ingration fine. When I opened a file in Unity, it would pop open in my vim session.&lt;/p&gt;
+&lt;p&gt;The logical next step is some sort of LSP integration. I went for the officially-supported omnisharp-roslyn and installed it on my system. The nvim-lsp documentation recommended the &lt;code&gt;omnisharp_extended&lt;/code&gt; plugin for handling go-to-definition, so I added that to my config as well. My config ended up looking like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;omnisharp = {
+    cmd = {
+        &amp;quot;mono&amp;quot;,
+        &amp;quot;/Users/ryanisaacg/bin/omnisharp-osx/omnisharp/OmniSharp.exe&amp;quot;,
+        &amp;quot;--languageserver&amp;quot;,
+        &amp;quot;--hostPID&amp;quot;,
+        tostring(pid),
+    },
+    handlers = {
+        [&amp;quot;textDocument/definition&amp;quot;] = require(&apos;omnisharp_extended&apos;).handler,
+    },
+
+    -- Enables support for reading code style, naming convention and analyzer
+    -- settings from .editorconfig.
+    enable_editorconfig_support = true,
+
+    -- If true, MSBuild project system will only load projects for files that
+    -- were opened in the editor. This setting is useful for big C# codebases
+    -- and allows for faster initialization of code navigation features only
+    -- for projects that are relevant to code that is being edited. With this
+    -- setting enabled OmniSharp may load fewer projects and may thus display
+    -- incomplete reference lists for symbols.
+    enable_ms_build_load_projects_on_demand = false,
+
+    -- Enables support for roslyn analyzers, code fixes and rulesets.
+    enable_roslyn_analyzers = false,
+
+    -- Specifies whether &apos;using&apos; directives should be grouped and sorted during
+    -- document formatting.
+    organize_imports_on_format = false,
+
+    -- Enables support for showing unimported types and unimported extension
+    -- methods in completion lists. When committed, the appropriate using
+    -- directive will be added at the top of the current file. This option can
+    -- have a negative impact on initial completion responsiveness,
+    -- particularly for the first few completion sessions after opening a
+    -- solution.
+    enable_import_completion = false,
+
+    -- Specifies whether to include preview versions of the .NET SDK when
+    -- determining which version to use for project loading.
+    sdk_include_prereleases = true,
+
+    -- Only run analyzers against open files when &apos;enableRoslynAnalyzers&apos; is
+    -- true
+    analyze_open_documents_only = false,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and it worked pretty well! I could open up my files from Unity, have them pop open in Neovim, and they were properly integrated with the C# LSP. Unfortunately omnisharp apparently won&apos;t search your PATH for &lt;code&gt;OmniSharp.exe&lt;/code&gt;, which means that this part of my config isn&apos;t portable to other machines. Other than that, everything seemed just fine.&lt;/p&gt;
+&lt;p&gt;After using this setup for a few days I ran into a problem. Whenever I created a new C# file, omnisharp would be completely borked: anything it defined was unavailable in other files and all of the imports in the new file would be marked as unresolved. I could fix the problems by restarting my entire editor, but omnisharp&apos;s long boot time makes that painful. At this point I thought was defeated and started to configure VSCode for C#. Fortunately, a new update to Neovim saved the day! In the GitHub issue someone pointed out that the issue was the LSP client not properly handling the &lt;code&gt;didChangeWatchedFiles&lt;/code&gt; message from the server. Last week Neovim added experimental support for handling this in its LSP, so once you &lt;a href=&quot;https://github.com/OmniSharp/omnisharp-roslyn/issues/2250#issuecomment-1499726992&quot;&gt;enable it in the LSP capabilities&lt;/a&gt; the new-file-problem goes away!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;local capabilities = vim.tbl_deep_extend(
+    &amp;quot;force&amp;quot;,
+    require(&apos;cmp_nvim_lsp&apos;).default_capabilities(),
+    {
+        workspace = {
+            didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            },
+        },
+    }
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Upgrading Neovim, however, introduced a new problem. It seems like omnisharp-roslyn reports invalid tokens for the LSP semantic-highlighting feature, which trips up nvim. There&apos;s a hacky workaround I&apos;m using (that I found &lt;a href=&quot;https://nicolaiarocci.com/making-csharp-and-omnisharp-play-well-with-neovim/&quot;&gt;in a blog post&lt;/a&gt;) which manually fixes the invalid tokens; hopefully omnisharp fixes the issue upstream soon.&lt;/p&gt;
+&lt;p&gt;That&apos;s essentially where I&apos;m leaving things for now: there are some hacks underlying my setup, but day-to-day everything works fine. I have a newfound appreciation for web dev tooling and the Rust project; this was definitely the most fiddly thing I&apos;ve done with my editor in quite some time.&lt;/p&gt;
+</content:encoded></item></channel></rss>

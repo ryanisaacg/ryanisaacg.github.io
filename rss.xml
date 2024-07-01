@@ -621,4 +621,21 @@ It is designed for use primarily in games, because it was written for Quicksilve
 &lt;p&gt;I installed &lt;a href=&quot;https://github.com/vscode-neovim/vscode-neovim&quot;&gt;the VSCode plugin&lt;/a&gt; and had to do some fiddling to get it recognize my &lt;code&gt;nvim&lt;/code&gt; binary (which I&apos;ve unfortunately now forgotten). Then I had to &lt;a href=&quot;https://github.com/ryanisaacg/dotfiles/commit/ef085b3b9b4749c95327fedf3f78ad6e25ac3020&quot;&gt;make a few VSCode-specific tweaks to my config&lt;/a&gt;. I skipped loading basically all my usual plugins. LSP, syntax highlighting, git change markers: all these sorts of things are built into VSCode (and won&apos;t work with the Neovim ⭤  VSCode bridge anyways). I also had to re-do all my custom keybindings (for example, opening a fuzzy finder when I hit &lt;code&gt;t&lt;/code&gt; in normal mode) to bind to VSCode actions instead. &lt;code&gt;vscode-neovim&lt;/code&gt; is a handy plugin that allows me to do that very easily.&lt;/p&gt;
 &lt;p&gt;For the past few months I&apos;ve been using this setup as a daily driver. The C# autocomplete integration works out of the box, unlike in my previous Neovim setup (because it&apos;s a proprietary Microsoft extension &amp;gt;_&amp;gt;). Go-to-definition and find-references and all that are working fine. All around it&apos;s a &lt;em&gt;much&lt;/em&gt; better C# editing experience. For the other projects in our monorepo (some Terraform and Typescript, mostly), things work fine. I would prefer to be back in my natural habitat (nvim + tmux + fish) but it&apos;s more convenient to have the whole monorepo open in VSCode than to jump back and forth between environments.&lt;/p&gt;
 &lt;p&gt;So on one hand, I did sorta give up on having my neovim + Unity setup from my last post. But on the other, I maybe have the best of both worlds?&lt;/p&gt;
+</content:encoded></item><item><title>Hello Recurse! (Week 1, Day 1)</title><link>https://ryanisaacg.com/code/hello-recurse/</link><guid>https://ryanisaacg.com/code/hello-recurse/</guid><description>&lt;p&gt;Today I start a 12-week batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;!&lt;/p&gt;
+</description><pubDate>Mon, 01 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Today I start a 12-week batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;!
+Here at the outset my goals are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Write a toy database! I&apos;ve used databases before but never written one, and have no idea how database internals work. This is currently my main interest&lt;/li&gt;
+&lt;li&gt;Explore distributed systems! I want to get some exposure to some variety beyond client/web server/database, especially streaming video.&lt;/li&gt;
+&lt;li&gt;Go down a rabbit hole I don&apos;t even know yet! I hope to get carried along by an unfamiliar current, to something like natural language processing, or music/signal processing, or something else entirely.&lt;/li&gt;
+&lt;li&gt;Blog often! At the very least I want to blog once a week about my experience at RC and what I&apos;m working on. If any of my projects end up interesting enough to stand alone, I wanna blog those as well.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Thus far today has been:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Orientation and learning about the internal software used to run RC&lt;/li&gt;
+&lt;li&gt;Writing this blog post&lt;/li&gt;
+&lt;li&gt;Getting a very basic Swift development environment working&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tomorrow I want to start on a macOS app to remind me to stretch and move around. I&apos;ve never done any real macOS or Swift programming, so my hope is that this will jar me out of my comfort zone nice and early. It also will serve the very practical purpose of keeping me healthy as I hack on my bigger projects for the rest of my batch.&lt;/p&gt;
+&lt;p&gt;My batch runs from July 1 to September 20, so expect lots more posts from me as I go through RC!&lt;/p&gt;
 </content:encoded></item></channel></rss>

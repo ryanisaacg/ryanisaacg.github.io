@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Ryan’s Blog</title><description>A blog about whatever catches my interest</description><link>https://ryanisaacg.com/</link><language>en-us</language><item><title>Hello Recurse! (Week 1, Day 1)</title><link>https://ryanisaacg.com/code/hello-recurse/</link><guid>https://ryanisaacg.com/code/hello-recurse/</guid><description>&lt;p&gt;Today I start a 12-week batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;!&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Ryan’s Blog</title><description>A blog about whatever catches my interest</description><link>https://ryanisaacg.com/</link><language>en-us</language><item><title>How to add a custom LSP server to nvim-lspconfig</title><link>https://ryanisaacg.com/code/nvim-lspconfig-custom-lsp/</link><guid>https://ryanisaacg.com/code/nvim-lspconfig-custom-lsp/</guid><description>&lt;p&gt;Normally the &lt;a href=&quot;https://github.com/neovim/nvim-lspconfig&quot;&gt;&lt;code&gt;nvim-lspconfig&lt;/code&gt; package&lt;/a&gt; has every language server I could possibly want, so I&apos;ve found it pretty low maintenance. Currently I&apos;m testing out the server for my own programming language, and I needed to add the LSP to my editor&apos;s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.&lt;/p&gt;
+</description><pubDate>Fri, 05 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Normally the &lt;a href=&quot;https://github.com/neovim/nvim-lspconfig&quot;&gt;&lt;code&gt;nvim-lspconfig&lt;/code&gt; package&lt;/a&gt; has every language server I could possibly want, so I&apos;ve found it pretty low maintenance. Currently I&apos;m testing out the server for my own programming language, and I needed to add the LSP to my editor&apos;s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.&lt;/p&gt;
+&lt;p&gt;Briefly I considered forking &lt;code&gt;nvim-lspconfig&lt;/code&gt; and adding my LSP&apos;s config to the &lt;code&gt;lua/lsp/server_configurations/&lt;/code&gt; folder, where all the official implementations live. I decided against because that seemed like an unnecessary hassle. Instead I searched out a way to do it from outside the plugin.&lt;/p&gt;
+&lt;p&gt;First I found &lt;a href=&quot;https://github.com/neovim/nvim-lspconfig#example-custom-config&quot;&gt;a Reddit thread&lt;/a&gt; which linked to a header within the &lt;code&gt;nvim-lspconfig&lt;/code&gt; readme. That header... does not appear in the readme. A bit of trawling through the Wayback Machine got me the &lt;a href=&quot;https://web.archive.org/web/20210422212220/https://github.com/neovim/nvim-lspconfig#example-custom-config&quot;&gt;snippet I wanted&lt;/a&gt;!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;local lspconfig = require&apos;lspconfig&apos;
+local configs = require&apos;lspconfig/configs&apos;
+-- Check if it&apos;s already defined for when reloading this file.
+if not lspconfig.foo_lsp then
+  configs.foo_lsp = {
+    default_config = {
+      cmd = {&apos;/home/ashkan/works/3rd/lua-language-server/run.sh&apos;};
+      filetypes = {&apos;lua&apos;};
+      root_dir = function(fname)
+        return lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+      end;
+      settings = {};
+    };
+  }
+end
+lspconfig.foo_lsp.setup{}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But that snippet didn&apos;t do anything. Ugh!&lt;/p&gt;
+&lt;p&gt;After some reading through &lt;code&gt;nvim-lspconfig&lt;/code&gt;&apos;s source code, I took a wild guess: &lt;code&gt;nvim-lspconfig&lt;/code&gt; &lt;a href=&quot;https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig.lua#L1&quot;&gt;internally imports the config file&lt;/a&gt; through &lt;code&gt;require(&apos;lspconfig.configs&apos;)&lt;/code&gt;, but this snippet is using &lt;code&gt;require&apos;lspconfig/configs&apos;&lt;/code&gt;. Could that possibly make a difference? The answer appears to be yes, because the following is what worked for me:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;require(&apos;lspconfig.configs&apos;).my_custom_lsp = {
+    default_config = {
+        cmd = {&apos;path/to/my/binary&apos;},
+        filetypes = {&apos;filetype&apos;};
+        root_dir = function(fname)
+            return lsp.util.find_git_ancestor(fname)
+        end;
+        settings = {};
+    };
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now all I have to do is write the rest of the language server—how hard could that be?&lt;/p&gt;
+</content:encoded></item><item><title>Hello Recurse! (Week 1, Day 1)</title><link>https://ryanisaacg.com/code/hello-recurse/</link><guid>https://ryanisaacg.com/code/hello-recurse/</guid><description>&lt;p&gt;Today I start a 12-week batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;!&lt;/p&gt;
 </description><pubDate>Mon, 01 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Today I start a 12-week batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;!
 Here at the outset my goals are:&lt;/p&gt;
 &lt;ol&gt;

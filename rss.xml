@@ -1,4 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Ryan’s Blog</title><description>A blog about whatever catches my interest</description><link>https://ryanisaacg.com/</link><language>en-us</language><item><title>1 Week in at the Recurse Center</title><link>https://ryanisaacg.com/code/recurse_week_1/</link><guid>https://ryanisaacg.com/code/recurse_week_1/</guid><description>&lt;p&gt;I&apos;m one week in to my &lt;a href=&quot;hello-recurse&quot;&gt;batch at the Recurse Center&lt;/a&gt;! Here&apos;s what I&apos;ve done and learned so far.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Ryan’s Blog</title><description>A blog about whatever catches my interest</description><link>https://ryanisaacg.com/</link><language>en-us</language><item><title>Writing a Programming Language for Fun</title><link>https://ryanisaacg.com/code/programming-language-for-fun/</link><guid>https://ryanisaacg.com/code/programming-language-for-fun/</guid><description>&lt;p&gt;For a little under a year I&apos;ve been working on &lt;a href=&quot;https://github.com/ryanisaacg/my-programming-language/&quot;&gt;a programming language project&lt;/a&gt;. It&apos;s a high level language that compiles to WebAssembly, designed to small games or scripts. Here I&apos;ll introduce the language, explain my design decisions thus far, and complain about naming things.&lt;/p&gt;
+</description><pubDate>Mon, 15 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;For a little under a year I&apos;ve been working on &lt;a href=&quot;https://github.com/ryanisaacg/my-programming-language/&quot;&gt;a programming language project&lt;/a&gt;. It&apos;s a high level language that compiles to WebAssembly, designed to small games or scripts. Here I&apos;ll introduce the language, explain my design decisions thus far, and complain about naming things.&lt;/p&gt;
+&lt;h2&gt;An Example&lt;/h2&gt;
+&lt;p&gt;Before I get into the weeds, I figured I should show off what a snippet of the language looks like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import self.tilemap.Tilemap;
+import self.tilemap.Tile;
+import self.character_controller;
+import self.character_controller.Input;
+
+const TILE_SIZE = 32;
+
+struct State {
+    player: Player,
+    map: Tilemap,
+    input: Input,
+
+    fn tick(self: unique State) {
+        // Update
+        character_controller.update_player(unique self.player, unique self.input, ref self.map);
+
+        // Draw
+        sdl.set_color(255, 255, 255, 255);
+        sdl.clear();
+
+        borrow player = ref self.player;
+        sdl.set_color(255, 0, 0, 255);
+        sdl.fill_rect(player.pos.x, player.pos.y, TILE_SIZE, TILE_SIZE);
+
+        borrow tilemap = ref self.map;
+        sdl.set_color(0, 0, 0, 255);
+        let tile_x = 0;
+        while tile_x &amp;lt; tilemap.width {
+            let tile_y = 0;
+            while tile_y &amp;lt; tilemap.height {
+                let idx = tile_x * tilemap.height + tile_y;
+                case tilemap.tiles[idx] {
+                    Empty =&amp;gt; {}
+                    Block =&amp;gt; {
+                        sdl.fill_rect(tile_x * TILE_SIZE, tile_y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    }
+                }
+                tile_y += 1;
+            }
+            tile_x += 1;
+        }
+
+        sdl.present();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With this little example in mind, why have I created this programming language?&lt;/p&gt;
+&lt;h2&gt;(Writing a Programming Language) for Fun&lt;/h2&gt;
+&lt;p&gt;Principally I started this project to enjoy the process and craft. Compilers are some of the most software-ass-software I&apos;ve ever written: take as input a structured formal language, and output another structured formal language. It really satisfies the puzzle-solver in me.&lt;/p&gt;
+&lt;p&gt;Given the project&apos;s hobby origins, it has hobby goals. I am willing to make compromises on the language itself, the compiler, and the output all in service of having a good time. If I have to trade off a little expressiveness in the language to save a little complexity in the compiler, I&apos;ll often take that trade. With that in mind, what am I compiling?&lt;/p&gt;
+&lt;h2&gt;Writing (a Programming Language for Fun)&lt;/h2&gt;
+&lt;p&gt;When I program for fun, it&apos;s almost always in Rust. In many ways Rust is my dream language: an imperative programming model, a broad ecosystem, a WASM backend, a good safety story, and great tooling like Cargo. For games and little scripts, I find Rust less satisfying because of high compilation times and inconvenient zero-cost abstractions (e.g. having to repeatedly clone strings or &lt;code&gt;Rc&lt;/code&gt;s).&lt;/p&gt;
+&lt;p&gt;My language is aimed at the niche of smaller programs which don&apos;t need the full weight of Rust&apos;s performance or expressive power. Its goals are to be easy to use, enable quick iteration, prevent silly mistakes, deploy to both web and desktop, and run efficiently enough to make games. Implementation concerns are allowed to override design concerns, but ideally they won&apos;t have to. In making early design decisions, I took inspiration from Rust, TypeScript, my half-baked understanding of Go, &lt;a href=&quot;https://without.boats/blog/notes-on-a-smaller-rust/&quot;&gt;Notes on a smaller Rust&lt;/a&gt;, &lt;a href=&quot;https://graydon2.dreamwidth.org/307291.html&quot;&gt;The Rust I Wanted Had No Future&lt;/a&gt;, &lt;a href=&quot;https://www.scattered-thoughts.net/writing/implementing-interactive-languages/&quot;&gt;Implementing interactive languages&lt;/a&gt;, and &lt;a href=&quot;https://austral-lang.org/&quot;&gt;Austral&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My first and easiest decision was types and type inference: all expressions have static types, and type information flows only in one direction. For the kind of programs I want to write, a full Hindley-Milner-style system seems like overkill. Instead each expression has a type entirely devoid of its context, and type information flows from the right hand side of declarations to the left. This is fundamentally similar to most imperative languages, especially ones that bolt on an &lt;code&gt;auto&lt;/code&gt; or &lt;code&gt;var&lt;/code&gt; keyword later in their design. We&apos;ll see if I come to regret this decision when I get into more complex collections, but I think it&apos;s an appropriate tradeoff.&lt;/p&gt;
+&lt;p&gt;Struct-style product types were an easy choice, but it took me a little while to decide on my sum type. Originally in the interest of a simple language I considered something along the lines of variant records, as &lt;a href=&quot;https://journal.stuffwithstuff.com/2023/08/04/representing-heterogeneous-data/&quot;&gt;laid out by Bob Nystrom &lt;/a&gt;. I never implemented this idea completely, instead writing something that was an unholy combination of a variant record and a Rust enum. You could access each variant like a field, but it returned a nullable result. Once I was actually trying to write programs, I realized I wanted a proper sum type and implemented basic pattern-matching over my enums. That brings us to structs and enums, with limited pattern matching over the latter.&lt;/p&gt;
+&lt;p&gt;Very early on I decided that this language wouldn&apos;t permit mutable aliasing. Aside from the correctness and performance benefits, mandating that mutable references are exclusive makes code easier to read. I considered trying to learn about mutable value semantics because of interest in &lt;a href=&quot;https://www.hylo-lang.org/&quot;&gt;Hylo&lt;/a&gt; and &lt;a href=&quot;https://www.scattered-thoughts.net/writing/ruminating-about-mutable-value-semantics&quot;&gt;Zest&lt;/a&gt;, but they were out of my comfort zone[^recurse]. I&apos;ve opted for the more familiar Rust-style move semantics. Types may either be cheaply copied or are treated as affine[^affine], but not both.&lt;/p&gt;
+&lt;p&gt;[^recurse]: I could see myself revisiting this decision at some point in my batch at the Recurse Center, but currently my plate is pretty full without mutable value semantics.
+[^affine]: I wish the language around &lt;a href=&quot;https://en.wikipedia.org/wiki/Substructural_type_system&quot;&gt;substructural type systems&lt;/a&gt; was less opaque. Please check out &lt;a href=&quot;https://without.boats/blog/ownership/&quot;&gt;Without Boats&apos; post &amp;quot;Ownership&amp;quot;&lt;/a&gt;. It is the clearest explanation of &amp;quot;affine&amp;quot; and &amp;quot;linear&amp;quot; types I have read.&lt;/p&gt;
+&lt;p&gt;Unlike Rust, I have decided that borrows are not a first-class type. They cannot be stored in user types, added to collections, returned from functions, or assigned to variables. Allowing borrows to potentially escape the scope they&apos;re created in makes borrow-checking much harder. As a result I don&apos;t plan to need lifetime annotations on borrows, which saves quite a bit of complexity and learning curve. Each borrow is limited entirely to its original lexical scope, and borrows may not be reassigned once created. As a result borrow-checking is a few hundred lines of code, and should be much less daunting to newcomers.&lt;/p&gt;
+&lt;p&gt;&amp;lt;aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;Second-class borrows will mean second-class slices. That&apos;s fine in many cases, but I&apos;m worried it will end up feeling restricted. If that bears out then my (unformed) plan is for &amp;quot;view types&amp;quot;, which share reference counts and locks with their parent collection. This way you could create (in Rust parlance) an &lt;code&gt;Arc&amp;lt;RwLock&amp;lt;Vec&amp;lt;T&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt; once, and then have many &lt;code&gt;Arc&amp;lt;RwLock&amp;lt;[T]&amp;gt;&amp;gt;&lt;/code&gt; instances which reference it. This should prevent mutable aliasing, while regrettably losing a bit of static verifiability.&lt;/p&gt;
+&lt;p&gt;&amp;lt;/aside&amp;gt;&lt;/p&gt;
+&lt;p&gt;The backend for the language is WASM[^interpreter]. It lets me target the browser or desktop with relative ease, and is totally cross-platform. So far it seems easy to emit and fast enough for my needs. My biggest frustration is the distinction between the program stack and linear memory; I understand the reason (security, ability to optimize, etc) but it does make reference types fairly annoying.&lt;/p&gt;
+&lt;p&gt;[^interpreter]: There&apos;s also a tree-walking interpreter that runs on the lower-level IR directly. I wrote this early in development so I could build out the language in vertical slices. It&apos;s slow and not intended for actual use, and has mostly served its purpose now that I emit WASM. The next time it slows down development I&apos;ll probably delete it.&lt;/p&gt;
+&lt;p&gt;Speed of execution has mostly worked out to my liking as a result of earlier decisions. When the types are known at compile time the memory layouts are as well, which makes emitted code pretty simple. I haven&apos;t added any optimization yet; I think there should be some significant low-hanging fruit once I decide to start.&lt;/p&gt;
+&lt;p&gt;Iteration speed also has just sort of worked out. The compiler is written in Rust and makes heavy use of &lt;a href=&quot;https://github.com/rayon-rs/rayon&quot;&gt;rayon&lt;/a&gt;: files are parsed and typechecked in parallel, and then functions are desugared, borrow-checked, and lowered to the &amp;quot;linear IR&amp;quot; in parallel. Code isn&apos;t emitted in parallel, but it could be without much of a change. Compiling to WASM also means that I can implement hot-reloading quite easily. All that I need to do is create a new WASM instance and copy the memory from one instance to the other. I&apos;ve already had fun writing a very tiny platformer character controller without having to close the running game.&lt;/p&gt;
+&lt;h2&gt;Naming the Damn Thing&lt;/h2&gt;
+&lt;p&gt;I&apos;ve been working on this project on-and-off for about eight months. It&apos;s now far enough along to write small toys, and I&apos;ve begun writing a game. What I still don&apos;t have is a name! The first name I picked was &amp;quot;brick&amp;quot;, a non-trademark-infringing nod to &lt;a href=&quot;https://en.wikipedia.org/wiki/Lego&quot;&gt;a toy that you use to build toys&lt;/a&gt;. After a while I discovered &lt;a href=&quot;https://github.com/brick-lang/brick&quot;&gt;there&apos;s already a hobby PL project with that name&lt;/a&gt;, albeit one that seems to have been abandoned six years ago. I&apos;d like to avoid a name collision if possible, but have found no other name candidate that called strongly to me. I&apos;ve considered:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;ludus&amp;quot;, Latin for &amp;quot;game&amp;quot;. Doesn&apos;t sound fun though, it sounds like Latin&lt;/li&gt;
+&lt;li&gt;&amp;quot;pyra&amp;quot;, as a shortening of &amp;quot;pyrite&amp;quot;. This is more of an inside joke with my name, but some surveying of friends turns out that the initial letters &amp;quot;py&amp;quot; strongly point to some association with Python&lt;/li&gt;
+&lt;li&gt;&amp;quot;mortar&amp;quot;, suggested by a friend if I couldn&apos;t take &amp;quot;brick.&amp;quot; It has &lt;a href=&quot;https://github.com/tonoy30/mortar&quot;&gt;a name collision&lt;/a&gt; (though an even more abandoned, less-used one) and doesn&apos;t have much going for it outside of an allusion to an allusion.&lt;/li&gt;
+&lt;li&gt;&amp;quot;block&amp;quot;, for the same reason as &amp;quot;brick&amp;quot;. Even worse name collisions: &amp;quot;block programming&amp;quot; is how &lt;a href=&quot;https://developers.google.com/blockly&quot;&gt;many&lt;/a&gt; &lt;a href=&quot;https://www.codejig.com/en/block-based-coding/&quot;&gt;visual&lt;/a&gt; &lt;a href=&quot;https://www.codewizardshq.com/what-is-block-coding/&quot;&gt;programming&lt;/a&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Scratch_(programming_language)&quot;&gt;languages&lt;/a&gt; refer to themselves. Not to mention endless potential confusion over &amp;quot;blockchain&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ideally a name would make some reference to the just-for-fun nature of the language. Secondarily I considered something that would obviously scan as a &amp;quot;smaller Rust&amp;quot;, but none of my ideas (&amp;quot;tarnish&amp;quot;, &amp;quot;oxidize&amp;quot;, etc) appealed to me. At this point I&apos;m weighing going back to &amp;quot;brick&amp;quot;, but I&apos;d really like to avoid the name collision. If you have any suggestions for names, please feel free to &lt;a href=&quot;ryan@ryanisaacg.com&quot;&gt;send them my way&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;In future posts I plan to elaborate on specifics like the design of the compiler, linking the runtime, the language server, and features like coroutines or interfaces (both currently half-working).&lt;/p&gt;
+</content:encoded></item><item><title>1 Week in at the Recurse Center</title><link>https://ryanisaacg.com/code/recurse_week_1/</link><guid>https://ryanisaacg.com/code/recurse_week_1/</guid><description>&lt;p&gt;I&apos;m one week in to my &lt;a href=&quot;hello-recurse&quot;&gt;batch at the Recurse Center&lt;/a&gt;! Here&apos;s what I&apos;ve done and learned so far.&lt;/p&gt;
 </description><pubDate>Mon, 08 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I&apos;m one week in to my &lt;a href=&quot;hello-recurse&quot;&gt;batch at the Recurse Center&lt;/a&gt;! Here&apos;s what I&apos;ve done and learned so far.&lt;/p&gt;
 &lt;p&gt;Monday and Tuesday were a little more orientation-y last week, so I got to virtually meet a lot of folks from my batch and get a sense of what other people are working on. Despite coming in with no interest or experience in audio programming, the enthusiasm of some other folks may sway me to try to learn digital audio basics over the next 11 weeks.&lt;/p&gt;
 &lt;p&gt;My first project was a tiny, practical one: &lt;a href=&quot;https://github.com/ryanisaacg/hindsight&quot;&gt;Hindsight&lt;/a&gt;, a timer app that reminds me to take a 20 second break every 20 minutes. It&apos;s my first time writing any Swift, so I&apos;m sure it&apos;s unidiomatic as all heck. There are plenty of improvements I&apos;d like to make (only start the timer when I&apos;m back at my keyboard, be smarter about detecting whether I&apos;m in a video / audio call, don&apos;t have the SwiftUI &amp;quot;hello world&amp;quot; window open all the time) but they&apos;re not big priorities for me right now. It&apos;s good enough!&lt;/p&gt;

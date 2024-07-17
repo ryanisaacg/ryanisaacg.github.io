@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Recurse Center: Week 2 :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="Recurse Center: Week 2 :: ryan.isaac.g">
+    <meta name="description" content="<p>Orientation is done! We're in the batch for real now.</p>
+">
+    <meta property="og:description" content="<p>Orientation is done! We're in the batch for real now.</p>
+">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/_astro/_...slug_.a264a228.css" />
+<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+        </div>
+    </div>
+    
+        <h1>Recurse Center: Week 2</h1>
+        <small>2024-07-17</small>
+    
+</header>
+    <article>
+        <p>Orientation is done! We’re in the batch for real now.</p>
+<!-- more -->
+<p>A few folks in my batch were interested in the <a href="https://app.codecrafters.io/courses/sqlite/overview">CodeCrafters SQLite course</a>, so I gave that a try. It didn’t end up meeting our expectations. Rather than giving any sort of step-by-step explanation of what you should do, the course just sort of links to the SQLite docs. I attempted to forge ahead regardless; after much frustration I some tangible progress. <a href="https://github.com/ryanisaacg/sqlite/">My implementation</a> can count the number of the tables in the a SQLite database, and tell you their names. I now feel confident that I <em>could</em> write code that queries the data in a SQLite database, but I’m not sure I want to spend the rest of my batch down this rabbit hole. For now I’ll be putting it to the side.</p>
+<p>I tried to improve <a href="https://github.com/ryanisaac/hindsight">Hindsight</a> (my app to remind me to take breaks while coding) by detecting if the camera is on, rather than if Zoom is open. At first I tried using a library but <a href="https://github.com/sindresorhus/is-camera-on/issues/4">it doesn’t work on my model of macbook</a>, so for now Hindsight will remain un-improved. Someone did link to the apparent <a href="https://github.com/wouterdebie/onair/issues/3">source of the issue</a>, so maybe I’ll take some time in the future to dig in and fix the problem?</p>
+<p>For my still-unnamed programming language I spent some time on <a href="programming-language-for-fun">a blog post</a> and made some progress on understanding language servers. I didn’t ship any major new features, but I did lay the foundation for supporting hover information and error highlighting<sup><a href="#user-content-fn-highlighting" id="user-content-fnref-highlighting" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup>.</p>
+<p>This week I also started two new projects: <a href="https://github.com/ryanisaacg/iceload">Iceload</a> and <a href="https://github.com/ryanisaacg/wasmtime-dl"><code>wasmtime-dl</code></a>.</p>
+<p>Iceload is my toy clone of <a href="https://firebase.google.com/docs/firestore">Firestore</a>, a document database with built-in pub/sub capabilities. My goal is to be able to get the developer experience of Firestore (easy setup, easy subscriptions to values, no need for a separate application server) in a local-first, “handmade” dev environment. I’m using <a href="https://crates.io/crates/sled"><code>sled</code></a> for the key/value store and persistence<sup><a href="#user-content-fn-couldwant" id="user-content-fnref-couldwant" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup>, and a websocket to communicate with clients. Currently basic document operations (get, insert, update, remove) all work! The next major steps are supporting subscriptions, creating the schema, and access control.</p>
+<p><code>wasmtime-dl</code> is a truly cursed Rust crate. Given a shared library (<code>dll</code> on Windows, <code>dylib</code> on macOS, <code>so</code> on Linux), I want to be able to expose that library’s exports to a wasmtime instance. Importantly I want to do this without needing to hand-write bindings that tell the wasmtime linker about the library; I want to drive the process with data instead. This is important for my programming language project; if I want my package to include some native functionality (say SDL2 bindings) I don’t want to have to drop down to Rust. Instead I should be able to describe the exported functions from the shared library and then bind it into the WASM VM. I’m excited to put <code>wasmtime-dl</code> into “production” in week 3 as I build out functionality for programs to bind to their host environments.</p>
+<p>The curse of <code>wasmtime-dl</code> is how it goes about this binding: 16,000 lines of generated Rust code to pattern match over possible shapes of functions. For every combination of <code>i32</code>/<code>f32</code>/<code>i64</code>/<code>f64</code> parameters (up to 4) and return values (including <code>void</code> returns), there’s a match case generated. Then for every function with just <code>i32</code> parameters (up to 16) and either a returned <code>i32</code> or <code>void</code> has its own case. Originally I wanted to support any primitive for up to 16 arguments, but the combinatorial explosion is real. That would have taken millions of lines of generated code, I think?</p>
+<p>At the very tail end of the week I started on the <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">Raytracing in One Weekend</a> with a pair of other Recursers in my batch. We got through all the setup and are poised to actually start tracing some rays, which should be fun!</p>
+<p>Week 2 was significantly more social than Week 1, because I spent a lot more time in-person at the hub. I find it hard to avoid going heads-down on my remote days, and end up wiling away the hours working without much interaction. As a result I find myself planning to spend as much time in the hub as possible, even though I’m a staunch remote-work fan. Something for me to think about over the next ten weeks, I guess!</p>
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-highlighting">
+<p>At the time of writing I’ve used that foundation to build error highlighting! Spoilers for next week’s post 🤫 <a href="#user-content-fnref-highlighting" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-couldwant">
+<p>At the start of my batch I didn’t even know how I <em>could</em> possibly write my own persisted key/value store. Now that I’ve implemented a B-Tree and trawled through the SQLite file format I’m confident in my new abilities, but also aware of how much work it would be. I now feel much better about offloading that component to <code>sled</code> and building atop prior art! <a href="#user-content-fnref-couldwant" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section>
+    </article>
+
+  </body></html>

@@ -1,58 +1,6 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics :: ryan.isaac.g </title>
-
-    <meta property="og:title" content="A Quicksilver Chanukah, Day 7: Quicksilver's New Graphics :: ryan.isaac.g">
-    <meta name="description" content="<p>The graphics API of Quicksilver isn't as dire need of a rework as the <a href=&#34;../quicksilver-chanukah-2019-day-6&#34;>lifecycle APIs</a>, but I wanted to take the next breaking change as an opportunity to address some long-standing issues.</p>
-">
-    <meta property="og:description" content="<p>The graphics API of Quicksilver isn't as dire need of a rework as the <a href=&#34;../quicksilver-chanukah-2019-day-6&#34;>lifecycle APIs</a>, but I wanted to take the next breaking change as an opportunity to address some long-standing issues.</p>
-">
-    <!-- Keep synced with link color in site.scss -->
-    <meta name="theme-color" content="#4c4edd">
-    
-    
-    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
-  <link rel="stylesheet" href="/_astro/_...slug_.bb52763f.css" />
-<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
-  <body>
-    
-    <header class="astro-3EF6KSR2">
-    <div class="page-header astro-3EF6KSR2">
-        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
-        <div class="header-links astro-3EF6KSR2">
-            <a href="/" class="astro-3EF6KSR2">/home</a>
-        </div>
-    </div>
-    <h1>A Quicksilver Chanukah, Day 7: Quicksilver&#39;s New Graphics</h1>
-        <small>2019-12-28</small>
-    
-</header>
-    <article>
-        <p>The graphics API of Quicksilver isn’t as dire need of a rework as the <a href="../quicksilver-chanukah-2019-day-6">lifecycle APIs</a>, but I wanted to take the next breaking change as an opportunity to address some long-standing issues.</p>
-<!-- more -->
-<p>In no particular order, they are:</p>
-<h2 id="low-level-access">Low-Level Access</h2>
-<p>As it stands, Quicksilver talks to a very specific backend design for graphics. The API is internal-only and designed to wrap up all the GL code in one place, to keep the high-level drawing APIs platform independent. There’s no way to expose the raw GL API directly to the user, as the backend talks directly to OpenGL 3.2 and WebGL 1. With <code>glow</code>, we could expose a cross-platform OpenGL context, but there are still differences between desktop and web GL. These problems, like different ways of describing the input and output in GLSL, are addressed by <a href="../quicksilver-chanukah-2019-day-5"><code>golem</code> (see announcement from 2 days ago.)</a>.</p>
-<p>Providing users access to a lower-level graphics API also frees the high-level API from trying to provide custom shader support. A custom shader is best served with custom vertex inputs, which means custom functions to turn high-level draw commands into low-level vertex data. Instead of trying to solve this problem in the general case, Quicksilver can provide the mechanism to solve it yourself.</p>
-<h2 id="draw-order">Draw Order</h2>
-<p>The previous graphics API aggressively batches draws, including re-ordering <code>draw</code> commands to avoid changing state while rendering. If a <code>z</code> parameter (not included in the default, simple <code>draw</code>) is not provided, anything goes. Hypothetically this leads to faster rendering, but it also means that many users experience unexpected results with basic operations. The new API should be built on a simple draw-order guarantee: the first draw call is drawn furthest back, with each subsequent draw lying on top of the ones before it.</p>
-<h2 id="render-to-texture">Render-To-Texture</h2>
-<p>The <code>Surface</code> API supports render-to-texture, but it has a few problems. First, the API is unintuitive: rendering to a texture only works within a closure, for example. Also, it’s plain buggy. <code>golem</code> provides a harder-to-misuse API for off-screen rendering, which can be used to build a nicer abstraction in Quicksilver itself.</p>
-<h2 id="screen-resizing-and-projection">Screen Resizing and Projection</h2>
-<p>The current version of Quicksilver “magically” handles the window being resized, as well as projecting and unprojecting between world and screen coordinates. Often this is more trouble than it’s worth: you want your UI at one projection and letterbox, and your game content at another. By exposing a few more knobs to the user (like the GL viewport), the <code>ResizeStrategy</code> API can be provided on top of other, orthogonal abstractions.</p>
-<ol>
-<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
-<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
-<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
-<li>This post!</li>
-<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
-</ol>
-    </article>
-
-  </body></html>
+<meta charset="utf-8">
+<link rel="canonical" href="/posts/quicksilver-chanukah-2019-day-7">
+<meta http-equiv="refresh" content="0; url=/posts/quicksilver-chanukah-2019-day-7" ">
+<title>Redirect</title>
+<p><a href="/posts/quicksilver-chanukah-2019-day-7">Click here</a> to be redirected.</p>

@@ -1,79 +1,88 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> A Quicksilver Chanukah, Day 2: Platter :: ryan.isaac.g </title>
-        <link rel="stylesheet" href="/page.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <main>
-            <header>
-                <a href="/"> Return Home </a>
-                <h1> A Quicksilver Chanukah, Day 2: Platter </h1>
-                <small> 2019-12-23 </small>
-            </header>
-            <article>
-                <p>This year saw the release of <code>async/.await</code> in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a <code>Future</code> instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.</p>
-<span id="continue-reading"></span>
-<p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
-<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">let images = load_file(&quot;my_manifest_path&quot;)
-    .map(parse_file_contents)
-    .and_then(|image_paths| join_all(
-        image_paths
-            .map(load_file)
-            .map(|file| file.and_then(parse_image))
-    );
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> A Quicksilver Chanukah, Day 2: Platter :: ryan.isaac.g </title>
 
-render_loading();
-loop {
-    &#x2F;&#x2F; Core application loop
-    if images.is_ready {
-        render_frame(&amp;images);
-    }
-}
-</code></pre>
-<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn't even touched error handling.</p>
+    <meta property="og:title" content="A Quicksilver Chanukah, Day 2: Platter :: ryan.isaac.g">
+    <meta name="description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.">
+    <meta property="og:description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/_astro/_...slug_.bb52763f.css" />
+<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+        </div>
+    </div>
+    <h1>A Quicksilver Chanukah, Day 2: Platter</h1>
+        <small>23 Dec  2019</small>
+    
+</header>
+    <article>
+        <p>This year saw the release of <code>async/.await</code> in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a <code>Future</code> instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.</p>
+<p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto;"><code><span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> images</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">load_file</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-string-expression)">"my_manifest_path"</span><span style="color: var(--astro-code-color-text)">)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">map</span><span style="color: var(--astro-code-color-text)">(parse_file_contents)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">and_then</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-keyword)">|</span><span style="color: var(--astro-code-color-text)">image_paths</span><span style="color: var(--astro-code-token-keyword)">|</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">join_all</span><span style="color: var(--astro-code-color-text)">(</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">        image_paths</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">            </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">map</span><span style="color: var(--astro-code-color-text)">(load_file)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">            </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">map</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-keyword)">|</span><span style="color: var(--astro-code-color-text)">file</span><span style="color: var(--astro-code-token-keyword)">|</span><span style="color: var(--astro-code-color-text)"> file</span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">and_then</span><span style="color: var(--astro-code-color-text)">(parse_image))</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: var(--astro-code-token-function)">render_loading</span><span style="color: var(--astro-code-color-text)">();</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">loop</span><span style="color: var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color: var(--astro-code-token-comment)">    // Core application loop</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">if</span><span style="color: var(--astro-code-color-text)"> images</span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-color-text)">is_ready {</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">        </span><span style="color: var(--astro-code-token-function)">render_frame</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-keyword)">&#x26;</span><span style="color: var(--astro-code-color-text)">images);</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    }</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">}</span></span></code></pre>
+<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn’t even touched error handling.</p>
 <p>Introducing <a href="https://crates.io/crates/platter"><code>platter</code></a>, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.</p>
-<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">render_loading();
-let contents = load_file(&quot;my_manifest_path&quot;).await?;
-let image_paths = parse_file_contents(contents);
-let images = Vec::new();
-for image_path in image_paths {
-    let image_file = load_file(image_path).await?;
-    images.push(parse_image(image_file)?);
-}
-loop {
-    render_frame(&amp;images);
-}
-</code></pre>
-<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it's much clearer:</p>
-<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">render_loading();
-let contents = load_file(&quot;my_manifest_path&quot;).await;
-let image_futures = parse_file_contents(contents)
-    .map(load_file);
-let images: Vec&lt;Image&gt; = try_join_all(image_futures)
-    .await?
-    .map(parse_image)
-    .collect()?;
-loop {
-    render_frame(&amp;images);
-}
-</code></pre>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto;"><code><span class="line"><span style="color: var(--astro-code-token-function)">render_loading</span><span style="color: var(--astro-code-color-text)">();</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> contents</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">load_file</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-string-expression)">"my_manifest_path"</span><span style="color: var(--astro-code-color-text)">)</span><span style="color: var(--astro-code-token-keyword)">.await?</span><span style="color: var(--astro-code-color-text)">;</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> image_paths</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">parse_file_contents</span><span style="color: var(--astro-code-color-text)">(contents);</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> images</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">Vec</span><span style="color: var(--astro-code-token-keyword)">::</span><span style="color: var(--astro-code-token-function)">new</span><span style="color: var(--astro-code-color-text)">();</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">for</span><span style="color: var(--astro-code-color-text)"> image_path </span><span style="color: var(--astro-code-token-keyword)">in</span><span style="color: var(--astro-code-color-text)"> image_paths {</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> image_file</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">load_file</span><span style="color: var(--astro-code-color-text)">(image_path)</span><span style="color: var(--astro-code-token-keyword)">.await?</span><span style="color: var(--astro-code-color-text)">;</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    images</span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">push</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-function)">parse_image</span><span style="color: var(--astro-code-color-text)">(image_file)</span><span style="color: var(--astro-code-token-keyword)">?</span><span style="color: var(--astro-code-color-text)">);</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">}</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">loop</span><span style="color: var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-function)">render_frame</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-keyword)">&#x26;</span><span style="color: var(--astro-code-color-text)">images);</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">}</span></span></code></pre>
+<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it’s much clearer:</p>
+<pre is:raw="" class="astro-code" style="background-color: var(--astro-code-color-background); overflow-x: auto;"><code><span class="line"><span style="color: var(--astro-code-token-function)">render_loading</span><span style="color: var(--astro-code-color-text)">();</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> contents</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">load_file</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-string-expression)">"my_manifest_path"</span><span style="color: var(--astro-code-color-text)">)</span><span style="color: var(--astro-code-token-keyword)">.await</span><span style="color: var(--astro-code-color-text)">;</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> image_futures</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">parse_file_contents</span><span style="color: var(--astro-code-color-text)">(contents)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">map</span><span style="color: var(--astro-code-color-text)">(load_file);</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">let</span><span style="color: var(--astro-code-color-text)"> images</span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">Vec</span><span style="color: var(--astro-code-color-text)">&#x3C;</span><span style="color: var(--astro-code-token-function)">Image</span><span style="color: var(--astro-code-color-text)">></span><span style="color: var(--astro-code-token-keyword)">:</span><span style="color: var(--astro-code-color-text)"> </span><span style="color: var(--astro-code-token-function)">try_join_all</span><span style="color: var(--astro-code-color-text)">(image_futures)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.await?</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">map</span><span style="color: var(--astro-code-color-text)">(parse_image)</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-keyword)">.</span><span style="color: var(--astro-code-token-function)">collect</span><span style="color: var(--astro-code-color-text)">()</span><span style="color: var(--astro-code-token-keyword)">?</span><span style="color: var(--astro-code-color-text)">;</span></span>
+<span class="line"><span style="color: var(--astro-code-token-keyword)">loop</span><span style="color: var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">    </span><span style="color: var(--astro-code-token-function)">render_frame</span><span style="color: var(--astro-code-color-text)">(</span><span style="color: var(--astro-code-token-keyword)">&#x26;</span><span style="color: var(--astro-code-color-text)">images);</span></span>
+<span class="line"><span style="color: var(--astro-code-color-text)">}</span></span></code></pre>
 <p><code>platter</code> is small and can be plugged into your own game framework or game project if you want to harness <code>async/await</code> to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!</p>
-<p>That's Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
+<p>That’s Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
 <ol>
-<li><a href="../quicksilver-chanukah-2019">Yesterday's introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019">Yesterday’s introduction post</a></li>
 <li>This post!</li>
 <li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
 <li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
-<li><a href="../quicksilver-chanukah-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
+    </article>
 
-            </article>
-        </main>
-    </body>
-</html>
+  </body></html>

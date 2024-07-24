@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Learning About the Language Server Protocol :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="Learning About the Language Server Protocol :: ryan.isaac.g">
+    <meta name="description" content="As part of my programming language project, I've been writing a language server. I'm familiar with the very basics of the LSP from integrating Neovim with projects like rust-analyzer, but this is the first time I've dug into the internals.">
+    <meta property="og:description" content="As part of my programming language project, I've been writing a language server. I'm familiar with the very basics of the LSP from integrating Neovim with projects like rust-analyzer, but this is the first time I've dug into the internals.">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/_astro/_...slug_.72596cf3.css" />
+<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+        </div>
+    </div>
+    <aside>
+            <p>
+              This post is a draft. Please don't share it with anyone else; if I didn't send you the link directly, you're probably not supposed to be seeing it!
+            </p>
+          </aside><h1>Learning About the Language Server Protocol</h1>
+        <small>26 Jul  2024</small>
+    
+</header>
+    <article>
+        <p>As part of <a href="programming-language-for-fun">my programming language project</a>, I’ve been writing a language server. I’m familiar with the very basics of the <a href="https://microsoft.github.io/language-server-protocol/">LSP</a> from integrating Neovim with projects like <code>rust-analyzer</code>, but this is the first time I’ve dug into the internals.</p>
+<p>At its most basic, the protocol consists of JSON messages exchanged<sup><a href="#user-content-fn-transport" id="user-content-fnref-transport" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup> between a server and a client. The server understands the programming language and does all the processing. The client<sup><a href="#user-content-fn-clients" id="user-content-fnref-clients" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup> interacts with the server in a high-level way, abstracting the difference between programming languages. Most exchanges involve a request from the client and a response from the server;</p>
+<p> <img src="/client-server-request.svg" class="diagram"> </p>
+<p>some go the other direction (the server requests and the client responds).</p>
+<p> <img src="/server-client-request.svg" class="diagram"> </p>
+<p>Still others are one-way messages with no response; these are called “notifications” in the LSP spec.</p>
+<p> <img src="/lsp-notif.svg" class="diagram"> </p>
+<p>Different clients and servers can have different “capabilities”, which they exchange during initial connection.<sup><a href="#user-content-fn-exchange" id="user-content-fnref-exchange" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup> For example, there’s a capability <code>definitionProvider</code> which the server may or may not have. If a server doesn’t advertise this capability, the client’s interface shouldn’t show “go to definition” controls.</p>
+<aside>
+<p>This can be lead to a footgun in early development: forgetting to enable a capability you’re newly adding. When I first added a goto-definition handler, logs showed that my commands weren’t even reaching the language server. I spent a little while debugging my goto-definition handler in confusion, before I realized I needed to report <code>definitionProvider: true</code>. Once I reported the capability, my commands began to reach the server.</p>
+</aside>
+<p>At various points in the document lifecycle, the client notifies the server of changes. This is why <code>rust-analyzer</code> can typecheck your files even before you save; your editor is sending your changes to the server as notifications. Depending on what capabilities the server advertises, it can receive events like “documented opened”, “document changed”, “document closed”, “document renamed”, etc. It’s expected to track changes internally, as future commands will reference these unsaved versions of the documents.</p>
+<p>There are all sorts of features that servers can support. Some are user-initiated actions, like:</p>
+<ul>
+<li>Goto definition</li>
+<li>Find references</li>
+<li>Highlight instances of a symbol</li>
+<li>Retrieve hover information</li>
+<li>Run “code actions” (like importing unknown names or refactoring code blocks)</li>
+<li>Rename a given symbol</li>
+</ul>
+<p>There are other requests that the client makes without user input, such as:</p>
+<ul>
+<li>Inlay hints (used for type annotations in <code>rust-analyzer</code>, I don’t think they’re in Neovim)</li>
+<li>Inline values (not sure what these are used for, they’re not in Neovim I think)</li>
+<li>Completion options (this is technically kicked off by user input but rarely a specific command in the interface)</li>
+<li>Semantic syntax highlighting</li>
+</ul>
+<p>You’ll notice that the line between “user actions” and “editor actions” is blurry. The LSP spec itself makes no distinction between user-initiated and automatic requests; they all come from the client and the server handles them the same way.</p>
+<p>Inline errors (“diagnostics” in the spec) are usually pushed from the server to the client as a notification. The spec makes no requirement of when this notification can be made, which means that compilation and type-checking can happen asynchronously. Servers are responsible for clearing out diagnostics if a compilation succeeds, by sending a “publish diagnostics” notification with an empty body.</p>
+<p>I still have some stuff to learn about the spec! While browsing I’ve seen references to CodeLens and Workspaces. I’m not sure these features exist in my editor? I’ve never encountered them at least. If I want to provide excellent VSCode support for my language, I’ll revisit them and try to learn what they are.</p>
+<p>In a future post, I plan to talk through the language server I’ve created and the design decisions I’m making as I work through it.</p>
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-transport">
+<p>The specification allows for many different underlying communication mechanisms. I think Neovim is mostly using stdin/stdout, but servers can also communicate over sockets or other IPC mechanisms. <a href="#user-content-fnref-transport" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-clients">
+<p>I only know of using text editors as LSP clients, like VSCode or Neovim. There may be other possible clients, but I don’t know of them. <a href="#user-content-fnref-clients" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+<li id="user-content-fn-exchange">
+<p>Servers may register new capabilities or unregister existing ones at runtime. Clients may or may not support dynamic registration. I’m not sure what circumstances would lead a server to change its capabilities at runtime, but the option is there? <a href="#user-content-fnref-exchange" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section>
+    </article>
+
+  </body></html>

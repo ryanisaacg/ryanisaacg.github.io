@@ -788,14 +788,4 @@ Increasingly it is practical to build an entire game with only the Rust toolchai
 &lt;h2&gt;Going Forward&lt;/h2&gt;
 &lt;p&gt;If it sounds like my current goal is to make Quicksilver obsolete, that wouldn&apos;t be too far off. Quicksilver&apos;s raison d&apos;etre is packaging up a bundle of functionality and to provide a single API for both web and native. Moving the ecosystem to support web and native makes this less important. Parts of Quicksilver that I think are particularly useful will probably become their own crates (re-exported in Quicksilver) to allow their use outside the framework. Some future version of Quicksilver may just be entirely a re-export of various crates and types with a consistent organization.&lt;/p&gt;
 &lt;p&gt;In essence, I want seamless desktop and WASM development to move from a selling point of developing games in Quicksilver to a selling point of developing games in Rust.&lt;/p&gt;
-</content:encoded></item><item><title>High Crimes and Misdeamenors with wasm and dynamic linking</title><link>https://ryanisaacg.com/posts/wasm-dl/</link><guid>https://ryanisaacg.com/posts/wasm-dl/</guid><pubDate>Tue, 01 Jan 1901 00:00:00 GMT</pubDate><content:encoded>&lt;ul&gt;
-&lt;li&gt;Initial thought was to drive with data&lt;/li&gt;
-&lt;li&gt;Massive combinatorial explosion python script&lt;/li&gt;
-&lt;li&gt;Refined down&lt;/li&gt;
-&lt;li&gt;Realized I can and should just read the wasm import section&lt;/li&gt;
-&lt;li&gt;given the import section tried some trait stuff and macro stuff, couldn&apos;t figure it out&lt;/li&gt;
-&lt;li&gt;punning a ValRaw that represents a float to a u32 was difficult, to_bits and from_bits were producing the wrong results&lt;/li&gt;
-&lt;li&gt;Eventually reached for a transmute (safe transmute through bytemuck), need to take the u32, convert to f32, then transmute it back&lt;/li&gt;
-&lt;li&gt;Can&apos;t use the wasm import section, at least not entirely - pointers!&lt;/li&gt;
-&lt;/ul&gt;
 </content:encoded></item></channel></rss>

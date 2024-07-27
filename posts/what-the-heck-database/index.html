@@ -62,7 +62,7 @@
 <p>In week 2 I joined some of my batchmates in writing SQLite from scratch. I decided to go about this in Zig, to stretch my legs and learn a new language. The first step is to parse the database file’s header, which is pretty simple. Things immediately kick up a notch on the next step as I began to dig into SQLite’s internal structures.</p>
 <p>Each SQLite database is represented by a page (4096 bytes in the test database, but it can be configured on a per-DB basis). A page is also a node in a B+Tree, either a leaf or branch; trees either represent tables or indices. Each page consists of a header, an array of internal pointers to “cells”, and then the cells themselves.</p>
 <p>TODO: talk about endian-ness bugs
-TODO: talk about first page cell offets</p>
+TODO: talk about first page cell offsets</p>
     </article>
 
   </body></html>

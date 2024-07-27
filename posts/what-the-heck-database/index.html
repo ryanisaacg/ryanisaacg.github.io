@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,6 +51,18 @@
 </ul>
 </li>
 </ul>
+<p>Starting my batch at the Recurse Center, I knew one of the things I wanted to learn was the basics of database internals. I can sling SQL as well as your average full-stack engineer, but what happens under the hood was a total mystery to me. It’s a magic spell, And I hate magic!</p>
+<p>I started with TODO. By working through the first half of the book in Rust, I learned:</p>
+<ul>
+<li>“Logs” in database means something pretty different from what I’m used to. Instead of storing information about a program’s operation history, a “write ahead log” is a data structure you can safely append incoming operations to. This allows concurrent operations to be safely stored in a durable fashion, even if the process crashes mid-write.</li>
+<li>To build a persistent key/value store, it’s important to use a data structure where changes are atomic (again to be resilient to crashes mid-write). There are LSM-trees; all I know about them is that the acronym expands to Log-Structured Merge. There are also B+Trees, which I’ve gotten up close and personal with.</li>
+<li>For efficient manipulation of files on disk, it’s important to keep in mind TODO {sectors, segments}. The smallest possible disk read is often a few kilobytes; reading less than that at a time is inefficient IO. Memory-mapping is the best approach if you need random access to disk</li>
+</ul>
+<p>I also built a memory-mapped B+Tree in Rust to make sure I understood the concepts. I think it doesn’t fully rebalance itself (making it somewhat inefficient), but it does correctly handle get/insert/remove operations.</p>
+<p>In week 2 I joined some of my batchmates in writing SQLite from scratch. I decided to go about this in Zig, to stretch my legs and learn a new language. The first step is to parse the database file’s header, which is pretty simple. Things immediately kick up a notch on the next step as I began to dig into SQLite’s internal structures.</p>
+<p>Each SQLite database is represented by a page (4096 bytes in the test database, but it can be configured on a per-DB basis). A page is also a node in a B+Tree, either a leaf or branch; trees either represent tables or indices. Each page consists of a header, an array of internal pointers to “cells”, and then the cells themselves.</p>
+<p>TODO: talk about endian-ness bugs
+TODO: talk about first page cell offets</p>
     </article>
 
   </body></html>

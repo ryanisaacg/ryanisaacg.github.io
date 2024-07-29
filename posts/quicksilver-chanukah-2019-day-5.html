@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> A Quicksilver Chanukah, Day 5: Golem </title>
+<meta property="og:title" content="A Quicksilver Chanukah, Day 5: Golem">
+
+<meta name="description" content="golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.">
+<meta property="og:description" content="golem is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+      <h1> A Quicksilver Chanukah, Day 5: Golem </h1>
+      <small>
+        26 Dec  2019
+      </small>
+    </header>
+    <article>
+      <p><code>golem</code> is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.</p>
+<h2>Why <code>golem</code> and not X</h2>
+<p>If you’re just interested in what <code>golem</code> is and how it works, feel free to skip this section!</p>
+<p>The previous three days I’ve introduced new crates that mostly stood on their own. I’m not aware of any fleshed-out alternatives, so creating those libraries myself doesn’t require much explanation. <code>golem</code>, however, is a different story: there aren’t exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver’s needs, most of which revolve around support for older hardware or older APIs. For brevity, I’d recommend you check out <a href="https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019">icefox’s guide to the existing graphics options</a>.</p>
+<p>I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn’t support Vulkan. This eliminates <code>ash</code> and <code>vulkano</code> straight off the bat, and <code>gfx-hal</code> as well. <code>ash</code> and <code>vulkano</code> target Vulkan directly, and <code>gfx-hal</code>’s OpenGL backend is not currently reliable enough (though I hope to see that improve!)</p>
+<p>I also want to be able to support WebGL 1, but WebGL 1 is not a very modern version of OpenGL. This makes it, for good reaon, unattractive to other libraries (like <code>luminance</code>, which is targeting WebGL 2 in its upcoming web support). However, WebGL 2’s <a href="https://caniuse.com/#feat=webgl2">market share</a> still hovers at around 75%, which isn’t ideal; notably missing from WebGL 2 support are the current verisons of Edge, Safari, and iOS Safari. Quicksilver recently transitioned to using WebGL 1 for better platform support, and I didn’t want to regress by requiring a high version. This rules out <code>luminance</code>, and presumably <code>glium</code> (which has no current development towards web support as far as I’m aware.)</p>
+<p>With just those two constraints I’m out of options, so I decided to write <code>golem</code>.</p>
+<h2>Mostly-Safe?</h2>
+<p>Where possible, <code>golem</code> handles for you the complex state machine of OpenGL. In other places, it prevents you from using resources that haven’t been properly set-up. In these cases, <code>golem</code> is safe with low-overhead, removing footguns from OpenGL without slowing your code down. In others, more overhead would be required to keep the API free of <code>unsafe</code>. Currently only two functions are marked as <code>unsafe</code> in <code>golem</code>’s public API, but they are the only functions that draw things to the screen! This means using <code>unsafe</code> code as a consumer of <code>golem</code> is unavoidable, hence “mostly-safe.”</p>
+<h2>A Code Snippet</h2>
+<p>Hopefully if you’re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">blinds<span class="token punctuation">::</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token namespace">golem<span class="token punctuation">::</span></span><span class="token punctuation">{</span>
+    <span class="token class-name">Attribute</span><span class="token punctuation">,</span> <span class="token class-name">AttributeType</span><span class="token punctuation">,</span> <span class="token class-name">Context</span><span class="token punctuation">,</span>
+    <span class="token class-name">Dimension</span><span class="token punctuation">::</span><span class="token punctuation">{</span><span class="token constant">D2</span><span class="token punctuation">,</span> <span class="token constant">D4</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token class-name">ElementBuffer</span><span class="token punctuation">,</span> <span class="token class-name">GeometryMode</span><span class="token punctuation">,</span> <span class="token class-name">GolemError</span><span class="token punctuation">,</span> <span class="token class-name">ShaderDescription</span><span class="token punctuation">,</span> <span class="token class-name">ShaderProgram</span><span class="token punctuation">,</span> <span class="token class-name">VertexBuffer</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// The application loop, powered by the blinds crate</span>
+<span class="token keyword">async</span> <span class="token keyword">fn</span> <span class="token function-definition function">app</span><span class="token punctuation">(</span>
+    window<span class="token punctuation">:</span> <span class="token class-name">Window</span><span class="token punctuation">,</span>
+    ctx<span class="token punctuation">:</span> <span class="token namespace">glow<span class="token punctuation">::</span></span><span class="token class-name">Context</span><span class="token punctuation">,</span>
+    <span class="token keyword">mut</span> events<span class="token punctuation">:</span> <span class="token class-name">EventStream</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">GolemError</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token comment">// Create a context from 'glow', GL On Whatever</span>
+    <span class="token keyword">let</span> ctx <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token class-name">Context</span><span class="token punctuation">::</span><span class="token function">from_glow</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+
+    <span class="token attribute attr-name">#[rustfmt::skip]</span>
+    <span class="token comment">// This is the data that represents the triangle</span>
+    <span class="token comment">// It's arranged how it will be passed to the GPU: each position represented as two f32 values,</span>
+    <span class="token comment">// followed by each color represented as 4 f32 values. The positions are on a scale from -1.0</span>
+    <span class="token comment">// to 1.0, which represents the viewport in OpenGL. The colors are represented as R, G, B, A,</span>
+    <span class="token comment">// on a scale from 0.0 to 1.0</span>
+    <span class="token keyword">let</span> vertices <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token comment">// Position         Color</span>
+        <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>         <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span>
+        <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>          <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span>
+        <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span>           <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// This is the data that indicates how to draw the vertices</span>
+    <span class="token comment">// For a simple example of one triangle, we don't gain much from this. Any order of these three</span>
+    <span class="token comment">// points will give us the same triangle. However, if we add more points (to draw a square, for</span>
+    <span class="token comment">// example), then we can write each point once while using it in multiple triangles.</span>
+    <span class="token keyword">let</span> indices <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Here we create the ShaderProgram, which is some code that runs on the GPU. It determines how</span>
+    <span class="token comment">// to turn our vertex data into an actual vertex that GL understands, and how to color each</span>
+    <span class="token comment">// 'fragment' (essentially a pixel). These are each their own little program, where the</span>
+    <span class="token comment">// information from the vertex shader is fed into the fragment shader.</span>
+    <span class="token comment">// For the purposes of making sure the shaders match, and for ensuring compatibility on desktop</span>
+    <span class="token comment">// and web, the inputs are represented as data structures and then converted to shader</span>
+    <span class="token comment">// declarations at runtime.</span>
+    <span class="token comment">// The input to the shader program is fed to the vertex_input, so your vertex data's format</span>
+    <span class="token comment">// needs to match what you define in vertex_input</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> shader <span class="token operator">=</span> <span class="token class-name">ShaderProgram</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span>
+        ctx<span class="token punctuation">,</span>
+        <span class="token class-name">ShaderDescription</span> <span class="token punctuation">{</span>
+            <span class="token comment">// Take in to the shader a position (as a vector with 2 components) and a color (as a</span>
+            <span class="token comment">// vector with 4 components). This is the same format as 'vertices' above</span>
+            vertex_input<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token punctuation">[</span>
+                <span class="token class-name">Attribute</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token string">"vert_position"</span><span class="token punctuation">,</span> <span class="token class-name">AttributeType</span><span class="token punctuation">::</span><span class="token class-name">Vector</span><span class="token punctuation">(</span><span class="token constant">D2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token class-name">Attribute</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token string">"vert_color"</span><span class="token punctuation">,</span> <span class="token class-name">AttributeType</span><span class="token punctuation">::</span><span class="token class-name">Vector</span><span class="token punctuation">(</span><span class="token constant">D4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token comment">// Pass to the fragment shader the color</span>
+            <span class="token comment">// OpenGL will actually smoothly interpolate between different vertex values for us, so</span>
+            <span class="token comment">// a red vertex and a blue vertex will have a gradient between them</span>
+            fragment_input<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token punctuation">[</span><span class="token class-name">Attribute</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token string">"frag_color"</span><span class="token punctuation">,</span> <span class="token class-name">AttributeType</span><span class="token punctuation">::</span><span class="token class-name">Vector</span><span class="token punctuation">(</span><span class="token constant">D4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token comment">// Uniforms represent a value that's the same for the entire shader; we don't need any</span>
+            <span class="token comment">// here. If you're rendering images or applying transformations to your entire draw</span>
+            <span class="token comment">// call, use uniforms!</span>
+            uniforms<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token comment">// A program written in GLSL that uses the inputs and outputs defined above</span>
+            <span class="token comment">// There's also a hard-coded output called gl_Position</span>
+            vertex_shader<span class="token punctuation">:</span> <span class="token string">r#" void main() {
+            gl_Position = vec4(vert_position, 0, 1);
+            frag_color = vert_color;
+        }"#</span><span class="token punctuation">,</span>
+            <span class="token comment">// The fragment shader has a hard-coded output: gl_FragColor</span>
+            fragment_shader<span class="token punctuation">:</span> <span class="token string">r#" void main() {
+            gl_FragColor = frag_color;
+        }"#</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Create buffer objects, which we use to transfer data from the CPU to the GPU</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> vb <span class="token operator">=</span> <span class="token class-name">VertexBuffer</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> eb <span class="token operator">=</span> <span class="token class-name">ElementBuffer</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+    <span class="token comment">// Set the data of the buffer to be our vertices and indices from earlier</span>
+    vb<span class="token punctuation">.</span><span class="token function">set_data</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>vertices<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    eb<span class="token punctuation">.</span><span class="token function">set_data</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>indices<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Prepare the shader for operations: shaders will raise errors if you forget to bind them</span>
+    shader<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Clear the screen</span>
+    ctx<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsafe</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Using our buffers, draw our triangle</span>
+        <span class="token comment">// We could also interpert our indices as Lines or a variety of other shape options:</span>
+        <span class="token comment">// nothing binds us to necessarily using Triangles, even though they're the most common</span>
+        <span class="token comment">// shape in graphics</span>
+        shader<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>vb<span class="token punctuation">,</span> <span class="token operator">&amp;</span>eb<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">..</span>indices<span class="token punctuation">.</span><span class="token function">len</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">GeometryMode</span><span class="token punctuation">::</span><span class="token class-name">Triangles</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// Show our data to the window</span>
+    window<span class="token punctuation">.</span><span class="token function">present</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Keep the window open and responsive until the user exits</span>
+    <span class="token keyword">loop</span> <span class="token punctuation">{</span>
+        events<span class="token punctuation">.</span><span class="token function">next_event</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Run our application!</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">run_gl</span><span class="token punctuation">(</span><span class="token class-name">Settings</span><span class="token punctuation">::</span><span class="token function">default</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>window<span class="token punctuation">,</span> gfx<span class="token punctuation">,</span> events<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+        <span class="token keyword">async</span> <span class="token keyword">move</span> <span class="token punctuation">{</span> <span class="token function">app</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> gfx<span class="token punctuation">,</span> events<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token punctuation">.</span><span class="token function">unwrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>(This is also an example of <a href="../quicksilver-chanukah-2019-day-4">yesterday’s <code>blinds</code></a> and its OpenGL support.)</p>
+<h2>Further Development</h2>
+<p><code>golem</code> is not intended to be a fully-featured wrapper around all of OpenGL. It’s intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that’s missing! Some of it is documented on the <a href="https://github.com/ryanisaacg/golem/issues">issue tracker</a>, but I’m sure that I’ve missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.</p>
+<p><code>golem</code> is the last new crate to announce, which means tomorrow is about what these crates enable: the new version of Quicksilver.</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+    </article>
+  </body>
+</html>

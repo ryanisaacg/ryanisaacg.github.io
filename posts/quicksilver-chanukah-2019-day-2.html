@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> A Quicksilver Chanukah, Day 2: Platter </title>
+<meta property="og:title" content="A Quicksilver Chanukah, Day 2: Platter">
+
+<meta name="description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.">
+<meta property="og:description" content="This year saw the release of async/.await in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a Future instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+      <h1> A Quicksilver Chanukah, Day 2: Platter </h1>
+      <small>
+        23 Dec  2019
+      </small>
+    </header>
+    <article>
+      <p>This year saw the release of <code>async/.await</code> in stable Rust, marking a huge change in how asynchronous code is written. Previously, one would have to chain a series of combinators onto a <code>Future</code> instance to accomplish asyncrhonous tasks. In Quicksilver, this was used for asset loading (for compatibility with the web backend), and has been a frequent source of pain.</p>
+<p>Something as simple as loading a file, reading its contents, and loading a series of images based on those contents might look like this psuedo-Rust:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> images<span class="token punctuation">:</span> <span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"my_manifest_path"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>parse_file_contents<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">and_then</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>image_paths<span class="token closure-punctuation punctuation">|</span></span> <span class="token function">join_all</span><span class="token punctuation">(</span>
+        image_paths
+            <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>load_file<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>file<span class="token closure-punctuation punctuation">|</span></span> file<span class="token punctuation">.</span><span class="token function">and_then</span><span class="token punctuation">(</span>parse_image<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">render_loading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">loop</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Core application loop</span>
+    <span class="token keyword">if</span> images<span class="token punctuation">.</span>is_ready <span class="token punctuation">{</span>
+        <span class="token function">render_frame</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>images<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This is fairly hard to read, and requires a bit of domain-specific knowledge of the combinators to achieve it. Worse still is introducing more than one of these combinator chains, and trying to execute game logic only if they complete. This snippet is plenty complex, and hasn’t even touched error handling.</p>
+<p>Introducing <a href="https://crates.io/crates/platter"><code>platter</code></a>, a new async-enabled crate with a single, simple task: load files on desktop and web with an easy API.</p>
+<pre class="language-rust"><code class="language-rust"><span class="token function">render_loading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> contents<span class="token punctuation">:</span> <span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"my_manifest_path"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token operator">?</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> image_paths<span class="token punctuation">:</span> <span class="token function">parse_file_contents</span><span class="token punctuation">(</span>contents<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> images<span class="token punctuation">:</span> <span class="token class-name">Vec</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> image_path <span class="token keyword">in</span> image_paths <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> image_file<span class="token punctuation">:</span> <span class="token function">load_file</span><span class="token punctuation">(</span>image_path<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token operator">?</span><span class="token punctuation">;</span>
+    images<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">parse_image</span><span class="token punctuation">(</span>image_file<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">loop</span> <span class="token punctuation">{</span>
+    <span class="token function">render_frame</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>images<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We can still make use of the combinators in a more functional-programming style if we wish, but now it’s much clearer:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token function">render_loading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> contents<span class="token punctuation">:</span> <span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"my_manifest_path"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> image_futures<span class="token punctuation">:</span> <span class="token function">parse_file_contents</span><span class="token punctuation">(</span>contents<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>load_file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> images<span class="token punctuation">:</span> <span class="token class-name">Vec</span><span class="token operator">&lt;</span><span class="token class-name">Image</span><span class="token operator">></span><span class="token punctuation">:</span> <span class="token function">try_join_all</span><span class="token punctuation">(</span>image_futures<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token keyword">await</span><span class="token operator">?</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>parse_image<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">;</span>
+<span class="token keyword">loop</span> <span class="token punctuation">{</span>
+    <span class="token function">render_frame</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>images<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>platter</code> is small and can be plugged into your own game framework or game project if you want to harness <code>async/await</code> to load files on desktop and web. It will be a major part of the new Quicksilver application lifecyle!</p>
+<p>That’s Day 2 down, but there are 6 more days of Quicksilver Chanukah:</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">Yesterday’s introduction post</a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+    </article>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Website Makeover, Again :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="Website Makeover, Again :: ryan.isaac.g">
+    <meta name="description" content="Out with the old, in with the new! After some frustration with Hugo, I've moved to Zola and some light CSS.">
+    <meta property="og:description" content="Out with the old, in with the new! After some frustration with Hugo, I've moved to Zola and some light CSS.">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/_astro/_...slug_.72596cf3.css" />
+<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+        </div>
+    </div>
+    <h1>Website Makeover, Again</h1>
+        <small>24 May  2020</small>
+    
+</header>
+    <article>
+        <p>Out with the old, in with the new! After some frustration with Hugo, I’ve moved to <a href="https://www.getzola.org/">Zola</a> and some light CSS.</p>
+<p>I wanted to write a new blog post regarding <a href="https://github.com/ryanisaacg/elefont">elefont</a> and Quicksilver’s new text rendering system, but I  was dreading making a post on the site. Hugo had proved opaque and fragile for me, and its blizzard of configuration options wasn’t making things much easier. Plus, something small broke when I tried to use the latest Hugo version on Windows to re-build the site. I wasn’t much interested in tracking down a changelog and bringing my blog up to the latest version, so I decided Hugo had to go.</p>
+<p>Initially I considered writing my own static site generator. <em>How hard could it be?</em> I asked myself. Then I thought about generating an RSS feed, and parsing front-matter, and maybe setting up a SASS compilation pipeline. <em>No thanks!</em> I instead settled on Zola, primarily because it seems to be the right combination of simple and expressive. Secondarily, it’s written in Rust, which I appreciate. Using Zola has been very nice so far; I feel more like I’m programming a little language designed to make website-making easy. Previous experiences with Hugo and Jekyll felt more like wrestling the generator into doing what I wanted; Zola is a breath of fresh air by comparison.</p>
+<p>Currently the site is very light on styling. So far I like the look of it, but for how long is anyone’s guess.</p>
+<p>I hope this means I can get some posts up about Quicksilver soon; there’s been a lot of evolution since the end of last year, when I was just starting on the new alpha versions. I ended up forgoing a State of Quicksilver 2020, for a few reasons:</p>
+<ul>
+<li><a href="../quicksilver-chanukah-2019">The Quicksilver Chanukah posts</a> covered a lot of my plans</li>
+<li>I wanted to wait until the 0.4 release is closer to feature-complete</li>
+<li>And mostly, I’ve been very busy</li>
+</ul>
+<p>Post-script update, as of June 8th 2020: The blog is a bit more automatic! Previously I was just pushing up new built versions of the site to Github Pages, but that gets tedious. I set up Github Actions to run on any push to ryanisaacg/blog on master; now the blog is automatically built and deployed.</p>
+    </article>
+
+  </body></html>

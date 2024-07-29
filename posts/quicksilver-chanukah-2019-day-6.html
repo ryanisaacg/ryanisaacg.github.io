@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle </title>
+<meta property="og:title" content="A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle">
+
+<meta name="description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application’s core loop and file loading, respectively.">
+<meta property="og:description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application’s core loop and file loading, respectively.">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+      <h1> A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle </h1>
+      <small>
+        27 Dec  2019
+      </small>
+    </header>
+    <article>
+      <p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application’s core loop and file loading, respectively.</p>
+<p><code>State</code> is a trait that Quicksilver uses to manage when your code runs. It requires you define the <code>new</code> method, as well as <code>draw</code>. Optionally you can define <code>update</code>, for a fixed tick rate function, and <code>event</code> for handling individual input events. This type then gets passed as a generic parameter to the <code>run</code> function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)</p>
+<p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they’re ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There’s no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
+<p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">MyState</span> <span class="token punctuation">{</span>
+    images<span class="token punctuation">:</span> <span class="token class-name">Asset</span><span class="token operator">&lt;</span><span class="token class-name">Vec</span><span class="token operator">&lt;</span><span class="token class-name">Image</span><span class="token operator">>></span><span class="token punctuation">,</span>
+    game<span class="token punctuation">:</span> <span class="token class-name">Game</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">State</span> <span class="token keyword">for</span> <span class="token class-name">MyState</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">MyState</span> <span class="token punctuation">{</span>
+        <span class="token class-name">MyState</span> <span class="token punctuation">{</span>
+            images<span class="token punctuation">:</span> <span class="token class-name">Asset</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token function">join_all</span><span class="token punctuation">(</span><span class="token macro property">vec!</span><span class="token punctuation">[</span><span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            game<span class="token punctuation">:</span> <span class="token class-name">Game</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">event</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> _win<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">,</span> ev<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">Event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>images<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>images<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>game<span class="token punctuation">.</span><span class="token function">process_event</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">update</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> _win<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>images<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>images<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>game<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">draw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> win<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>images<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>images<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>game<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>images<span class="token punctuation">,</span> win<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">run</span><span class="token punctuation">::</span><span class="token operator">&lt;</span><span class="token class-name">MyState</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>you could now write something like:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">async</span> <span class="token keyword">fn</span> <span class="token function-definition function">my_game</span><span class="token punctuation">(</span>win<span class="token punctuation">:</span> <span class="token class-name">Window</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> gfx<span class="token punctuation">:</span> <span class="token class-name">Graphics</span><span class="token punctuation">,</span> events<span class="token punctuation">:</span> <span class="token class-name">EventStream</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> game <span class="token operator">=</span> <span class="token class-name">Game</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> images <span class="token operator">=</span> <span class="token function">join_all</span><span class="token punctuation">(</span><span class="token macro property">vec!</span><span class="token punctuation">[</span><span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Image</span><span class="token punctuation">::</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token punctuation">;</span>
+    <span class="token keyword">loop</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token keyword">let</span> <span class="token class-name">Some</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span> <span class="token operator">=</span> events<span class="token punctuation">.</span><span class="token function">next_event</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span> <span class="token punctuation">{</span>
+            game<span class="token punctuation">.</span><span class="token function">process_event</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        game<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        game<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> gfx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gfx<span class="token punctuation">.</span><span class="token function">present</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>win<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">run</span><span class="token punctuation">(</span>my_game<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>If you want to know more, check out <a href="../quicksilver-chanukah-2019-day-4">my post about blinds</a> for more details on the event loop and <a href="../quicksilver-chanukah-2019-day-2">my post about platter</a> for more details on async file loading.</p>
+<p>As a side effect of the async API, the user has a lot more control over when their code runs. Previously Quicksilver managed your update timing automatically: it would aim for 60Hz by default, regardless of how long updates take. Now you’re in charge of your own timing, though features to make timing fire-and-forget could become part of the final release.</p>
+<p>Speaking of releases, I hope to have a very early alpha of this version of Quicksilver out within the next week or so. It will be a very bare-bones version: just the event loop and some small graphics functions for now, which I’ll go into more depth about tomorrow.</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-4"><code>blinds</code>: An easy-to-use async wrapper of <code>winit</code></a></li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+    </article>
+  </body>
+</html>

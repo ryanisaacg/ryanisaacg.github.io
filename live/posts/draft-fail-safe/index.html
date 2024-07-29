@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Drafts that Fail Safe :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="Drafts that Fail Safe :: ryan.isaac.g">
+    <meta name="description" content="Last Friday I published a post on my blog entirely on accident. It was a short outline of just a few bullet points, sent to be turned into a full post over the next couple weeks. I thought it may be interesting to write a tiny incident report about how it happened and what I’m changing to avoid it happening again.">
+    <meta property="og:description" content="Last Friday I published a post on my blog entirely on accident. It was a short outline of just a few bullet points, sent to be turned into a full post over the next couple weeks. I thought it may be interesting to write a tiny incident report about how it happened and what I’m changing to avoid it happening again.">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="Ryan's Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/_astro/_...slug_.72596cf3.css" />
+<link rel="stylesheet" href="/_astro/_...slug_.75727b75.css" /></head>
+  <body>
+    
+    <header class="astro-3EF6KSR2">
+    <div class="page-header astro-3EF6KSR2">
+        <strong class="astro-3EF6KSR2">ryan.isaac.g</strong>
+        <div class="header-links astro-3EF6KSR2">
+            <a href="/" class="astro-3EF6KSR2">/home</a>
+        </div>
+    </div>
+    <aside>
+            <p>
+              This post is a draft. Please don't share it with anyone else; if I didn't send you the link directly, you're probably not supposed to be seeing it!
+            </p>
+          </aside><h1>Drafts that Fail Safe</h1>
+        <small>29 Jul  2024</small>
+    
+</header>
+    <article>
+        <p>Last Friday I published a post on my blog entirely on accident. It was a short outline of just a few bullet points, sent to be turned into a full post over the next couple weeks. I thought it may be interesting to write a tiny incident report about how it happened and what I’m changing to avoid it happening again.</p>
+<p>My blog workflow mostly involves shuffling static files around between Obsididan and two git repos. I compose and edit posts in my Obsidian vault, sync them into my private “blog” git repo with a script, and process them with a static site generator<sup><a href="#user-content-fn-ssg" id="user-content-fnref-ssg" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup>. When I push that repo to GitHub, the SSG creates the HTML and makes an automated push to my GitHub Pages repo. Posts can be marked as draft; drafts don’t appear on the front page or the RSS Feed.</p>
+<p>Satisfied with <a href="../learning-laps">my post about language servers</a>, I decided to publish it. I made final edits, removed the draft marker, synced the state of my repo, and published. I didn’t even check my site’s new build, because I felt confident in the output. Later that night <a href="https://github.com/recursecenter/blaggregator">Blaggregator</a> informed me of <strong>two</strong> new posts to my blog. One was my LSP post; the other was an outline I hadn’t even started writing.</p>
+<p>It turns out that I had totally forgotten to add the “draft” checkbox to my draft’s frontmatter in Obsidian. By design pages with no draft boolean are considered in a non-draft state, so that I didn’t have to modify my back catalogue of posts when I added the draft feature. When I made that decision I didn’t consider the high potential for unsafety it introduced. If I start jotting thoughts into a new draft, say on the train, it’s pretty easy to forget to configure the front matter. Then later it will get scooped up and published alongside something else.</p>
+<p>In order to avoid this issue again, I can see two workable changes. One is to <em>fail loudly</em> and refuse to accept pages that aren’t definitively marked as “draft” or “not draft.” This will force me to go through and mark drafts as such before publication. It’s hard to imagine me adding the “draft” checkbox to a page’s frontmatter and then failing to check it. If I was worried about forgetting that last step I could go further and <em>fail safe</em> by requiring pages to be affirmatively marked as “published.” No matter how careless or forgetful I am, I won’t be able to publish any draft I hadn’t proactively marked as ready.</p>
+<p>In actuality I think I’ll go for the first solution. It more closely matches the model of what’s happening in my blog software (filter out rather than seek out published posts), and it would have prevented this “incident.”</p>
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-ssg">
+<p>Currently I’m using Astro on this blog, after having tried Hugo and Zola (the latter of which I used for many years). On another site I use 11ty, which I may switch this site to as well. <a href="#user-content-fnref-ssg" data-footnote-backref="" class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section>
+    </article>
+
+  </body></html>

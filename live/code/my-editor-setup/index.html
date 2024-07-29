@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/page.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    <title> Becoming a Vim Guy :: ryan.isaac.g </title>
+
+    <meta property="og:title" content="Becoming a Vim Guy :: ryan.isaac.g">
+    <meta name="description" content="&lt;p&gt;When my development setup comes up in conversation, people can be pretty surprised that I use &lt;a href=&quot;https:&#x2F;&#x2F;neovim.io&#x2F;&quot;&gt;Neovim&lt;&#x2F;a&gt; (a fork of &lt;a href=&quot;https:&#x2F;&#x2F;www.vim.org&#x2F;&quot;&gt;Vim&lt;&#x2F;a&gt;). I figured it would be neat to write a blog post explaining why I do!&lt;&#x2F;p&gt;
+">
+    <meta property="og:description" content="&lt;p&gt;When my development setup comes up in conversation, people can be pretty surprised that I use &lt;a href=&quot;https:&#x2F;&#x2F;neovim.io&#x2F;&quot;&gt;Neovim&lt;&#x2F;a&gt; (a fork of &lt;a href=&quot;https:&#x2F;&#x2F;www.vim.org&#x2F;&quot;&gt;Vim&lt;&#x2F;a&gt;). I figured it would be neat to write a blog post explaining why I do!&lt;&#x2F;p&gt;
+">
+    <!-- Keep synced with link color in site.scss -->
+    <meta name="theme-color" content="#4c4edd">
+    
+    
+
+    </head>
+    <body>
+        <main>
+            <header>
+                
+<div class="page-header">
+    <b>ryan.isaac.g</b>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/code">/code</a>
+        <a href="/tabletop">/tabletop</a>
+    </div>
+</div>
+
+                <h1> Becoming a Vim Guy </h1>
+                <small> 2022-04-23 </small>
+            </header>
+            <article>
+                <p>When my development setup comes up in conversation, people can be pretty surprised that I use <a href="https://neovim.io/">Neovim</a> (a fork of <a href="https://www.vim.org/">Vim</a>). I figured it would be neat to write a blog post explaining why I do!</p>
+<span id="continue-reading"></span><h2 id="how-i-got-here">How I got here</h2>
+<p>My troubles started in high school. I had just gotten a new <a href="https://www.amazon.com/HP-Stream-Laptop-PC-14-ax010nr/dp/B01JLCKP34">piece-of-shit laptop</a> that was more of a keyboard and a screen than a computer. It chugged doing basic web browsing, and couldn't quite handle having Firefox and <a href="https://atom.io/">Atom</a> open at the same time. This presented me with quite the conundrum: what text editor to use instead? Up until that point, I had never committed myself to any one code editor. My journey took me from IDEs like Visual Studio and Eclipse, electron-based editors like Atom and Visual Studio Code, and Notepad++, which earns a special place in my heart but ultimately isn't flexible enough for me. Vim was the odd one out; I never really was excited about it, but I needed to learn it for editing files on headless Unix machines. But this new laptop didn't leave me much choice, so I used Vim.</p>
+<p>It took me a long time before I seriously fell for Vim. My &quot;real&quot; computer at home (a desktop, which couldn't get lugged between classes) was still an Atom machine, with plenty of hardware overhead to throw in Electron-powered chat apps and terminals besides. But over time Vim began to grow on me. At first it was the little things, like being able to Ctrl-Z out of my editor back into a terminal. I will admit that it also made me feel like a ~Real Hacker~ in the way other editors didn't. Then it grew to bigger things, like the modal editing model helping me avoid repetive stress pain.</p>
+<h2 id="why-i-stayed">Why I stayed</h2>
+<p>The primary thing that keeps me using Vim is its modal editing model. There's an elegance to being able to build up complex commands from a few easily memorized atoms. If I want to delete the next eight words, that command would be <code>d8w</code> which expands pretty intuitively: <code>delete</code>, <code>8</code>, <code>word</code>. A side benefit is that I'm not invoking complex chords that require twisting my wrists. Along with a split keyboard, wrist rests, and good posture I've found modal editing to be key in avoiding repetitive stress pain from typing.</p>
+<p>Fuzzy-finding was the first transformative addition to my editor. It's pretty common nowadays, available as Ctrl-P in Atom and VSCode. My first taste of Vim's extensibility was the <a href="https://github.com/junegunn/fzf.vim">FZF</a> plugin, which adds that fuzzy-finding capability to Vim. I've stuck with it ever since. Other extensions add Vim status indicators, filesystem manipulation commands, syntax highlighting for essentially any language, and probably the most important: jump-to-definition. Being able to jump from a function call to that function's code is such a life saver.</p>
+<p>After years of satisfying myself with plugins and configuration, I wanted more. Vim has a built-in scripting language called Vimscript. Being able to program my editor is great.  I've whipped up tiny user commands to do things like spit out the Github URL to the open file and strip trailing whitespace from a file. Vimscript, however, did not satisfy me; suffice to say: the language takes a running jump past &quot;quirky&quot; and lands somewhere around &quot;insufferable.&quot; When I heard Neovim had support for scripting the editor from Lua, I jumped ship immediately.</p>
+<p>While Lua scripting is what got me to jump ship, it was the later addition of built-in <a href="https://en.wikipedia.org/wiki/Language_Server_Protocol">Language Server Protocol</a> support that sold me. With a bit of configuration my editor is capable of speaking to language servers for Rust, Typescript, Python, and more. Other plugins had granted me the powers of error highlighting and jump-to-definiton, but Neovim's LSP subsystem makes those things blazing fast. As soon as I finish typing a line of code, typechecking has run and I can see errors instantly. It's hard to put into words, but it feels much nicer to have these operations finish in under a second rather than in two or three.</p>
+<p>I hope this explains some of what I find valuable in Neovim, and how I ended up using it as my main developer tool. With all that said, I don't want to proselytize Vim. If there's one major takeaway from this post, it's to tinker with your tools and feel empowered to improve your development environment. You should use whatever works best for you—I just encourage you to give the question of what <em>does</em> work best some thought.</p>
+
+            </article>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> Quicksilver and Open Source </title>
+<meta property="og:title" content="Quicksilver and Open Source">
+
+<meta name="description" content="So this is a post that’s been bouncing around my head for a while, in one form or another. I created and maintain Quicksilver, a 2D game framework for creating games for desktop and the web. The reason I’m writing this post is that I also haven’t used Quicksilver to make anything for over a year.">
+<meta property="og:description" content="So this is a post that’s been bouncing around my head for a while, in one form or another. I created and maintain Quicksilver, a 2D game framework for creating games for desktop and the web. The reason I’m writing this post is that I also haven’t used Quicksilver to make anything for over a year.">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+      <h1> Quicksilver and Open Source </h1>
+      <small>
+        13 Oct  2020
+      </small>
+    </header>
+    <article>
+      <p>So this is a post that’s been bouncing around my head for a while, in one form or another. I created and maintain <a href="https://github.com/ryanisaacg/quicksilver">Quicksilver</a>, a 2D game framework for creating games for desktop and the web. The reason I’m writing this post is that I also haven’t <em>used</em> Quicksilver to make anything for over a year.</p>
+<p>TL;DR: Quicksilver has been a source of great joy and frustration for me, and was my first real experience with open source. I’m still committed to maintaining it, but I don’t think I’ll be actively improving or working on it going forward.</p>
+<h2>The Project’s Beginning</h2>
+<aside>
+<p>What follows is a quick history of Quicksilver, and why I wanted to make it. I’ve never written it all down in one place before, and I figured now was a good opportunity. If you just want the details on what’s next, feel free to <a href="#so-long">skip this section.</a></p>
+</aside>
+<p>From the start of my game-making hobby, I wanted a few things: to make small games, to be able to run them on low-powered hardware, and to be able to share them on the web. This was the beginning of my troubles.</p>
+<p>First I tried game engines, like GameMaker (which was actually my first programming environment), Unity, and later Godot. A few things about them frustrated me: the closed-source nature of Unity, Godot’s idiosyncratic custom scripting language (I understand this has improved), and being forced to lay my code out the way the engine wanted it. Ideally I would write the core of the gameplay code however I liked, and then add hooks to use for the engine tools. The paradigm of a game engine (a tool designed for teams, not soloists) wanted the opposite: everything should flow from the engine itself. To each their own, I guess.</p>
+<p>Game frameworks fared better, but inevitably something bothered me enough to switch. When I was using LibGDX and Java, distributing the Java binaries was a struggle. When I was using MonoGame and C#, cross-platform development on Linux was painful. Any dynamically typed programming language would eventually push me away after hours wasted tracking down a trivial bug. Even when I found a satisfactory programming language, often the game development ecosystem was sorely lacking (this is what drove me from D). And after all that, most game frameworks didn’t support sharing my game on the web.</p>
+<p>I tried developing for the web directly, rather than relying on translation layers or compilation steps. I made a few little things, but I never really could commit. This was before I was a web programmer by trade, so I spent a lot of time confused and annoyed. In the five or so years since Javascript has become a joy to use, as long as you’re willing to put up with byzantine build tools. Without these niceties I found it to be a pain; modularity didn’t exist (just link the script files into your HTML), odd typing decisions constantly bit me (did you know that the Canvas 2D API treats NaN as 0 when drawing?), and I missed something about having a native executable build I could email someone, and run with a single click.</p>
+<p>In mid-2017, Rust was where I finally settled, because it gave me two things: easy native-executable distribution, and a web compilation option. At the time, web compilation was unstable and no-one was really using it to make games; people who did tended to write bindings to the webpage by hand. Pulling in the venerable <code>glutin</code> library for windowing on the desktop, I hand-wrote the Quicksilver-to-JS bindings for WebAssembly and got busy developing. It was buggy, it was a pain in the ass to use, and it was an absolute delight. Finally, native code running in the browser! I published my new library in the beginning of 2018, and slowly other people started to use it in their own work.</p>
+<p>Maintaining the JS bindings by hand was an absolute disaster. In June of 2018, I worked up the energy to switch to a library to handle the browser interactions for me. This was well before the <code>web-sys</code> project, a comprehensive set of bindings to every browser API imaginable. When I was looking, I had two options. <code>stdweb</code>, an ambitious project with plans to bind every single browser API to an idiomatic Rust wrapper, and <code>wasm-bindgen</code>, a more efficient option with more maintainers, that required you to write the bindings yourself. I picked <code>stdweb</code> for its ergonomics (much to my future dismay) and continued on, now with a much-improved workflow and a great deal more stability.</p>
+<p>At some point I realized things had to change. There were problems in the API maybe one in five new users would trip over, the backend graphics code was terrifying and unmaintainable, and <code>async/await</code> was just around the corner. I could free myself and my users from callback hell! I set about plans for a major new API revision, and got to work. Over the summer of 2019 I laid the foundation for a set of new libraries, to abstract out the parts of Quicksilver that could live separately. By the end of the year they were pretty much all ready; over the course of Chanukah I put out a few blog updates describing them. The next big version of Quicksilver was in sight: all I had to do was re-write the entire thing to use my new foundational libraries.</p>
+<p>This year has not been a good year for progress. If I push myself, I can imagine in the next few months I could finish the API revision I started last year. Lots of things have contributed to this slowdown, and sapped my energy: a global pandemic, a move from a full-time student to a full-time worker, the worsening political situation in the United States. But I haven’t lost the energy to work on side projects entirely. I’m playing, running, and writing tabletop role-playing games, I’m reading more than I used to, and I’m playing around a little with some other hobby software. I just haven’t been making games, or using Quicksilver.</p>
+<p>The work that’s left isn’t particularly exciting either. I need to switch away from <code>stdweb</code> (the maintainer seems to have silently disappeared), I need to write boatloads of documentation, I need to investigate and triage a handful of bug reports, and I need to write a library to support audio on desktop and web.</p>
+<h2>So Long…</h2>
+<p>To be frank, I didn’t get into open source to write software <em>for</em> other people. If other people want software from me, they can pay me for it (which is quite literally my career). I got into open source because I was writing software for myself, and I figured other people might want to check it out. Sure, I <em>wanted</em> people to check it out or use it. It felt great when people started using Quicksilver or posting bugs with projects they were working on. Out of all the game frameworks in the world, someone decided to use mine. How exciting!</p>
+<p>Over time my interests have drifted away from game development. I don’t keep up with the indie game scene, I don’t enter game jams, I don’t make little weekend projects. I’m not longer writing Quicksilver for myself, but I still work on it. For a while (most of last year, in fact), working on the framework was a hobby unto itself. I was solving fun new challenges, and it was great! As the fun new challenges got solved, I became less and less interested, and the things that had been tiny pain points before became less and less bearable.</p>
+<p>What makes it all worse is that Quicksilver will never be <em>done.</em> There will always be one more feature, one more request, one more corner to polish. This summer, I was realizing that, and open source burnout was finally catching up with me. Every time I opened the issue tracker or my own notes I would feel dread, and close it without writing a line of code. The abstract idea of happy users was no longer enough to sustain me. I still haven’t even reached feature parity with the old, non-async version of Quicksilver, and I’m not sure I ever will.</p>
+<p>At some point it struck me: over three years, I had slowly moved from writing software that I was sharing with other people to writing software for other people. Unless things change, I don’t see myself writing more features for Quicksilver. I can’t promise sound support, or new documentation, or a smooth migration from <code>stdweb</code> to <code>web-sys</code>. If I can find the time and energy, I might package up the current alpha into an actual release, but I won’t promise that either.</p>
+<p>For now, I have no problem <em>maintaining</em> software. I’ll be sticking around to triage bug reports, review pull requests, and cut releases (on Quicksilver, all its associated libraries, and Winit). Quicksilver isn’t going anywhere- but it’s important I make this explicit. It’s also not <em>going anywhere</em>. I have no plans to fix the handful of outstanding bugs, or the feature requests, or upstream improvements to other projects.</p>
+<p>Here it is important to mention <a href="https://en.wikipedia.org/wiki/Bus_factor">the Bus Factor</a>. Essentially: how many people have to get hit by a bus for your project to completely grind to a halt? In the case of Quicksilver, it has always been 1. Don’t get me wrong, other people have certainly contributed! Every well-crafted bug report or pull request has great value. At the end of the day, however, I’m still the single point of failure. That was never going to be a sustainable project structure, and I urge people to consider this concept in open source more generally.</p>
+<h2>…And Thanks for all the Fish</h2>
+<p>I don’t want to give the impression that I regret the project, or wish I hadn’t done it. Quicksilver was a great project for me to hold on to throughout my time as an undergraduate, and I hope it as brought other people a little bit of the joy it brought me. It couldn’t have gotten where it was without the Rust community; thank you to the 40 (!) other people who contributed commits, the countless people who filed bugs, and everyone who said kind things online. From the bottom of my heart: thank you.</p>
+<p>If you’re using Quicksilver and it works for you, rock on. If you’re looking for something else in light of this, I totally understand. For all the reasons mentioned above, I’m not really plugged in to what the best game-development alternatives are, though I’ve heard <a href="https://github.com/bevyengine/bevy">bevy</a> is doing exciting new things.</p>
+<p>Good luck, have fun, and make great things.</p>
+
+    </article>
+  </body>
+</html>

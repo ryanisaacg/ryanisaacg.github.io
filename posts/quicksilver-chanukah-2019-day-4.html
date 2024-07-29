@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> A Quicksilver Chanukah, Day 4: Blinds </title>
+<meta property="og:title" content="A Quicksilver Chanukah, Day 4: Blinds">
+
+<meta name="description" content="With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.">
+<meta property="og:description" content="With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+      <h1> A Quicksilver Chanukah, Day 4: Blinds </h1>
+      <small>
+        25 Dec  2019
+      </small>
+    </header>
+    <article>
+      <p>With the recent update to <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of <code>async/.await</code>, which is where <a href="https://crates.io/crates/blinds"><code>blinds</code></a> comes in.</p>
+<p><code>blinds</code> is based on <code>winit</code>, but focused on Quicksilver’s specific use case of single-window games on desktop and web. It also integrates <code>gilrs</code> for gamepad support (though this could be provided directly by <code>winit</code> later), without exposing either in its external API. Additionally, <code>blinds</code> has optional support for OpenGL, via <code>glow</code> for uniform bindings across web and desktop.</p>
+<p>The <code>async</code> API works via the <code>LocalPool</code> and the <code>winit</code> event loop, allowing you to write code that <em>almost</em> looks like a synchronous event loop.</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">blinds<span class="token punctuation">::</span></span><span class="token punctuation">{</span>run<span class="token punctuation">,</span> <span class="token class-name">Event</span><span class="token punctuation">,</span> <span class="token class-name">EventStream</span><span class="token punctuation">,</span> <span class="token class-name">Key</span><span class="token punctuation">,</span> <span class="token class-name">Settings</span><span class="token punctuation">,</span> <span class="token class-name">Window</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Settings</span><span class="token punctuation">::</span><span class="token function">default</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">async</span> <span class="token keyword">fn</span> <span class="token function-definition function">app</span><span class="token punctuation">(</span>_window<span class="token punctuation">:</span> <span class="token class-name">Window</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> events<span class="token punctuation">:</span> <span class="token class-name">EventStream</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">loop</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token keyword">let</span> <span class="token class-name">Some</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">:</span> events<span class="token punctuation">.</span><span class="token function">next_event</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span> <span class="token punctuation">{</span>
+            <span class="token comment">// Process your events here!</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// Process your frame here!</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The use of <code>.await</code> here is a bit of a hack, as it allows the event loop to wrest control away from the user and return it to the browser without blocking. Compare this to the comparable snippet from the legacy Quicksilver API:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">quicksilver<span class="token punctuation">::</span></span><span class="token punctuation">{</span>
+    <span class="token class-name">Result</span><span class="token punctuation">,</span>
+    <span class="token namespace">geom<span class="token punctuation">::</span></span><span class="token class-name">Vector</span><span class="token punctuation">,</span>
+    <span class="token namespace">lifecycle<span class="token punctuation">::</span></span><span class="token punctuation">{</span><span class="token class-name">Event</span><span class="token punctuation">,</span> <span class="token class-name">Settings</span><span class="token punctuation">,</span> <span class="token class-name">State</span><span class="token punctuation">,</span> <span class="token class-name">Window</span><span class="token punctuation">,</span> run<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token type-definition class-name">HelloWorld</span><span class="token punctuation">;</span>
+
+<span class="token keyword">impl</span> <span class="token class-name">State</span> <span class="token keyword">for</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+    <span class="token keyword">fn</span> <span class="token function-definition function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token class-name">HelloWorld</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token class-name">HelloWorld</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">fn</span> <span class="token function-definition function">event</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> window<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">,</span> event<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token class-name">Event</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token comment">// Process events here</span>
+        <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">fn</span> <span class="token function-definition function">update</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> window<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token comment">// Update here</span>
+        <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">draw</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token keyword">self</span><span class="token punctuation">,</span> window<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> <span class="token class-name">Window</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Result</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token comment">// Draw here</span>
+        <span class="token class-name">Ok</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">run</span><span class="token punctuation">::</span><span class="token operator">&lt;</span><span class="token class-name">HelloWorld</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">,</span> <span class="token class-name">Vector</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">800</span><span class="token punctuation">,</span> <span class="token number">600</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Settings</span><span class="token punctuation">::</span><span class="token function">default</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The <code>async</code> API isn’t just way more convenient than the previous, trait-based system. It also allows you to use other <code>async</code> APIs (like <a href="../quicksilver-chanukah-2019-day-2">day 2’s <code>platter</code></a>), which is important for web support.</p>
+<p><code>blinds</code> isn’t quite ready for a full release yet: there are a few more window APIs I do want to expose before it leaves alpha. However, you can still try it out, just be aware that the API is fairly unstable and likely to change between multiple times before the first non-alpha release!</p>
+<p>With <code>blinds</code> today, tomorrow will be the last new crate: <code>golem</code>!</p>
+<ol>
+<li><a href="../quicksilver-chanukah-2019">The introduction post</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-2"><code>platter</code>: An async file-loading API for desktop and web</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-3"><code>gestalt</code>: An API to manage bundling and saving data locally on desktop and web</a></li>
+<li>This post!</li>
+<li><a href="../quicksilver-chanukah-2019-day-5"><code>golem</code>: An opinionated mostly-safe graphics library for desktop and web GL</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-6">Changes to the Quicksilver application lifecycle</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
+<li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
+</ol>
+
+    </article>
+  </body>
+</html>

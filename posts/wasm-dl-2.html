@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> High Crimes and Misdeamenors with wasm and dynamic linking </title>
+<meta property="og:title" content="High Crimes and Misdeamenors with wasm and dynamic linking">
+
+<meta name="description" content="">
+<meta property="og:description" content="">
+
+<meta name="theme-color" content="#E7CD78">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+        </div>
+    </div>
+
+      
+        <aside>
+          <p>
+            This post is a draft. Please don't share it with anyone else; if I didn't send you the link directly, you're probably not supposed to be seeing it!
+          </p>
+        </aside>
+      
+      <h1> High Crimes and Misdeamenors with wasm and dynamic linking </h1>
+      <small>
+        1 Jan  1901
+      </small>
+    </header>
+    <article>
+      <ul>
+<li>Initial thought was to drive with data</li>
+<li>Massive combinatorial explosion python script</li>
+<li>Refined down</li>
+<li>Realized I can and should just read the wasm import section</li>
+<li>given the import section tried some trait stuff and macro stuff, couldn’t figure it out</li>
+<li>punning a ValRaw that represents a float to a u32 was difficult, to_bits and from_bits were producing the wrong results</li>
+<li>Eventually reached for a transmute (safe transmute through bytemuck), need to take the u32, convert to f32, then transmute it back</li>
+<li>Can’t use the wasm import section, at least not entirely - pointers!</li>
+</ul>
+
+    </article>
+  </body>
+</html>

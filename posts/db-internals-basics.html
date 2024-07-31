@@ -42,6 +42,7 @@
     </header>
     <article>
       <p>Starting my batch at the Recurse Center, I knew one of the things I wanted to learn was the basics of database internals. My goal was to answer a basic question: “what does a database look physically, from the perspective of files on disk?”</p>
+<h2>B+Trees</h2>
 <p>I started with <a href="https://build-your-own.org/database/">“Build Your Own Database From Scratch In Go”</a>. By working through the first half of the book in Rust, I learned:</p>
 <ul>
 <li>“Logs” in databases mean something pretty different from what I’m used to. Instead of storing information about a program’s operation history, a “write ahead log” is a data structure you can safely append incoming operations to. This allows concurrent operations to be safely stored in a durable fashion, even if the process crashes mid-write.</li>
@@ -49,15 +50,17 @@
 <li>For efficient manipulation of files on disk, it’s important to keep in mind segment sizes. The smallest possible disk read is often a few kilobytes; reading or writing less than that at a time is inefficient IO. Also, memory-mapping is the best approach if you need random access to disk.</li>
 </ul>
 <p>Following along, I <a href="https://github.com/ryanisaacg/catalog">built a memory-mapped B+Tree in Rust</a> to make sure I understood the concepts. I think it doesn’t fully rebalance itself (making it somewhat inefficient), but it does correctly handle get/insert/remove operations. Using <code>mmap</code> means that the file is automatically updated under the hood, which is (I think) how real databases work. Unfortunately this is super unergonomic, because I’m taking a byte array and doing a bunch of unsafe witchery to map the bytes to Rust structures. I think my use of <code>MaybeUninit</code> in this code is actually unsound? So I wouldn’t use that code as a good example of anything.</p>
+<h2>SQLite Format</h2>
 <p>In week 2 I joined some of my batchmates in writing SQLite from scratch. I decided to <a href="https://github.com/ryanisaacg/sqlite">go about this in Zig</a>, partially to learn a new language and partially to avoid the memory-mapping problems I had in Rust. The first step is to parse <a href="https://www.sqlite.org/fileformat.html#the_database_header">the database file’s header</a>, which is pretty simple. Things immediately kicked up a notch on the next step as I began to dig into SQLite’s internal structures. Each SQLite database is represented by a page (4096 bytes in the test database, but it can be configured on a per-DB basis). A page is also a node in a B+Tree, either a leaf or branch; trees either represent tables or indices. Each page consists of a header, an array of internal pointers to “cells”, and then the cells themselves.</p>
 <p>All this actually sounds pretty simple. Let me assure you that there was plenty of room to write frustrating, hard-to-understand bugs along the way:</p>
 <ul>
-<li>All the integers in the format are little endian. Somehow I managed to read in exactly one value in the header in big-endian, which took me hours to track down.</li>
+<li>All the integers in the format are big endian. Somehow I managed to read in exactly one value in the header in little endian, which took me hours to track down.</li>
 <li>Cells have a variable length so their locations in the page data cannot be determined except by the cell-offset array.</li>
 <li>Pages are 1-indexed. Assuming pages are 0-indexed won’t result in obvious problems, but it will result in incorrect programs that report odd things.</li>
 <li>The cell offsets on the first database page treat the database header as belonging to that page, so their offsets aren’t relative to the page header but rather to byte 0.</li>
 </ul>
 <p>After I had worked through these initial obstacles, my program was able to enumerate the tables in a SQLite database file and read the <code>sqlite_schema</code> table to determine their names. For now I’ve stopped there, because I feel like I’ve developed a good understanding of the physical basis of database file storage.</p>
+<h2>Takeaways</h2>
 <p>With what I learned from my projects, I can answer my initial question with two core facts:</p>
 <ol>
 <li>Each SQL table can be thought of as a key-value store, where the value is the row in the table.</li>

@@ -200,10 +200,16 @@ h1 {
 
 h2 {
     font-size: 27px;
+    margin-bottom: 6px;
 }
 
 h3 {
     font-size: 24px;
+}
+
+p, ul, ol {
+    margin-top: 2px;
+    margin-bottom: 8px;
 }
 
 .footnotes-sep {

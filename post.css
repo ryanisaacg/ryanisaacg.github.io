@@ -207,7 +207,12 @@ h3 {
     font-size: 24px;
 }
 
-p, ul, ol {
+p {
+    margin-top: 2px;
+    margin-bottom: 16px;
+}
+
+ul, ol {
     margin-top: 2px;
     margin-bottom: 8px;
 }

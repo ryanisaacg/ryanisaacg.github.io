@@ -4,13 +4,37 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-07-31T15:51:57Z</updated>
+  <updated>2024-07-31T15:52:33Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
   </author>
   
   
+  
+    <entry>
+      <title>Recurse Center: Week 4</title>
+      <link href="https://ryanisaacg.com/posts/recurse-week-4.html"/>
+      <updated>2024-07-31T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/recurse-week-4.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;In my fourth week I focused on the Recurse Game Jam, which ran from Monday to Thursday. I teamed up with &lt;a href=&quot;https://metavee.github.io/blog/&quot;&gt;Robin&lt;/a&gt; on her game &lt;a href=&quot;https://github.com/metavee/puzdug-x86&quot;&gt;puzdug-x86&lt;/a&gt;, a &lt;a href=&quot;https://en.wikipedia.org/wiki/Roguelike&quot;&gt;roguelike&lt;/a&gt; puzzle dungeon in x86 assembly. The game includes fog of war, player movement, mostly-static enemies, a win and loss condition, and color ASCII graphics. Robin had set out to make a game that fit in the boot sector, and we did briefly have a build that worked on a DOS-less Qemu instance! Unfortunately there is a 512 byte limit for the boot sector which we quickly shot past&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://ryanisaacg.com/posts/recurse-week-4.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;; the final product for the game jam was a whopping 1KB (how excessive 😄).&lt;/p&gt;
+&lt;p&gt;I loved working in such an unfamiliar and challenging environment as assembly. There’s a serenity to making a game with such an uphill climb, because it took pressure off my mind to make the game impressive. Shipping anything written in assembly is impressive enough, I think!&lt;/p&gt;
+&lt;p&gt;I also…&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Used Siri Shortcuts to parse a web endpoint for my local train times, and &lt;a href=&quot;https://ryanisaacg.com/posts/path-times&quot;&gt;blogged about it.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Finished up my &lt;a href=&quot;https://ryanisaacg.com/posts/learning-lsps&quot;&gt;first LSP blog post.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Made Hindsight, my “20 second break after 20 minutes of screen” app, a little smarter. Previously it checked if the Zoom app was running to avoid interrupting me in a call; now it checks to see if my camera is on instead.&lt;/li&gt;
+&lt;li&gt;Went down a rabbit hole with wasm and dynamic linking. I didn’t end up achieving what I wanted to, but I learned some things that will hopefully make for an interesting blog post soon.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr class=&quot;footnotes-sep&quot; /&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol class=&quot;footnotes-list&quot;&gt;
+&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Since the jam, Robin has further improved the game by adding a custom bootloader, so you &lt;em&gt;can&lt;/em&gt; boot directly into puzdug. &lt;a href=&quot;https://ryanisaacg.com/posts/recurse-week-4.html#fnref1&quot; aria-label=&quot;Back to reference 1&quot; role=&quot;doc-backlink&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content>
+    </entry>
   
   
     <entry>

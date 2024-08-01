@@ -4,7 +4,7 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-07-31T18:57:31Z</updated>
+  <updated>2024-08-01T15:24:01Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
@@ -1082,6 +1082,7 @@ Increasingly it is practical to build an entire game with only the Rust toolchai
 &lt;p&gt;In essence, I want seamless desktop and WASM development to move from a selling point of developing games in Quicksilver to a selling point of developing games in Rust.&lt;/p&gt;
 </content>
     </entry>
+  
   
   
 </feed>

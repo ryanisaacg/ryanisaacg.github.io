@@ -10,8 +10,8 @@
 <title> High Crimes and Misdeamenors with wasm and dynamic linking </title>
 <meta property="og:title" content="High Crimes and Misdeamenors with wasm and dynamic linking">
 
-<meta name="description" content="">
-<meta property="og:description" content="">
+<meta name="description" content="My programming language compiles to WebAssembly, which I run on desktop via wasmtime. TODO: explain more about why I want to link">
+<meta property="og:description" content="My programming language compiles to WebAssembly, which I run on desktop via wasmtime. TODO: explain more about why I want to link">
 
 <meta name="theme-color" content="#E7CD78">
 
@@ -37,11 +37,17 @@
       
       <h1> High Crimes and Misdeamenors with wasm and dynamic linking </h1>
       <small>
-        1 Jan  1901
+        7 Aug  2024
       </small>
     </header>
     <article>
-      <ul>
+      <p><a href="programming-language-for-fun">My programming language</a> compiles to WebAssembly, which I run on desktop via <a href="https://github.com/bytecodealliance/wasmtime">wasmtime</a>. TODO: explain more about why I want to link</p>
+<p>When I ran into a linker error with SDL_image, I was thrust rudely back into the world of dynamic libraries, linker paths, and C ABIs. Usually I’ll do anything to avoid this, including <a href="https://github.com/ryanisaacg/quicksilver">writing my own game framework from scratch</a>. But this week it served as a challenge: can I get at those sweet sweet capabilities without having to go through a layer of Rust bindings? What if I could load dynamic libraries from wasm itself?</p>
+<p>Importantly, wasm is sandboxed by design. There are no mechanisms to reach outside that sandbox. Instead a wasm module can define “imports”, which may be a function, a global variable, a chunk of memory, or a table<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup>. These imports are the only ways a wasm module can have side effects. In the browser, Javascript functions are used to satisfy imports; in wasmtime, you use Rust functions. My goal with <code>wasmtime-dl</code> was to allow those imports to be satisfied by a dynamic library provided at runtime, essentially punching a hole in the sandbox for my own convenience.</p>
+<p>This would open up a bit of design space for native bindings in my programming language. Instead of need to inject all bindings into wasmtime by writing Rust code, my goal was an automatic TODO</p>
+<p>I had no experience with using dynamic libraries in this way. Previously I had compiled C or Rust code that would use a dynamic library at runtime, but that sort of detail is handled for you<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>.</p>
+<p>Any time a wasm module has a side effect of any kind (printing to a console, painting to the screen, sending a web request) it must be</p>
+<ul>
 <li>Initial thought was to drive with data</li>
 <li>Massive combinatorial explosion python script</li>
 <li>Refined down</li>
@@ -51,6 +57,15 @@
 <li>Eventually reached for a transmute (safe transmute through bytemuck), need to take the u32, convert to f32, then transmute it back</li>
 <li>Can’t use the wasm import section, at least not entirely - pointers!</li>
 </ul>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Tables are essentially arrays managed by the wasm runtime. <a href="#fnref1" aria-label="Back to reference 1" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>By the compiler or the linker, I’m not sure which. And I’m also not sure how a binary finds a dynamic library. This may or may not be the basis for a future project. <a href="#fnref2" aria-label="Back to reference 2" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 
     </article>
   </body>

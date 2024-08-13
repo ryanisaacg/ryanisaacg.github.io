@@ -4,7 +4,7 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-08-12T22:11:28Z</updated>
+  <updated>2024-08-13T03:23:12Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
@@ -12,6 +12,23 @@
   
   
   
+  
+  
+    <entry>
+      <title>Recurse Center: Week 6</title>
+      <link href="https://ryanisaacg.com/posts/recurse-week-6.html"/>
+      <updated>2024-08-12T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/recurse-week-6.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;I’m halfway through my batch already! That can’t be true, can it? It feels like I just started!&lt;/p&gt;
+&lt;p&gt;This week I:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Focused on &lt;a href=&quot;https://github.com/ryanisaacg/concerto&quot;&gt;Concerto&lt;/a&gt;. I got decent-sounding bells synthesized via Web Audio, and rewrote the backend to sync notes between clients. After an afternoon of wrangling with GCP I got the project deployed, and showed it off at Thursday presentations.&lt;/li&gt;
+&lt;li&gt;Made some progress on my &lt;a href=&quot;https://browser.engineering/&quot;&gt;browser.engineering&lt;/a&gt; project, &lt;a href=&quot;https://github.com/ryanisaacg/shelves&quot;&gt;shelves&lt;/a&gt;. Thanks to some pairing with &lt;a href=&quot;https://annahope.me/&quot;&gt;Anna&lt;/a&gt;, I now have a GUI where my rendered text appears.&lt;/li&gt;
+&lt;li&gt;Drafted my repeatedly-promised blog post about &lt;a href=&quot;https://github.com/ryanisaacg/wasmtime-dl/&quot;&gt;&lt;code&gt;wasmtime-dl&lt;/code&gt;&lt;/a&gt;. It needs a round of revisions, but I hope to have the post out this week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In terms of code written, this was my least productive week so far! Partly the wasmtime blog post is the longest I’ve written yet, and it took more time than I expected. This was also my first week presenting anything, and I’m out of practice putting a talk together. My hope is that this upcoming week will reverse my low-productivity trend!&lt;/p&gt;
+</content>
+    </entry>
   
   
     <entry>

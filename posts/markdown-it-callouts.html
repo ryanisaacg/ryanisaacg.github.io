@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> My First NPM Package: markdown-it-callouts </title>
+<meta property="og:title" content="My First NPM Package: markdown-it-callouts">
+
+<meta name="description" content="I’ve got a blog post in the works that uses infoboxes. Previously I had a little snippet adapted from eleventy-notes so I could parse Obsidian callouts into aside elements, but now I wanted to have special styling.">
+<meta property="og:description" content="I’ve got a blog post in the works that uses infoboxes. Previously I had a little snippet adapted from eleventy-notes so I could parse Obsidian callouts into aside elements, but now I wanted to have special styling.">
+
+<meta name="theme-color" content="#7d7fff">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+            <a href="/posts">/all posts</a>
+        </div>
+    </div>
+
+      
+      <h1> My First NPM Package: markdown-it-callouts </h1>
+      <small>
+        14 Aug  2024
+      </small>
+    </header>
+    <article>
+      <p>I’ve got a blog post in the works that uses infoboxes. Previously I had a little snippet adapted from <a href="https://github.com/rothsandro/eleventy-notes">eleventy-notes</a> so I could parse <a href="https://help.obsidian.md/Editing+and+formatting/Callouts">Obsidian callouts</a> into <code>aside</code> elements, but now I wanted to have special styling.</p>
+<aside class="callout callout-info">
+<h3 class="callout-title"><span class="callout-symbol">ⓘ</span>They look like this!</h3><p></p>
+<p>It’s like my styling for asides, but a little more flexible. The colors can be changed, and a little symbol can be configured to show up next to the title.</p>
+</aside>
+<pre class="language-markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span> [!info] They're defined like this!
+<span class="token blockquote punctuation">></span> The first line is the title, and subsequent lines are the body.
+<span class="token blockquote punctuation">></span> You can put whatever elements you want in here too, like code blocks or images.</code></pre>
+<p>I rolled up my sleeves and added all the <code>markdown-it</code> rendering code and CSS I needed. Once I had the new feature in place to correctly handle this non-standard markdown feature, I wanted to package it up for reusability<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup>. The code is available <a href="https://github.com/ryanisaacg/markdown-it-callouts">on GitHub</a>, but it’s surprisingly annoying to pull in a Typescript dependency via a Git link. I <em>could</em> check in the compiled artifacts to source control, but that’s a poor practice if I can avoid it. Instead I decided to publish the package to npm.</p>
+<p>My first attempt to publish on npm only sent up my Typescript source files, which is gives you the same problems as pulling in the Github repo. I had to learn about the <code>package.json</code> field <code>files</code>, so that way npm would package up my artifacts and not my source code. Otherwise the publishing process was familiar to me from publishing Rust crates. I ran <code>npm publish</code> and <a href="https://www.npmjs.com/package/markdown-it-callouts">the package went up on the registry</a>. Feel free to check it out for your own projects, if you also want a convenient way to parse callouts.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Other people being able to pull it in is a nice side effect; mostly I want to be able to share the functionality between my blogs. <a href="#fnref1" aria-label="Back to reference 1" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+    </article>
+  </body>
+</html>

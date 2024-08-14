@@ -4,13 +4,39 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-08-14T18:58:38Z</updated>
+  <updated>2024-08-14T19:32:40Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
   </author>
   
   
+  
+  
+    <entry>
+      <title>My First NPM Package: markdown-it-callouts</title>
+      <link href="https://ryanisaacg.com/posts/markdown-it-callouts.html"/>
+      <updated>2024-08-14T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/markdown-it-callouts.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;I’ve got a blog post in the works that uses infoboxes. Previously I had a little snippet adapted from &lt;a href=&quot;https://github.com/rothsandro/eleventy-notes&quot;&gt;eleventy-notes&lt;/a&gt; so I could parse &lt;a href=&quot;https://help.obsidian.md/Editing+and+formatting/Callouts&quot;&gt;Obsidian callouts&lt;/a&gt; into &lt;code&gt;aside&lt;/code&gt; elements, but now I wanted to have special styling.&lt;/p&gt;
+&lt;aside class=&quot;callout callout-info&quot;&gt;
+&lt;h3 class=&quot;callout-title&quot;&gt;&lt;span class=&quot;callout-symbol&quot;&gt;ⓘ&lt;/span&gt;They look like this!&lt;/h3&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;It’s like my styling for asides, but a little more flexible. The colors can be changed, and a little symbol can be configured to show up next to the title.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; [!info] They&#39;re defined like this!
+&lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; The first line is the title, and subsequent lines are the body.
+&lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; You can put whatever elements you want in here too, like code blocks or images.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I rolled up my sleeves and added all the &lt;code&gt;markdown-it&lt;/code&gt; rendering code and CSS I needed. Once I had the new feature in place to correctly handle this non-standard markdown feature, I wanted to package it up for reusability&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://ryanisaacg.com/posts/markdown-it-callouts.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;. The code is available &lt;a href=&quot;https://github.com/ryanisaacg/markdown-it-callouts&quot;&gt;on GitHub&lt;/a&gt;, but it’s surprisingly annoying to pull in a Typescript dependency via a Git link. I &lt;em&gt;could&lt;/em&gt; check in the compiled artifacts to source control, but that’s a poor practice if I can avoid it. Instead I decided to publish the package to npm.&lt;/p&gt;
+&lt;p&gt;My first attempt to publish on npm only sent up my Typescript source files, which is gives you the same problems as pulling in the Github repo. I had to learn about the &lt;code&gt;package.json&lt;/code&gt; field &lt;code&gt;files&lt;/code&gt;, so that way npm would package up my artifacts and not my source code. Otherwise the publishing process was familiar to me from publishing Rust crates. I ran &lt;code&gt;npm publish&lt;/code&gt; and &lt;a href=&quot;https://www.npmjs.com/package/markdown-it-callouts&quot;&gt;the package went up on the registry&lt;/a&gt;. Feel free to check it out for your own projects, if you also want a convenient way to parse callouts.&lt;/p&gt;
+&lt;hr class=&quot;footnotes-sep&quot; /&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol class=&quot;footnotes-list&quot;&gt;
+&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Other people being able to pull it in is a nice side effect; mostly I want to be able to share the functionality between my blogs. &lt;a href=&quot;https://ryanisaacg.com/posts/markdown-it-callouts.html#fnref1&quot; aria-label=&quot;Back to reference 1&quot; role=&quot;doc-backlink&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content>
+    </entry>
   
   
   

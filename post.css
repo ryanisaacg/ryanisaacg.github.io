@@ -36,6 +36,8 @@
 
 :root {
     --max-width: 800px;
+    --aside-note-color: #A00;
+    --aside-info-color: #0AA;
 }
 
 /* Colors */
@@ -88,11 +90,45 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-aside p {
-  border-left: 3px solid #A00;
+aside {
+  box-sizing: border-box;
   padding: 16px;
   background-color: var(--aside-bkg);
+  border-radius: 1px;
 }
+
+aside .callout-title {
+  margin: 0px;
+}
+
+aside .callout-symbol {
+  margin-right: 8px;
+}
+
+aside.callout-aside, aside.callout-note {
+  border-left: 3px solid var(--aside-note-color);
+}
+
+aside.callout-aside .callout-symbol {
+  color: var(--aside-note-color);
+}
+
+aside.callout-info {
+  border-left: 3px solid var(--aside-info-color);
+}
+
+aside.callout-info .callout-symbol {
+  color: var(--aside-info-color);
+}
+
+aside p:first-child {
+  margin-top: 0px;
+}
+
+aside p:last-child {
+  margin-bottom: 0px;
+}
+
 
 blockquote {
   padding: 4px 0px;
@@ -211,7 +247,7 @@ header {
     margin-bottom: 16px;
 }
 
-p {
+p, aside {
     margin-top: 2px;
     margin-bottom: 16px;
 }

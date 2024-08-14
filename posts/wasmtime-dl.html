@@ -57,25 +57,25 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Here’s the generated wasm, expressed in the Web Assembly Text (WAT) format:</p>
-<pre class="language-wat"><code class="language-wat">(module
- (type $0 (func (param i32 f32)))
- (type $1 (func))
- (import "env" "do_side_effect" (func $do_side_effect (param i32 f32)))
- (global $__stack_pointer (mut i32) (i32.const 1048576))
- (global $global$1 i32 (i32.const 1048576))
- (global $global$2 i32 (i32.const 1048576))
- (memory $0 16)
- (export "memory" (memory $0))
- (export "my_wasm_function" (func $my_wasm_function))
- (export "__data_end" (global $global$1))
- (export "__heap_base" (global $global$2))
- (func $my_wasm_function
-  (call $do_side_effect
-   (i32.const 123)
-   (f32.const 456)
-  )
- )
-)</code></pre>
+<pre class="language-lisp"><code class="language-lisp"><span class="token punctuation">(</span><span class="token car">module</span>
+ <span class="token punctuation">(</span><span class="token car">type</span> $0 <span class="token punctuation">(</span><span class="token car">func</span> <span class="token punctuation">(</span><span class="token car">param</span> i32 f32<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">type</span> $1 <span class="token punctuation">(</span><span class="token car">func</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">import</span> <span class="token string">"env"</span> <span class="token string">"do_side_effect"</span> <span class="token punctuation">(</span><span class="token car">func</span> $do_side_effect <span class="token punctuation">(</span><span class="token car">param</span> i32 f32<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $__stack_pointer <span class="token punctuation">(</span><span class="token car">mut</span> i32<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $global$1 i32 <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $global$2 i32 <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">memory</span> $0 <span class="token number">16</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"memory"</span> <span class="token punctuation">(</span><span class="token car">memory</span> $0<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"my_wasm_function"</span> <span class="token punctuation">(</span><span class="token car">func</span> $my_wasm_function<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"__data_end"</span> <span class="token punctuation">(</span><span class="token car">global</span> $global$1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"__heap_base"</span> <span class="token punctuation">(</span><span class="token car">global</span> $global$2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">func</span> $my_wasm_function
+  <span class="token punctuation">(</span><span class="token car">call</span> $do_side_effect
+   <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">123</span><span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token car">f32</span>.const <span class="token number">456</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+ <span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre>
 <p>Ignoring some noise, we can see our <code>do_side_effect</code> import reflected and our <code>my_wasm_function</code> declared and exported.</p>
 </aside>
 <p>On desktop I’m running Brick programs via <a href="https://github.com/bytecodealliance/wasmtime"><code>wasmtime</code></a>, a wasm runtime maintained by the folks behind the wasm spec. It’s written in Rust and exposes a Rust API, which allows us to attach Rust functions as a wasm module’s imports. This is great, because it allows us to include external libraries like <code>tokio</code> for web requests or <code>macroquad</code> for graphics. The API looks like this:</p>
@@ -222,25 +222,25 @@
 <p>You shouldn’t have to define the bindings - they’re right there in the binary! I’m not sure if I realized this in the shower, or on the train, or at the gym, but it hit me like a bolt of lightning. A wasm binary defines the types of its imports, including what parameters and return values functions have.</p>
 <aside class="callout-info">
 <p>Remember our Rust example from before? <code>do_side_effect</code>’s type is encoded right in the wasm:</p>
-<pre class="language-wat"><code class="language-wat">(module
- (type $0 (func (param i32 f32)))
- (type $1 (func))
- (import "env" "do_side_effect" (func $do_side_effect (param i32 f32)))
- (global $__stack_pointer (mut i32) (i32.const 1048576))
- (global $global$1 i32 (i32.const 1048576))
- (global $global$2 i32 (i32.const 1048576))
- (memory $0 16)
- (export "memory" (memory $0))
- (export "my_wasm_function" (func $my_wasm_function))
- (export "__data_end" (global $global$1))
- (export "__heap_base" (global $global$2))
- (func $my_wasm_function
-  (call $do_side_effect
-   (i32.const 123)
-   (f32.const 456)
-  )
- )
-)</code></pre>
+<pre class="language-lisp"><code class="language-lisp"><span class="token punctuation">(</span><span class="token car">module</span>
+ <span class="token punctuation">(</span><span class="token car">type</span> $0 <span class="token punctuation">(</span><span class="token car">func</span> <span class="token punctuation">(</span><span class="token car">param</span> i32 f32<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">type</span> $1 <span class="token punctuation">(</span><span class="token car">func</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">import</span> <span class="token string">"env"</span> <span class="token string">"do_side_effect"</span> <span class="token punctuation">(</span><span class="token car">func</span> $do_side_effect <span class="token punctuation">(</span><span class="token car">param</span> i32 f32<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $__stack_pointer <span class="token punctuation">(</span><span class="token car">mut</span> i32<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $global$1 i32 <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">global</span> $global$2 i32 <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">1048576</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">memory</span> $0 <span class="token number">16</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"memory"</span> <span class="token punctuation">(</span><span class="token car">memory</span> $0<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"my_wasm_function"</span> <span class="token punctuation">(</span><span class="token car">func</span> $my_wasm_function<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"__data_end"</span> <span class="token punctuation">(</span><span class="token car">global</span> $global$1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">export</span> <span class="token string">"__heap_base"</span> <span class="token punctuation">(</span><span class="token car">global</span> $global$2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token car">func</span> $my_wasm_function
+  <span class="token punctuation">(</span><span class="token car">call</span> $do_side_effect
+   <span class="token punctuation">(</span><span class="token car">i32</span>.const <span class="token number">123</span><span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token car">f32</span>.const <span class="token number">456</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+ <span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre>
 </aside>
 <p>That means we can save some work for the caller. Instead of asking them for some external definition for each function, we’ll just use the one provided by the wasm binary.</p>
 <p>The first experimental version worked! Driving the function bindings by examining the imports of the module itself meant that the user only needed to provide a mapping from wasm imports to dynamic libraries, and <code>wasmtime-dl</code> could drive the rest. Our interface from before can be simplified to remove user-provided binding definitions entirely, doesn’t it look so much simpler?</p>

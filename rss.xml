@@ -4,12 +4,44 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-08-20T18:34:48Z</updated>
+  <updated>2024-08-20T18:58:14Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
   </author>
   
+  
+  
+    <entry>
+      <title>Recurse Center: Week 7</title>
+      <link href="https://ryanisaacg.com/posts/recurse-week-7.html"/>
+      <updated>2024-08-20T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/recurse-week-7.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;In the back half of my batch, job search and life have begun to cut into my RC time just a little. I’m feeling a little bit less productive as a result, but did get some stuff done:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;a href=&quot;https://ryanisaacg.com/posts/wasmtime-dl&quot;&gt;&lt;code&gt;wasmtime-dl&lt;/code&gt; blog post is out&lt;/a&gt;, which is my longest post yet (both in terms of my RC batch and all the posts before it). I’m pretty proud of it and feel excited to write more deeply here.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To get that blog post looking good, I &lt;a href=&quot;https://ryanisaacg.com/posts/markdown-it-callouts&quot;&gt;wrote and used an NPM package&lt;/a&gt; to generate HTML for Obsidian callouts.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I did a couple playtests of &lt;a href=&quot;https://github.com/ryanisaacg/concerto&quot;&gt;concerto&lt;/a&gt;, an audiovisual webtoy I worked on in the first half of my batch. It’s pretty much ready for me to write it up and share.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ryanisaacg/shelves&quot;&gt;My implementation&lt;/a&gt; of &lt;a href=&quot;https://browser.engineering/&quot;&gt;browser.engineering&lt;/a&gt; is up to the start of chapter 4. I can parse a subset of HTML, but not do anything with it yet.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I made two changes to how &lt;a href=&quot;https://github.com/ryanisaacg/brick&quot;&gt;Brick&lt;/a&gt;’s runtime works:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Instead of requiring it to be built manually, I set up a Rust build script so that the runtime will be automatically rebuilt.&lt;/li&gt;
+&lt;li&gt;I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With these two changes, I can now link the runtime module directly to the compiled binary with &lt;a href=&quot;https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module&quot;&gt;wasmtime’s Linker interface&lt;/a&gt;. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    </entry>
   
   
     <entry>

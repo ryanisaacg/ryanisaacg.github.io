@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/post.css">
+    
+    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> Recurse Center: Week 7 </title>
+<meta property="og:title" content="Recurse Center: Week 7">
+
+<meta name="description" content="In the back half of my batch, job search and life have begun to cut into my RC time just a little. I’m feeling a little bit less productive as a result, but did get some stuff done:">
+<meta property="og:description" content="In the back half of my batch, job search and life have begun to cut into my RC time just a little. I’m feeling a little bit less productive as a result, but did get some stuff done:">
+
+<meta name="theme-color" content="#7d7fff">
+
+
+  </head>
+  <body>
+    <header>
+        <div class="page-header">
+        
+            <strong>ryan.isaac.g</strong>
+        
+        <div class="header-links">
+            <a href="/">/home</a>
+            <a href="/posts">/all posts</a>
+        </div>
+    </div>
+
+      
+      <h1> Recurse Center: Week 7 </h1>
+      <small>
+        20 Aug  2024
+      </small>
+    </header>
+    <article>
+      <p>In the back half of my batch, job search and life have begun to cut into my RC time just a little. I’m feeling a little bit less productive as a result, but did get some stuff done:</p>
+<ul>
+<li>
+<p>The <a href="wasmtime-dl"><code>wasmtime-dl</code> blog post is out</a>, which is my longest post yet (both in terms of my RC batch and all the posts before it). I’m pretty proud of it and feel excited to write more deeply here.</p>
+</li>
+<li>
+<p>To get that blog post looking good, I <a href="markdown-it-callouts">wrote and used an NPM package</a> to generate HTML for Obsidian callouts.</p>
+</li>
+<li>
+<p>I did a couple playtests of <a href="https://github.com/ryanisaacg/concerto">concerto</a>, an audiovisual webtoy I worked on in the first half of my batch. It’s pretty much ready for me to write it up and share.</p>
+</li>
+<li>
+<p><a href="https://github.com/ryanisaacg/shelves">My implementation</a> of <a href="https://browser.engineering">browser.engineering</a> is up to the start of chapter 4. I can parse a subset of HTML, but not do anything with it yet.</p>
+</li>
+<li>
+<p>I made two changes to how <a href="https://github.com/ryanisaacg/brick">Brick</a>’s runtime works:</p>
+<ol>
+<li>Instead of requiring it to be built manually, I set up a Rust build script so that the runtime will be automatically rebuilt.</li>
+<li>I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.</li>
+</ol>
+<p>With these two changes, I can now link the runtime module directly to the compiled binary with <a href="https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module">wasmtime’s Linker interface</a>. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.</p>
+</li>
+</ul>
+
+    </article>
+  </body>
+</html>

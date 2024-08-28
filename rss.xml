@@ -4,11 +4,39 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-08-20T18:58:14Z</updated>
+  <updated>2024-08-28T21:51:29Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
   </author>
+  
+    <entry>
+      <title>Recurse Center: Week 8</title>
+      <link href="https://ryanisaacg.com/posts/recurse-week-8.html"/>
+      <updated>2024-08-29T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/recurse-week-8.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;Personal life got in the way for 2 of the 5 days of Week 8, which is unfortunate but happens. I only had time to focus on one project this week, but it was a chunky one: I wrote a linker for &lt;a href=&quot;https://github.com/ryanisaacg/brick&quot;&gt;Brick&lt;/a&gt;’s toolchain.&lt;/p&gt;
+&lt;p&gt;This isn’t my extremely cursed &lt;a href=&quot;https://ryanisaacg.com/posts/wasmtime-dl&quot;&gt;wasmtime-dl project&lt;/a&gt;. It’s a crate that takes multiple WASM modules, resolves any exports that match imports, smooshes them all together, and outputs a single standalone module. This is crucial for Brick’s compilation process, because I need to combine the user’s compiled program with the runtime I wrote in Rust. I rolled my own linker for three reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I thought it would be fun (it was)&lt;/li&gt;
+&lt;li&gt;I wanted to avoid taking a massive C++ dependency&lt;/li&gt;
+&lt;li&gt;If I write the code, I know it’s doing exactly what I need and nothing else&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There are two major alternatives I considered, &lt;a href=&quot;https://github.com/WebAssembly/binaryen?tab=readme-ov-file#tools&quot;&gt;&lt;code&gt;wasm-merge&lt;/code&gt;&lt;/a&gt; or &lt;a href=&quot;https://lld.llvm.org/WebAssembly.html&quot;&gt;&lt;code&gt;wasm-ld&lt;/code&gt;&lt;/a&gt;. The first is part of the &lt;a href=&quot;https://github.com/WebAssembly/binaryen&quot;&gt;binaryen&lt;/a&gt; project, which is a WASM toolkit; the second is a port of &lt;a href=&quot;https://lld.llvm.org/&quot;&gt;&lt;code&gt;lld&lt;/code&gt;&lt;/a&gt;. Taking dependencies on either of these major projects would conflict with goal #2 and #3 above. Keeping my dependency tree purely Rust makes building and running the compiler simpler, especially if I want to build the compiler itself to WASM and embed it in a webpage.&lt;/p&gt;
+&lt;p&gt;Avoiding large dependencies decreases the overall complexity of the project; currently the only dependencies I’m taking are Rust ecosystem mainstays (&lt;code&gt;rayon&lt;/code&gt;, &lt;code&gt;anyhow&lt;/code&gt;, &lt;code&gt;thiserror&lt;/code&gt;, &lt;code&gt;serde&lt;/code&gt;) or protocol-specific crates that I &lt;em&gt;could&lt;/em&gt; rewrite myself if necessary (&lt;code&gt;wasm-encoder&lt;/code&gt;, &lt;code&gt;wasmparser&lt;/code&gt;, &lt;code&gt;lsp-server&lt;/code&gt;, &lt;code&gt;lsp-types&lt;/code&gt;)&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://ryanisaacg.com/posts/recurse-week-8.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;.  If a newcomer wanted to understand the project end-to-end, they would be confronted with around 20,000 lines of Rust. That sounds like a lot, but Binaryen is hundreds of thousands of lines of C++ and LLVM is in the &lt;em&gt;millions&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Also, this is probably minor in the scheme of things for performance, but &lt;code&gt;wasm-merge&lt;/code&gt; and &lt;code&gt;wasm-ld&lt;/code&gt; both work with objects on disk. I wanted to do the linking in-memory before I write out the final binary, for convenience and speed.&lt;/p&gt;
+&lt;p&gt;Over the weekend between Weeks 8 and 9 I also hacked on an Obsidian plugin. It was a pretty fun experience, and my web background made it very straightforward. I now have a plugin which allows me to review my diary notes from the past week, which I like to do as part of my journaling practice. You can &lt;a href=&quot;https://github.com/ryanisaacg/obsidian-diary-review&quot;&gt;check it out on Github&lt;/a&gt;, but it’s not documented or configurable in the slightest. I might come back and clean it up at some point, but no promises - it’s already doing everything I need.&lt;/p&gt;
+&lt;hr class=&quot;footnotes-sep&quot; /&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol class=&quot;footnotes-list&quot;&gt;
+&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Technically I also depend on wasmtime, but I could swap it out for another wasm runtime without too much trouble. I’m mostly using it as a test runner; it’s a very convenient way to run some wasm from Rust code. Nothing about the compiler toolchain requires wasmtime specifically. &lt;a href=&quot;https://ryanisaacg.com/posts/recurse-week-8.html#fnref1&quot; aria-label=&quot;Back to reference 1&quot; role=&quot;doc-backlink&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content>
+    </entry>
+  
+  
   
   
   

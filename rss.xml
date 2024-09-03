@@ -4,11 +4,26 @@
   <subtitle></subtitle>
   <link href="https://ryanisaacg.com/rss.xml" rel="self"/>
   <link href="https://ryanisaacg.com"/>
-  <updated>2024-08-28T21:51:29Z</updated>
+  <updated>2024-09-03T19:35:49Z</updated>
   <id>https://ryanisaacg.com</id>
   <author>
     <name>Ryan</name>
   </author>
+  
+  
+  
+    <entry>
+      <title>Recurse Center: Week 9</title>
+      <link href="https://ryanisaacg.com/posts/recurse-week-9.html"/>
+      <updated>2024-09-03T00:00:00Z</updated>
+      <id>https://ryanisaacg.com/posts/recurse-week-9.html</id>
+      <content xml:lang="en" type="html">&lt;p&gt;Personal life and my job search continue to slow my RC progress slightly, which I expected for the back half of my batch.&lt;/p&gt;
+&lt;p&gt;This week had the second Impossible Stuff Day of my batch. I decided to fix a performance issue with testing &lt;a href=&quot;https://ryanisaacg.com/posts/recurse-week-8&quot;&gt;&lt;code&gt;brick-ld&lt;/code&gt;&lt;/a&gt;, which took the test suite runtime from ~11 seconds to ~0.5 seconds. The optimization is based on &lt;a href=&quot;https://github.com/ryanisaacg/brick/blob/main/brick-ld/tests/wasm_data.rs#L31&quot;&gt;chunking multiple source files into the same binary&lt;/a&gt;, and then running multiple tests off that binary. It turns out overhead from setting up wasmtime instances is the majority of the test time, so anything that reduces that overhead speeds up tests greatly.&lt;/p&gt;
+&lt;p&gt;For the rest of the week, I decided to switch gears and learn Go. I did the first few days of Advent of Code 2023, which helped me get an initial grasp on the language. By the second part of Day 5 I felt I was hitting diminishing returns, so I stopped there. Go doesn’t have many fancy features for data structures or iteration, which Advent of Code problems usually focus on. Once you’ve used a slice, a map, and a struct, you’ve really learned all of the language that Advent will help you with imo.&lt;/p&gt;
+&lt;p&gt;I also built a &lt;a href=&quot;https://github.com/ryanisaacg/vinyl&quot;&gt;tiny web service in Go&lt;/a&gt; to allow my partner to upload music from their phone to our Plex server. It’s &lt;a href=&quot;https://maggieappleton.com/home-cooked-software&quot;&gt;homecooked&lt;/a&gt;, it’s &lt;a href=&quot;https://handmade.network/manifesto&quot;&gt;handmade&lt;/a&gt;, it’s &lt;a href=&quot;https://gwern.net/doc/technology/2004-03-30-shirky-situatedsoftware.html&quot;&gt;situated&lt;/a&gt;. Which is to say it’s two HTML forms and a single input element, and it is so simple that I didn’t even hit my goal of learning HTMX. I’ll need to find a slightly more complex project for that, I guess.&lt;/p&gt;
+</content>
+    </entry>
+  
   
     <entry>
       <title>Recurse Center: Week 8</title>
@@ -35,8 +50,6 @@
 &lt;/section&gt;
 </content>
     </entry>
-  
-  
   
   
   

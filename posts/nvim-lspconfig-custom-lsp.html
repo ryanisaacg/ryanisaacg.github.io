@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> How to add a custom LSP server to nvim-lspconfig </title>
+<title>How to add a custom LSP server to nvim-lspconfig</title>
 <meta property="og:title" content="How to add a custom LSP server to nvim-lspconfig">
 
-<meta name="description" content="Normally the nvim-lspconfig package has every language server I could possibly want, so I’ve found it pretty low maintenance. Currently I’m testing out the server for my own programming language, and I needed to add the LSP to my editor’s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.">
-<meta property="og:description" content="Normally the nvim-lspconfig package has every language server I could possibly want, so I’ve found it pretty low maintenance. Currently I’m testing out the server for my own programming language, and I needed to add the LSP to my editor’s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> How to add a custom LSP server to nvim-lspconfig </h1>
-      <small>
-        5 Jul  2024
-      </small>
-    </header>
-    <article>
-      <p>Normally the <a href="https://github.com/neovim/nvim-lspconfig"><code>nvim-lspconfig</code> package</a> has every language server I could possibly want, so I’ve found it pretty low maintenance. Currently I’m testing out the server for my own programming language, and I needed to add the LSP to my editor’s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.</p>
+      <h1>How to add a custom LSP server to nvim-lspconfig</h1>
+      <small>5 Jul  2024</small>
+    
+</header>
+
+
+
+    <article><p>Normally the <a href="https://github.com/neovim/nvim-lspconfig"><code>nvim-lspconfig</code> package</a> has every language server I could possibly want, so I’ve found it pretty low maintenance. Currently I’m testing out the server for my own programming language, and I needed to add the LSP to my editor’s config. It was a surprisingly annoying task! I wanted to share the little snippet I used to get it configured.</p>
 <p>Briefly I considered forking <code>nvim-lspconfig</code> and adding my LSP’s config to the <code>lua/lsp/server_configurations/</code> folder, where all the official implementations live. I decided against because that seemed like an unnecessary hassle. Instead I searched out a way to do it from outside the plugin.</p>
 <p>First I found <a href="https://github.com/neovim/nvim-lspconfig#example-custom-config">a Reddit thread</a> which linked to a header within the <code>nvim-lspconfig</code> readme. That header… does not appear in the readme. A bit of trawling through the Wayback Machine got me the <a href="https://web.archive.org/web/20210422212220/https://github.com/neovim/nvim-lspconfig#example-custom-config">snippet I wanted</a>!</p>
 <pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> lspconfig <span class="token operator">=</span> require<span class="token string">'lspconfig'</span>
@@ -68,7 +69,10 @@ lspconfig<span class="token punctuation">.</span>foo_lsp<span class="token punct
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Now all I have to do is write the rest of the language server—how hard could that be?</p>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

@@ -1,0 +1,184 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header * {
+  margin: 0;
+}
+
+.header-links * {
+  margin-left: 1em;
+}
+.post-feed-entry {
+  list-style: none;
+  margin-bottom: 4px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-feed-entry a {
+  font-weight: bold;
+}
+
+.post-feed-entry time {
+  line-height: 1;
+  font-size: 15px;
+  color: var(--secondary-text);
+}
+
+@media only screen and (max-width: 768px) {
+  .post-feed-entry {
+    display: block;
+  }
+
+  .post-feed-entry a {
+    margin-top: 2px;
+    margin-bottom: 0px;
+  }
+}
+.post-feed {
+  padding: 0px;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary-text: #000;
+    --secondary-text: #333;
+    --primary-bkg: #FFF;
+    --aside-bkg: #EEE;
+    --link-text: #423eda;
+
+    --code-token-comment: hsl(230, 4%, 64%);
+    --code-token-constant: hsl(35, 99%, 36%);
+    --code-token-string: hsl(119, 34%, 47%);
+    --code-token-keyword: hsl(301, 63%, 40%);
+    --code-token-function: hsl(221, 87%, 60%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-text: #EEE;
+    --secondary-text: #BBB;
+    --primary-bkg: #141414;
+    --aside-bkg: #222;
+    --link-text: #7d7fff;
+
+    --code-token-comment: hsl(220, 10%, 40%);
+    --code-token-constant: hsl(29, 54%, 61%);
+    --code-token-string: hsl(95, 38%, 62%);
+    --code-token-keyword: hsl(286, 60%, 67%);
+    --code-token-function: hsl(207, 82%, 66%);
+  }
+
+  .diagram {
+    filter: invert(100%);
+  }
+}
+
+:root {
+    --max-width: 800px;
+    --aside-note-color: #A00;
+    --aside-info-color: #0AA;
+}
+
+/* Colors */
+
+a {
+  color: var(--link-text);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--link-text);
+}
+
+a:hover {
+  color: var(--link-text);
+  text-decoration: underline;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'PT Sans', 'Open Sans', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: var(--primary-text);
+  background-color: var(--primary-bkg);
+  line-height: 1.4;
+}
+
+body {
+  margin: 1.2em;
+  font-size: 21px;
+}
+
+/* Align body elements */
+
+p, h1, h2, h3, h4, h5, h6, ol, ul, header, footer, aside, blockquote, pre, img {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-width);
+
+  pre {
+    max-width: initial;
+  }
+}
+
+pre {
+  padding: 4px 0px;
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+}
+
+aside {
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: var(--aside-bkg);
+  border-radius: 1px;
+}
+
+aside .callout-title {
+  margin: 0px;
+}
+
+aside .callout-symbol {
+  margin-right: 8px;
+}
+
+aside.callout-aside, aside.callout-note {
+  border-left: 3px solid var(--aside-note-color);
+}
+
+aside.callout-aside .callout-symbol {
+  color: var(--aside-note-color);
+}
+
+aside.callout-info {
+  border-left: 3px solid var(--aside-info-color);
+}
+
+aside.callout-info .callout-symbol {
+  color: var(--aside-info-color);
+}
+
+aside p:first-child {
+  margin-top: 0px;
+}
+
+aside p:last-child {
+  margin-bottom: 0px;
+}
+
+blockquote {
+  padding: 4px 0px;
+  font-style: italic;
+
+    p {
+      padding: 0px 16px;
+    }
+}

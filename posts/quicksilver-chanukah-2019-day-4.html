@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> A Quicksilver Chanukah, Day 4: Blinds </title>
+<title>A Quicksilver Chanukah, Day 4: Blinds</title>
 <meta property="og:title" content="A Quicksilver Chanukah, Day 4: Blinds">
 
-<meta name="description" content="With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.">
-<meta property="og:description" content="With the recent update to winit, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of async/.await, which is where blinds comes in.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> A Quicksilver Chanukah, Day 4: Blinds </h1>
-      <small>
-        25 Dec  2019
-      </small>
-    </header>
-    <article>
-      <p>With the recent update to <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of <code>async/.await</code>, which is where <a href="https://crates.io/crates/blinds"><code>blinds</code></a> comes in.</p>
+      <h1>A Quicksilver Chanukah, Day 4: Blinds</h1>
+      <small>25 Dec  2019</small>
+    
+</header>
+
+
+
+    <article><p>With the recent update to <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>, it gained web support! This is great, and it means that Quicksilver doesn’t need to have its own parallel implementation of windowing. However, there is room for an abstraction that’s a little simpler than Winit, and takes advantage of <code>async/.await</code>, which is where <a href="https://crates.io/crates/blinds"><code>blinds</code></a> comes in.</p>
 <p><code>blinds</code> is based on <code>winit</code>, but focused on Quicksilver’s specific use case of single-window games on desktop and web. It also integrates <code>gilrs</code> for gamepad support (though this could be provided directly by <code>winit</code> later), without exposing either in its external API. Additionally, <code>blinds</code> has optional support for OpenGL, via <code>glow</code> for uniform bindings across web and desktop.</p>
 <p>The <code>async</code> API works via the <code>LocalPool</code> and the <code>winit</code> event loop, allowing you to write code that <em>almost</em> looks like a synchronous event loop.</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">blinds<span class="token punctuation">::</span></span><span class="token punctuation">{</span>run<span class="token punctuation">,</span> <span class="token class-name">Event</span><span class="token punctuation">,</span> <span class="token class-name">EventStream</span><span class="token punctuation">,</span> <span class="token class-name">Key</span><span class="token punctuation">,</span> <span class="token class-name">Settings</span><span class="token punctuation">,</span> <span class="token class-name">Window</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -97,7 +98,10 @@
 <li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

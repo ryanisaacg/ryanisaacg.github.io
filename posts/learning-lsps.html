@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> Learning About the Language Server Protocol </title>
+<title>Learning About the Language Server Protocol</title>
 <meta property="og:title" content="Learning About the Language Server Protocol">
 
-<meta name="description" content="As part of my programming language project, I’ve been writing a language server. I’m familiar with the very basics of the LSP from integrating Neovim with projects like rust-analyzer, but this is the first time I’ve dug into its internals.">
-<meta property="og:description" content="As part of my programming language project, I’ve been writing a language server. I’m familiar with the very basics of the LSP from integrating Neovim with projects like rust-analyzer, but this is the first time I’ve dug into its internals.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> Learning About the Language Server Protocol </h1>
-      <small>
-        26 Jul  2024
-      </small>
-    </header>
-    <article>
-      <p>As part of <a href="programming-language-for-fun">my programming language project</a>, I’ve been writing a language server. I’m familiar with the very basics of the <a href="https://microsoft.github.io/language-server-protocol/">LSP</a> from integrating Neovim with projects like <code>rust-analyzer</code>, but this is the first time I’ve dug into its internals.</p>
+      <h1>Learning About the Language Server Protocol</h1>
+      <small>26 Jul  2024</small>
+    
+</header>
+
+
+
+    <article><p>As part of <a href="programming-language-for-fun">my programming language project</a>, I’ve been writing a language server. I’m familiar with the very basics of the <a href="https://microsoft.github.io/language-server-protocol/">LSP</a> from integrating Neovim with projects like <code>rust-analyzer</code>, but this is the first time I’ve dug into its internals.</p>
 <p>The protocol consists of JSON messages exchanged<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup> between a server and a client. The server understands the programming language and does all the processing. The client<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup> interacts with the server in a high-level way, abstracting the difference between programming languages. Most exchanges involve a request from the client and a response from the server;</p>
 <p> <img src="/client-server-request.svg" class="diagram" alt="A diagram demonstrating neovim sending a request and rust-analyzer responding" /> </p>
 <p>some go the other direction (the server requests and the client responds).</p>
@@ -80,7 +81,10 @@
 </li>
 </ol>
 </section>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

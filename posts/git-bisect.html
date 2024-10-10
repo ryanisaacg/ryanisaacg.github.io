@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> Falling in love with git bisect </title>
+<title>Falling in love with git bisect</title>
 <meta property="og:title" content="Falling in love with git bisect">
 
-<meta name="description" content="Recently I found myself tracking down a handful of regressions: bugs I knew hadn’t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with git bisect.">
-<meta property="og:description" content="Recently I found myself tracking down a handful of regressions: bugs I knew hadn’t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with git bisect.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> Falling in love with git bisect </h1>
-      <small>
-        29 May  2022
-      </small>
-    </header>
-    <article>
-      <p>Recently I found myself tracking down a handful of regressions: bugs I knew hadn’t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with <code>git bisect</code>.</p>
+      <h1>Falling in love with git bisect</h1>
+      <small>29 May  2022</small>
+    
+</header>
+
+
+
+    <article><p>Recently I found myself tracking down a handful of regressions: bugs I knew hadn’t existed just a week or two before. I vaguely knew that there was a git command that could help me, but I had never really put it to serious use. Now that I have used it, I find myself falling in love with <code>git bisect</code>.</p>
 <p><code>bisect</code>, in the style of all things git, is slightly arcane and clunky but powerful nonetheless. All you have to do is tell git a known-good commit and a known-bad commit, and it will guide you through an efficient exploration of your repository’s history. At each step of the process, <code>bisect</code> presents you with a commit and asks “is this commit good, or bad?” A quick test of your system and you can produce the answer (failing tests, incorrect behavior, broken build, what have you) and inform git; it can then continue with a binary search to find the offending change.</p>
 <aside>
 <p>In case your runtime analysis skills are a little dusty, a binary search has an <code>O(log N)</code> runtime to find its result. Even with 10,000 commits between your good and bad state, at most you’ll have to inspect 13 to find the culprit.</p>
@@ -55,7 +56,10 @@
 <p>After you’ve specified your commits, git will check out the midpoint and ask you to evaluate it. Do whatever you need (run tests, inspect an app, check benchmarks) and then inform git that this commit is <code>good</code> or <code>bad</code> with a simple <code>git bisect good/bad</code> as desired. The process will repeat a few times until you find what you’re looking for!</p>
 <p>This is where we come to a crucial caveat: your git history. I find that it’s best to squash intermediary commits when merging, resulting in a clean list of working commits. It aids in history explorations like this one, and means you don’t have to fight through a flurry of “wip: temp” and “fix lint” garbage commits. However, if you find yourself confronted with a commit that you cannot test, <code>git bisect skip</code> is your friend.</p>
 <p>If you’d like to learn more, the <a href="https://git-scm.com/docs/git-bisect">git bisect docs</a> have more detail and even explore the topic of automatic bisecting. Happy hacking!</p>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

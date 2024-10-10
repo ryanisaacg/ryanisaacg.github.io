@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> Brick Programming Language: Autumn Status and Roadmap </title>
+<title>Brick Programming Language: Autumn Status and Roadmap</title>
 <meta property="og:title" content="Brick Programming Language: Autumn Status and Roadmap">
 
-<meta name="description" content="Brick is a hobby programming language I’ve been working on for around a year. I previously blogged a little about my goals, but you don’t need to read that post to understand this one.">
-<meta property="og:description" content="Brick is a hobby programming language I’ve been working on for around a year. I previously blogged a little about my goals, but you don’t need to read that post to understand this one.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> Brick Programming Language: Autumn Status and Roadmap </h1>
-      <small>
-        11 Sep  2024
-      </small>
-    </header>
-    <article>
-      <p><a href="https://github.com/ryanisaacg/brick">Brick</a> is a hobby programming language I’ve been working on for around a year. I previously <a href="programming-language-for-fun">blogged a little about my goals</a>, but you don’t need to read that post to understand this one.</p>
+      <h1>Brick Programming Language: Autumn Status and Roadmap</h1>
+      <small>11 Sep  2024</small>
+    
+</header>
+
+
+
+    <article><p><a href="https://github.com/ryanisaacg/brick">Brick</a> is a hobby programming language I’ve been working on for around a year. I previously <a href="programming-language-for-fun">blogged a little about my goals</a>, but you don’t need to read that post to understand this one.</p>
 <p>Until now, most of my work on Brick has been catching up to my initial plan. I stole from languages like Rust, Zig, Austral, or Go; those languages allowed me to understand the tradeoffs of my decisions before I committed to them. For about a year I was in pure implementation mode, rarely making design decisions of any significance. Now I’m shifting into a slightly more exploratory mode as I try to dial in what programming in Brick should feel like.</p>
 <p>When asked about the design of Brick, I usually say something like “a simpler Rust” or “Rust meets Go”. People often assume this means I’m jettisoning the borrow checker and move semantics in favor of a garbage collector, and then I have to explain that’s the opposite of my goal. Rust has a better safety story than imperative, garbage-collected languages like Python or Java: it defines away the “spooky action at a distance” of aliased, mutable pointers. It does this while keeping the imperative programming model, unlike Clojure or Haskell which adopt a model of functional, immutable programming. I’d like to keep that safety story and not introduce any spooky action at a distance to Brick.</p>
 <p>Where I want to differ from Rust is threefold: references, polymorphism, and auto-cloned collections.</p>
@@ -50,7 +51,10 @@
 </li>
 </ol>
 </section>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

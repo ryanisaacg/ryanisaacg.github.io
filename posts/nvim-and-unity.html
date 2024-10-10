@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> Using Neovim with Unity </title>
+<title>Using Neovim with Unity</title>
 <meta property="og:title" content="Using Neovim with Unity">
 
-<meta name="description" content="In the last few years I’ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor’s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.">
-<meta property="og:description" content="In the last few years I’ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor’s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,24 +20,24 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> Using Neovim with Unity </h1>
-      <small>
-        26 Apr  2023
-      </small>
-    </header>
-    <article>
-      <p>In the last few years I’ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor’s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.</p>
+      <h1>Using Neovim with Unity</h1>
+      <small>26 Apr  2023</small>
+    
+</header>
+
+
+
+    <article><p>In the last few years I’ve switched fully to Neovim, and embraced the lua scripting and built-in LSP support. Most development I do these days tends to be TypeScript or Rust, and my editor’s integration with tooling like prettier, rustfmt, rust-analyzer, and tsc is great! Having recently started doing some work in Unity, however, I discovered that I would have to get my hands dirty for a good C# experience.</p>
 <p>I started off by searching around for other people’s experience using Neovim with Unity, and found <a href="https://chrislabarge.com/posts/neovim-unity-engine/">a decent blog post</a> that walked me through the basic steps:</p>
 <ol>
 <li>Configure Unity to send a message over a Unix socket to neovim when you want to open a file</li>
@@ -106,7 +107,10 @@
 <span class="token punctuation">)</span></code></pre>
 <p>Upgrading Neovim, however, introduced a new problem. It seems like omnisharp-roslyn reports invalid tokens for the LSP semantic-highlighting feature, which trips up nvim. There’s a hacky workaround I’m using (that I found <a href="https://nicolaiarocci.com/making-csharp-and-omnisharp-play-well-with-neovim/">in a blog post</a>) which manually fixes the invalid tokens; hopefully omnisharp fixes the issue upstream soon.</p>
 <p>That’s essentially where I’m leaving things for now: there are some hacks underlying my setup, but day-to-day everything works fine. I have a newfound appreciation for web dev tooling and the Rust project; this was definitely the most fiddly thing I’ve done with my editor in quite some time.</p>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

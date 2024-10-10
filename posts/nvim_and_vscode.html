@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="/post.css">
+<head>
     
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> Neovim and VSCode </title>
+<title>Neovim and VSCode</title>
 <meta property="og:title" content="Neovim and VSCode">
 
-<meta name="description" content="Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After some involved setup, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?">
-<meta property="og:description" content="Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After some involved setup, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?">
+<meta name="description">
+<meta property="og:description">
 
 <meta name="theme-color" content="#7d7fff">
 
@@ -19,29 +20,32 @@
   </head>
   <body>
     <header>
-        <div class="page-header">
-        
-            <strong>ryan.isaac.g</strong>
-        
-        <div class="header-links">
-            <a href="/">/home</a>
-            <a href="/posts">/all posts</a>
-        </div>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
     </div>
-
+  </div>
+  
       
-      <h1> Neovim and VSCode </h1>
-      <small>
-        30 Mar  2024
-      </small>
-    </header>
-    <article>
-      <p>Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After <a href="TODO">some involved setup</a>, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?</p>
+      <h1>Neovim and VSCode</h1>
+      <small>30 Mar  2024</small>
+    
+</header>
+
+
+
+    <article><p>Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After <a href="TODO">some involved setup</a>, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?</p>
 <p>Most text editors targeted towards programmer types have some kind of vim mode. Despite being an avid vim user, I never enable it. The emulation is never exact enough; invariably I’ll try something like a basic macro and completely fumble as I hit a missing feature or three. At that point I’d rather just use the basic EMacs shortcuts available in all macOS input fields. Previously I had tried a Vim plugin for VSCode and had the same disappointing experience. Neovim changed the game in Vim modes, though. The re-architecture of the project apparently allows Neovim to be fully embedded within other applications. Instead of relying on janky emulations, I can get the real thing.</p>
 <p>I installed <a href="https://github.com/vscode-neovim/vscode-neovim">the VSCode plugin</a> and had to do some fiddling to get it recognize my <code>nvim</code> binary (which I’ve unfortunately now forgotten). Then I had to <a href="https://github.com/ryanisaacg/dotfiles/commit/ef085b3b9b4749c95327fedf3f78ad6e25ac3020">make a few VSCode-specific tweaks to my config</a>. I skipped loading basically all my usual plugins. LSP, syntax highlighting, git change markers: all these sorts of things are built into VSCode (and won’t work with the Neovim ⭤  VSCode bridge anyways). I also had to re-do all my custom keybindings (for example, opening a fuzzy finder when I hit <code>t</code> in normal mode) to bind to VSCode actions instead. <code>vscode-neovim</code> is a handy plugin that allows me to do that very easily.</p>
 <p>For the past few months I’ve been using this setup as a daily driver. The C# autocomplete integration works out of the box, unlike in my previous Neovim setup (because it’s a proprietary Microsoft extension &gt;_&gt;). Go-to-definition and find-references and all that are working fine. All around it’s a <em>much</em> better C# editing experience. For the other projects in our monorepo (some Terraform and Typescript, mostly), things work fine. I would prefer to be back in my natural habitat (nvim + tmux + fish) but it’s more convenient to have the whole monorepo open in VSCode than to jump back and forth between environments.</p>
 <p>So on one hand, I did sorta give up on having my neovim + Unity setup from my last post. But on the other, I maybe have the best of both worlds?</p>
+</article>
+  
 
-    </article>
-  </body>
+
+
+</body>
 </html>

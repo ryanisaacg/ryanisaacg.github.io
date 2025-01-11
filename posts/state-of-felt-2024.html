@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    
+    
+    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>What I got done on Felt in 2024</title>
+<meta property="og:title" content="What I got done on Felt in 2024">
+
+<meta name="description" content="Over the past year-and-change I’ve been working on a hobby programming language called Felt. Felt is a language designed for arts and crafts: it’s for small programs (either practical or fun) that don’t need industrial strength. I last wrote about it during my batch at the Recurse Center, and that blog post remains a good overview of the general vibe and goals of the project.">
+<meta property="og:description" content="Over the past year-and-change I’ve been working on a hobby programming language called Felt. Felt is a language designed for arts and crafts: it’s for small programs (either practical or fun) that don’t need industrial strength. I last wrote about it during my batch at the Recurse Center, and that blog post remains a good overview of the general vibe and goals of the project.">
+
+<meta name="theme-color" content="#7d7fff">
+
+
+  </head>
+  <body>
+    <header>
+  <div class="page-header">
+    
+    <strong>ryan.isaac.g</strong>
+    <div class="header-links">
+      <a href="/">/home</a>
+      <a href="/posts">/all posts</a>
+    </div>
+  </div>
+  
+      <aside class="callout-note">
+        <p>
+          This post is a draft. Please don't share it with anyone else; if I didn't send you the link directly, you're probably not supposed to be seeing it!
+        </p>
+      </aside>
+      <h1>What I got done on Felt in 2024</h1>
+      <small>20 Jan  2024</small>
+    
+</header>
+
+
+
+    <article><p>Over the past year-and-change I’ve been working on a hobby programming language called Felt<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup>. Felt is a language designed for arts and crafts: it’s for small programs (either practical or fun) that don’t need industrial strength. I <a href="programming-language-for-fun">last wrote about it</a> during my batch at the <a href="https://www.recurse.com/">Recurse Center</a>, and that blog post remains a good overview of the general vibe and goals of the project.</p>
+<p>I think of Felt as bringing a systems-programming mindset to a high-level language. I want to take the core innovation of Rust (state may either be mutable or aliased but never both) and package it into a simpler language that’s easier to learn, write, and iterate on. The prototypical Felt program is a web game or toy<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>, something where memory locality matters but a reference counter won’t be performance-crushing.</p>
+<h2>What’s There</h2>
+<ul>
+<li>A non-optimizing, whole-program compiler which outputs WASM<sup class="footnote-ref"><a href="#fn3" id="fnref3" aria-describedby="footnotes-label" role="doc-noteref">[3]</a></sup>
+<ul>
+<li>There’s a basic type-checker (though the type system is also basic so it’s fine)</li>
+<li>There’s a borrow-checker, which is currently Good Enough™️. Borrows are second-class and limited to the scope they’re created, so checking them isn’t too hard</li>
+<li>Polymorphism is currently provided through Go-like interfaces, available on both structs and unions</li>
+</ul>
+</li>
+<li>A basic LSP (that doesn’t understand imports at all, which is a major stumbling point)</li>
+<li>A treesitter grammar</li>
+</ul>
+<h2>What’s Planned</h2>
+<ul>
+<li>Generics (either monomorphic or not). This is a big goal for 2025</li>
+<li>Containers. There are growable arrays and reference counted boxes provided as compiler built-ins. There are also dictionaries, but they only support integer keys because I’m not sure how to allow custom types without a ton of compiler machinery. My plan is to add enough to the language that containers can be implemented as part of a standard library, which will solve this problem</li>
+<li>Packages</li>
+<li>Function references</li>
+<li>Iteration</li>
+<li>Coroutines</li>
+</ul>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>It’s gone through some identity crises, but for now it’s going by Felt. Previously I was calling it Brick, but that didn’t convey the vibe I was going for. <a href="#fnref1" aria-label="Back to reference 1" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Which is a big reason why I compile to WASM <a href="#fnref2" aria-label="Back to reference 2" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Much of the compiler is written from scratch without consulting prior art. This is part of the fun for me, but I’m sure it means I’ve made suboptimal decisions. <a href="#fnref3" aria-label="Back to reference 3" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</article>
+  
+
+
+
+</body>
+</html>

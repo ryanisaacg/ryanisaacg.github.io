@@ -1,43 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    
-    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
-<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    <head>
+        <link rel="stylesheet" href="/post.css" />
+        
+        <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Quick Advice to New Rustaceans</title>
+<title> Quick Advice to New Rustaceans </title>
 <meta property="og:title" content="Quick Advice to New Rustaceans">
 
-<meta name="description" content="Let’s say you’re new to Rust. Maybe you’ve read TRPL and worked through Rustlings or YARR. You can write enough Rust to solve problems, and can fix compiler errors when they crop up. Now you come to a more nebulous question: how do you write good Rust? And how do you write Rust that won’t require mortal combat with the borrow checker?">
-<meta property="og:description" content="Let’s say you’re new to Rust. Maybe you’ve read TRPL and worked through Rustlings or YARR. You can write enough Rust to solve problems, and can fix compiler errors when they crop up. Now you come to a more nebulous question: how do you write good Rust? And how do you write Rust that won’t require mortal combat with the borrow checker?">
+<meta name="description" content="true">
+<meta property="og:description" content="true">
 
 <meta name="theme-color" content="#7d7fff">
 
 
-  </head>
-  <body>
-    <header>
-  <div class="page-header">
-    
-    <strong>ryan.isaac.g</strong>
+    </head>
+    <body>
+        <header>
+            <div class="page-header">
+    <strong>Ryan Goldstein</strong>
     <div class="header-links">
-      <a href="/">/home</a>
-      <a href="/posts">/all posts</a>
+        <a href="/">/home</a>
+        <a href="/posts">/all posts</a>
     </div>
-  </div>
-  
-      
-      <h1>Quick Advice to New Rustaceans</h1>
-      <small>11 Jan  2025</small>
-    
-</header>
+</div>
 
+            
 
-
-    <article><p>Let’s say you’re new to Rust. Maybe you’ve read <a href="https://doc.rust-lang.org/book/">TRPL</a> and worked through <a href="https://github.com/rust-lang/rustlings">Rustlings</a> or <a href="https://yarr.fyi/">YARR</a>. You can write enough Rust to solve problems, and can fix compiler errors when they crop up. Now you come to a more nebulous question: how do you write <em>good</em> Rust? And how do you write Rust that won’t require mortal combat with the borrow checker?</p>
+            <h1> Quick Advice to New Rustaceans </h1>
+            <small> 11 Jan  2025 </small>
+        </header>
+        <article>
+            <p>Let’s say you’re new to Rust. Maybe you’ve read <a href="https://doc.rust-lang.org/book/">TRPL</a> and worked through <a href="https://github.com/rust-lang/rustlings">Rustlings</a> or <a href="https://yarr.fyi/">YARR</a>. You can write enough Rust to solve problems, and can fix compiler errors when they crop up. Now you come to a more nebulous question: how do you write <em>good</em> Rust? And how do you write Rust that won’t require mortal combat with the borrow checker?</p>
 <p>Start by letting go of a no-compromises approach to performance.</p>
 <h2>Don’t Be Afraid to Clone</h2>
 <p>Because Rust makes cloning explicit, I get the feeling that a lot of newcomers find it stressful. How expensive of an operation is a <code>.clone()</code>? Unfortunately, the answer can range from “very expensive” to “very cheap.” Reference-counted structures like an <code>Arc</code> or a channel can be cloned very cheaply. Generally strings like usernames, filenames, or paths are small, and therefore cheap. In these cases clone first and think later.</p>
@@ -54,10 +50,8 @@
 <li><a href="https://rust-lang.github.io/api-guidelines/flexibility.html#caller-decides-where-to-copy-and-place-data-c-caller-control">Don’t take arguments by reference to clone them; let the caller do it</a></li>
 <li><a href="https://rust-lang.github.io/api-guidelines/future-proofing.html">Take a look at the future-proofing section, if your API has customers you don’t control</a></li>
 </ul>
-</article>
-  
 
-
-
-</body>
+        </article>
+    </body>
 </html>
+

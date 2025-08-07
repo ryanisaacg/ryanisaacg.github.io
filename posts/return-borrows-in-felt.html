@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/post.css" />
+        
+        <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> Return-Position Borrows in Felt </title>
+<meta property="og:title" content="Return-Position Borrows in Felt">
+
+<meta name="description" content="true">
+<meta property="og:description" content="true">
+
+<meta name="theme-color" content="#7d7fff">
+
+
+    </head>
+    <body>
+        <header>
+            <div class="page-header">
+    <strong>Ryan Goldstein</strong>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/posts">/all posts</a>
+    </div>
+</div>
+
+            
+
+            <h1> Return-Position Borrows in Felt </h1>
+            <small> 16 Jun  2025 </small>
+        </header>
+        <article>
+            <h2>Felt Context</h2>
+<p><em>Feel free to skip this section if you’ve been following my little PL project.</em></p>
+<p>I’ve been working on a programming language called “Felt”<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup> for the past couple years. I <a href="../programming-language-for-fun">last wrote about it</a> during my batch at the <a href="https://www.recurse.com/">Recurse Center</a>, and that blog post remains a good overview of the general vibe of the project.</p>
+<p>One of my goals with Felt is to create a simple programming language that enforces “shared XOR mutable”. That is, at no point in a valid program can there be a <em>shared</em> reference and a <em>mutable</em> reference to the same value, at the same time. I think that “shared XOR mutable” is a hugely beneficial innovation in Rust<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>, and has broad benefits beyond maximum-performance systems programming.</p>
+<p>Sort of as a proof of that theory, I’ve set out to make a simple, imperative, high-level language that gives similar guarantees around aliasing. I’m pretty serious about keeping things simple—partially because I have to implement whatever I design. This whole project is for fun, so designing something super complex means I have to implement something super complex… No thanks.</p>
+<p>Plus, I feel like there might be a niche for a PL shaped like Go, but designed with niceties like sum types.</p>
+<h2>Basics of Borrowing in Felt</h2>
+<p><em>If you’re familiar with Rust, you can mentally replace Felt’s <code>ref</code> keyword with <code>&amp;</code> and its <code>unique</code> keyword with <code>&amp;mut</code> and skip this section.</em></p>
+<p>Felt’s references are pointers that encode whether they are shared (copyable and immutable) or unique (non-copyable and mutable). They also must always point to a valid object, which may not be changed, destroyed, or moved while there are any active references. The latter obviously has some memory safety benefits, but it’s the former that is more interesting to me. It eliminates a class of annoying, spooky-action-at-a-distance bugs like iterator invalidation<sup class="footnote-ref"><a href="#fn3" id="fnref3" aria-describedby="footnotes-label" role="doc-noteref">[3]</a></sup>, concurrent race conditions, and unknown writers clobbering data in deeply-nested function calls.</p>
+<p>Taking a reference (or “borrowing”) looks like this:</p>
+<pre><code>let x = 5;
+do_something_immutable(ref x);
+do_something_mutable(unique x);
+</code></pre>
+<p>And produces types with names like <code>unique i32</code> and <code>ref i32</code>.</p>
+<h2>Borrow Limitations</h2>
+<p>My original design for borrowed references to values was very constrained: borrows exist only in the syntactical scope where they’re created. There’s no way to assign a borrowed value to a new name. That way the entire problem of borrow-lifetime-checking is essentially avoided: it’s impossible to define a borrow that lives longer than the thing it’s borrowing, because references may only ever have a narrower scope than what they are borrowing. I implemented this borrow checker, wrote a couple tests, and saw that it worked. Life is good.</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> x <span class="token operator">=</span> list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">{</span>
+    borrow y <span class="token operator">=</span> unique x<span class="token punctuation">;</span>
+    <span class="token comment">// y can't possible outlive x - it's stuck inside this scope</span>
+    <span class="token comment">// its value can't be re-assigned to other borrows, and it</span>
+    <span class="token comment">// cannot change its value.</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Life is good… unless you want to return a reference to something. At first I said to myself “bleh, you just can’t return references! Write your program a different way.” This lets you get pretty far. I wrote a tiny game as a demo at RC, pretty much entirely in Felt! At that point my language design seemed validated.</p>
+<p>Then I decided I wanted to write a collection in Felt. It’s a pretty simple one, that I tend to implement each time I write a game: a spatial map of tiles for a game world. It’s indexed by world-space coordinates and returns the tile at that location, backed by a one-dimensional array. Nice and efficient. I wrote it in Felt:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">union</span> <span class="token type-definition class-name">Tile</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Empty</span><span class="token punctuation">,</span>
+    <span class="token class-name">Block</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> <span class="token type-definition class-name">Tilemap</span><span class="token punctuation">:</span> <span class="token class-name">Resource</span> <span class="token punctuation">{</span>
+    tiles<span class="token punctuation">:</span> list<span class="token punctuation">[</span><span class="token class-name">Tile</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    width<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span>
+    height<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span>
+    tile_size<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">index</span><span class="token punctuation">(</span><span class="token keyword">ref</span> <span class="token keyword">self</span><span class="token punctuation">,</span> x<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">i32</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> tile_x <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">truncate</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">self</span><span class="token punctuation">.</span>tile_size<span class="token punctuation">;</span>
+        <span class="token keyword">let</span> tile_y <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">truncate</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">self</span><span class="token punctuation">.</span>tile_size<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> tile_x <span class="token operator">*</span> <span class="token keyword">self</span><span class="token punctuation">.</span>height <span class="token operator">+</span> tile_y<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">at</span><span class="token punctuation">(</span><span class="token keyword">ref</span> <span class="token keyword">self</span><span class="token punctuation">,</span> x<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name">Tile</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> tile_x <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">truncate</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">self</span><span class="token punctuation">.</span>tile_size<span class="token punctuation">;</span>
+        <span class="token keyword">let</span> tile_y <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">truncate</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">self</span><span class="token punctuation">.</span>tile_size<span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> x <span class="token operator">&lt;</span> <span class="token number">0.0</span> or y <span class="token operator">&lt;</span> <span class="token number">0.0</span> or tile_x <span class="token operator">>=</span> <span class="token keyword">self</span><span class="token punctuation">.</span>width or tile_y <span class="token operator">>=</span> <span class="token keyword">self</span><span class="token punctuation">.</span>height <span class="token punctuation">{</span>
+            <span class="token class-name">Tile</span><span class="token punctuation">.</span><span class="token class-name">Block</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>tiles<span class="token punctuation">[</span>tile_x <span class="token operator">*</span> <span class="token keyword">self</span><span class="token punctuation">.</span>height <span class="token operator">+</span> tile_y<span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fn</span> <span class="token function-definition function">free</span><span class="token punctuation">(</span><span class="token keyword">ref</span> <span class="token keyword">self</span><span class="token punctuation">,</span> x<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">bool</span> <span class="token punctuation">{</span>
+        case <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">Empty</span> <span class="token operator">=></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+            <span class="token class-name">Block</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Then I thought “it would be nice to take a mutable reference to a <code>Tile</code>, so I can both get the value and set it without having to round-trip through the <code>Tilemap</code>.” Ah, crap. That requires the ability to return references. Maybe it’s not sustainable to have the collections in the language hard-coded in the compiler after all.</p>
+<h2>Returning References from Functions</h2>
+<p>I sat on the problem for the next two and a half months. A couple times I doodled ideas on the back of a bill or hopefully-unimportant tax document. Various solutions came to mind with various issues, including “implement full Rust-style borrow checking” (which I know I don’t want to do) or “give up” (which I also don’t really wanna do).</p>
+<p>The solution ended up requiring 20% of the effort to get 80% of what I want, which is sort of the Felt project’s motto. You are now permitted to return a reference from a function—as long as it only borrows from the function’s parameters. References returned from a function are assumed to be constrained by the lifetime of the shortest-lived parameter.</p>
+<p>We know all parameters must outlive the current function (because their lifetime originates in the caller). There’s still no way to return a reference that borrows a local value, because those values will go out of scope when the function returns. Without any kind of annotation syntax to pick which parameters constrain the lifetime of the return value, we’re forced to assume they all do. Whichever argument has the shortest lifetime will determine the lifetime of the returned value.</p>
+<p>This is now legal:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">ref_max</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token keyword">i32</span><span class="token punctuation">,</span> y<span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token keyword">i32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token keyword">i32</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token operator">*</span>x <span class="token operator">></span> <span class="token operator">*</span>y <span class="token punctuation">{</span>
+        x
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        y
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+borrow c <span class="token operator">=</span> <span class="token function">ref_max</span><span class="token punctuation">(</span><span class="token keyword">ref</span> a<span class="token punctuation">,</span> <span class="token keyword">ref</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">*</span>c</code></pre>
+<p>because the lifetime of <code>ref_max</code>’s return value is constrained to be the lifetime of its parameters (in this case, <code>a</code> and <code>b</code>).</p>
+<p>but unfortunately this is not:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">lookup</span><span class="token punctuation">(</span>dict<span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token class-name">Dictionary</span><span class="token punctuation">,</span> key<span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token class-name">Key</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token class-name">Value</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... implementation ... */</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">mutate</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> unique <span class="token class-name">Key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... implementation ... */</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">examine_value</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> <span class="token keyword">ref</span> <span class="token class-name">Value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... implementation ... */</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> dict <span class="token operator">=</span> <span class="token class-name">Dictionary</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> key <span class="token operator">=</span> <span class="token class-name">Key</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+borrow value <span class="token operator">=</span> <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token keyword">ref</span> dict<span class="token punctuation">,</span> <span class="token keyword">ref</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">mutate</span><span class="token punctuation">(</span>unique key<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// mutably borrowing key invalidates</span>
+                        <span class="token comment">// all prior references,</span>
+                        <span class="token comment">// including `value`</span>
+
+<span class="token function">examine_value</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// this is now a compile error</span></code></pre>
+<p><code>value</code>’s lifetime is the the intersection of <code>dict</code> and <code>key</code>. The immutable borrow of <code>key</code> must end on the next line, when <code>key</code> is mutably borrowed. Because a value can never be mutable and immutably borrowed at the same time, the previous immutable borrow to <code>key</code> is invalidated at this point which transitively invalidates <code>value</code>. Thus attempting to use <code>value</code> on the next line is a compiler error.</p>
+<p>The latter case isn’t a hard limitation; I could introduce something like Rust’s lifetime annotations to solve it. It’s definitely overly strict. In the above example, it’s almost certainly safe to mutate <code>value</code> while observing <code>key</code>, but we can’t express that to the compiler. Maybe I’ll change that at some point, but for now I’m happy with my “barely good enough” solution.</p>
+<h2>The Next Problem: Optional References</h2>
+<p>At some point, I <em>know</em> I’m going to want to express “this function takes either a reference or some null-value” or “this function returns a reference or an error” or something similar. Right now… you super can’t do that. There are two reasons:</p>
+<ol>
+<li>Nullability is a language-level construct that has sorta jank semantics. I’m planning to replace it with Felt’s union mechanism, but I don’t have type parameters yet. (Look out out for that later this year, I hope).</li>
+<li>Including a reference inside another type is expressly forbidden (to make borrow checking easier).</li>
+</ol>
+<p>Even if I introduce some kind of limited lifetime annotation syntax to make that dictionary lookup example work well, it won’t solve problem #2. Currently I don’t know how I’ll solve this. Maybe type parameters will help? That’s the next thing on the docket either way, so maybe look out for a blog post on basic type parameters in a few months.nths.</p>
+<p><em>Thanks to <a href="https://bernsteinbear.com/">Max Bernstein</a> and Nate Lane for quick feedback on a draft of this post.</em></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Which isn’t the first name for the language, and is unlikely to be the last either. <a href="#fnref1" aria-label="Back to reference 1" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>I’m sure that someone with more knowledge of the history could tell me that Rust actually borrowed this from elsewhere, maybe something like Cyclone? But I think we can safely say that the vast majority of programmers who have encountered the idea encountered it from Rust. <a href="#fnref2" aria-label="Back to reference 2" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Iterator invalidation, also called “Concurrent Modification Exception” in Java: Adding or remove items from the collection typically invalidates all its iterators. In C++ using an invalid iterator causes undefined behavior, whereas in Java and C# (and presumably others) it throws an exception. In my experience trying to delete objects from a list you’re iterating is an extremely common game-development mistake. <a href="#fnref3" aria-label="Back to reference 3" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        </article>
+    </body>
+</html>
+

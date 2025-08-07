@@ -1,43 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    
-    <link rel="stylesheet" href="/bundle/9dVZUnXHcI.css">
-<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="RSS feed">
+    <head>
+        <link rel="stylesheet" href="/post.css" />
+        
+        <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle</title>
+<title> A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle </title>
 <meta property="og:title" content="A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle">
 
-<meta name="description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application’s core loop and file loading, respectively.">
-<meta property="og:description" content="Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the State and Asset APIs, for managing your application’s core loop and file loading, respectively.">
+<meta name="description" content="true">
+<meta property="og:description" content="true">
 
 <meta name="theme-color" content="#7d7fff">
 
 
-  </head>
-  <body>
-    <header>
-  <div class="page-header">
-    
-    <strong>ryan.isaac.g</strong>
+    </head>
+    <body>
+        <header>
+            <div class="page-header">
+    <strong>Ryan Goldstein</strong>
     <div class="header-links">
-      <a href="/">/home</a>
-      <a href="/posts">/all posts</a>
+        <a href="/">/home</a>
+        <a href="/posts">/all posts</a>
     </div>
-  </div>
-  
-      
-      <h1>A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle</h1>
-      <small>27 Dec  2019</small>
-    
-</header>
+</div>
 
+            
 
-
-    <article><p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application’s core loop and file loading, respectively.</p>
+            <h1> A Quicksilver Chanukah, Day 6: Quicksilver's New Lifecycle </h1>
+            <small> 27 Dec  2019 </small>
+        </header>
+        <article>
+            <p>Quicksilver has always had some major API compromises to deliver on its core promise: write a game once, and it targets desktop and the web with no changes. The two ugliest compromises are the <code>State</code> and <code>Asset</code> APIs, for managing your application’s core loop and file loading, respectively.</p>
 <p><code>State</code> is a trait that Quicksilver uses to manage when your code runs. It requires you define the <code>new</code> method, as well as <code>draw</code>. Optionally you can define <code>update</code>, for a fixed tick rate function, and <code>event</code> for handling individual input events. This type then gets passed as a generic parameter to the <code>run</code> function, which handles instantiating it and running the event loop. The downside is that the user gets very little say in how their code is arranged, but the benefit is that your code runs on web without blocking the main thread (which will lock up the tab.)</p>
 <p><code>Asset</code> is a wrapper around <code>Future</code>, which is an asychronous action in Rust. The point of the <code>Asset</code> API was to avoid users having to manually poll their futures to check if they’re ready: just use an <code>Asset</code> and its execute method, which will run a closure if its <code>Future</code> is completed. Unfortunately, this turns out not to be very ergonomic. <code>Asset</code> is a pain to use, and a point of confusion for most users. There’s no way around asychronous file loading on the web, but new developments in Rust have made much better solutions possible.</p>
 <p>Readers of previous posts may notice that these two API problems are addressed by two of the crates I announced this week: <code>blinds</code> to address <code>State</code> and <code>platter</code> to address <code>Asset</code>. Where before, you might write something like:</p>
@@ -106,10 +102,8 @@
 <li><a href="../quicksilver-chanukah-2019-day-7">Changes to the Quicksilver graphics API</a></li>
 <li><a href="../quicksilver-chanukah-2019-day-8">An overview of the work on web support this year</a></li>
 </ol>
-</article>
-  
 
-
-
-</body>
+        </article>
+    </body>
 </html>
+

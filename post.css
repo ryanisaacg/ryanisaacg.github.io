@@ -1,3 +1,4 @@
+
 @media (prefers-color-scheme: light) {
   :root {
     --primary-text: #000;
@@ -129,7 +130,6 @@ aside p:last-child {
   margin-bottom: 0px;
 }
 
-
 blockquote {
   padding: 4px 0px;
   font-style: italic;
@@ -139,8 +139,7 @@ blockquote {
     }
 }
 
-/* Header */
-
+/* PAGE HEADER */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -155,6 +154,44 @@ blockquote {
   margin-left: 1em;
 }
 
+
+body {
+    font-size: 19px;
+}
+
+h1 {
+    margin-bottom: 0px;
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 27px;
+    margin-bottom: 6px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+header {
+    margin-bottom: 16px;
+}
+
+p, aside {
+    margin-top: 2px;
+    margin-bottom: 16px;
+}
+
+ul, ol {
+    margin-top: 2px;
+    margin-bottom: 8px;
+}
+
+.footnotes-sep {
+    max-width: calc(var(--max-width) + 16px);
+}
+
+/* SYNTAX HIGHLIGHTING VIA PRISM */
 pre[class*="language-"] {
 	overflow: auto;
 }
@@ -224,39 +261,3 @@ pre[class*="language-"] {
 }
 
 
-
-body {
-    font-size: 19px;
-}
-
-h1 {
-    margin-bottom: 0px;
-    font-size: 32px;
-}
-
-h2 {
-    font-size: 27px;
-    margin-bottom: 6px;
-}
-
-h3 {
-    font-size: 24px;
-}
-
-header {
-    margin-bottom: 16px;
-}
-
-p, aside {
-    margin-top: 2px;
-    margin-bottom: 16px;
-}
-
-ul, ol {
-    margin-top: 2px;
-    margin-bottom: 8px;
-}
-
-.footnotes-sep {
-  max-width: calc(var(--max-width) + 16px);
-}

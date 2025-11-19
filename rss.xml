@@ -4,7 +4,7 @@
   <subtitle></subtitle>
   <link href="https://rygoldstein.com/rss.xml" rel="self"/>
   <link href="https://rygoldstein.com"/>
-  <updated>2025-08-26T23:51:49Z</updated>
+  <updated>2025-11-19T02:01:32Z</updated>
   <id>https://rygoldstein.com</id>
   <author>
     <name>Ryan</name>
@@ -144,6 +144,7 @@
     </entry>
   
   
+  
     <entry>
       <title>Return-Position Borrows in Felt</title>
       <link href="https://rygoldstein.com/posts/return-borrows-in-felt.html"/>
@@ -151,7 +152,7 @@
       <id>https://rygoldstein.com/posts/return-borrows-in-felt.html</id>
       <content xml:lang="en" type="html">&lt;h2&gt;Felt Context&lt;/h2&gt;
 &lt;p&gt;&lt;em&gt;Feel free to skip this section if you’ve been following my little PL project.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;I’ve been working on a programming language called “Felt”&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/return-borrows-in-felt.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; for the past couple years. I &lt;a href=&quot;https://rygoldstein.com/programming-language-for-fun&quot;&gt;last wrote about it&lt;/a&gt; during my batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;, and that blog post remains a good overview of the general vibe of the project.&lt;/p&gt;
+&lt;p&gt;I’ve been working on a programming language called “Felt”&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/return-borrows-in-felt.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; for the past couple years. I &lt;a href=&quot;https://rygoldstein.com/posts/programming-language-for-fun&quot;&gt;last wrote about it&lt;/a&gt; during my batch at the &lt;a href=&quot;https://www.recurse.com/&quot;&gt;Recurse Center&lt;/a&gt;, and that blog post remains a good overview of the general vibe of the project.&lt;/p&gt;
 &lt;p&gt;One of my goals with Felt is to create a simple programming language that enforces “shared XOR mutable”. That is, at no point in a valid program can there be a &lt;em&gt;shared&lt;/em&gt; reference and a &lt;em&gt;mutable&lt;/em&gt; reference to the same value, at the same time. I think that “shared XOR mutable” is a hugely beneficial innovation in Rust&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/return-borrows-in-felt.html#fn2&quot; id=&quot;fnref2&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;, and has broad benefits beyond maximum-performance systems programming.&lt;/p&gt;
 &lt;p&gt;Sort of as a proof of that theory, I’ve set out to make a simple, imperative, high-level language that gives similar guarantees around aliasing. I’m pretty serious about keeping things simple—partially because I have to implement whatever I design. This whole project is for fun, so designing something super complex means I have to implement something super complex… No thanks.&lt;/p&gt;
 &lt;p&gt;Plus, I feel like there might be a niche for a PL shaped like Go, but designed with niceties like sum types.&lt;/p&gt;
@@ -270,6 +271,7 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;/section&gt;
 </content>
     </entry>
+  
   
   
     <entry>
@@ -412,9 +414,9 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;p&gt;I made two changes to how &lt;a href=&quot;https://github.com/ryanisaacg/brick&quot;&gt;Brick&lt;/a&gt;’s runtime works:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Instead of requiring it to be built manually, I set up a Rust build script so that the runtime will be automatically rebuilt.&lt;/li&gt;
-&lt;li&gt;I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.&lt;/li&gt;
+&lt;li&gt;I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.
+With these two changes, I can now link the runtime module directly to the compiled binary with &lt;a href=&quot;https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module&quot;&gt;wasmtime’s Linker interface&lt;/a&gt;. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;With these two changes, I can now link the runtime module directly to the compiled binary with &lt;a href=&quot;https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module&quot;&gt;wasmtime’s Linker interface&lt;/a&gt;. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 </content>
@@ -427,8 +429,8 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
       <updated>2024-08-19T00:00:00Z</updated>
       <id>https://rygoldstein.com/posts/wasmtime-dl.html</id>
       <content xml:lang="en" type="html">&lt;p&gt;In &lt;a href=&quot;https://rygoldstein.com/posts/programming-language-for-fun&quot;&gt;my programming language&lt;/a&gt;, currently codenamed Brick, I want to allow developers to pull in platform-native libraries written in other languages. Brick compiles to WebAssembly (wasm), and wasm is totally sandboxed by design. Without functions provided by the environment (“imports” in wasm lingo), a wasm module can have no side effects when run. I want Brick programs to have plenty of side effects, like making web requests or drawing graphics to the screen.&lt;/p&gt;
-&lt;aside class=&quot;callout callout-info&quot;&gt;
-&lt;h3 class=&quot;callout-title&quot;&gt;&lt;span class=&quot;callout-symbol&quot;&gt;ⓘ&lt;/span&gt;What does a wasm import look like?&lt;/h3&gt;&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!info] What does a wasm import look like?&lt;/p&gt;
 &lt;p&gt;Let’s use Rust as an example. This is how we would define an external&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/wasmtime-dl.html#fn1&quot; id=&quot;fnref1&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; function:&lt;/p&gt;
 &lt;pre class=&quot;language-rust&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;token function-definition function&quot;&gt;do_side_effect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;arg1&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;i32&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; arg2&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;f32&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -437,7 +439,7 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;p&gt;Here’s the corresponding wasm, expressed in the Web Assembly Text (WAT) format:&lt;/p&gt;
 &lt;pre class=&quot;language-lisp&quot;&gt;&lt;code class=&quot;language-lisp&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;env&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;do_side_effect&quot;&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;func&lt;/span&gt; $do_side_effect &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;param&lt;/span&gt; i32 f32&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/aside&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;On desktop I’m running Brick programs via &lt;a href=&quot;https://github.com/bytecodealliance/wasmtime&quot;&gt;&lt;code&gt;wasmtime&lt;/code&gt;&lt;/a&gt;, a wasm runtime maintained by the folks behind the wasm spec. It’s written in Rust and exposes a Rust API, which allows us to attach Rust functions as a wasm module’s imports. This is great, because it allows us to include external libraries like &lt;code&gt;tokio&lt;/code&gt; for web requests or &lt;code&gt;macroquad&lt;/code&gt; for graphics. The linking API looks like this:&lt;/p&gt;
 &lt;pre class=&quot;language-rust&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;linker&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;func_wrap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
     &lt;span class=&quot;token string&quot;&gt;&quot;bindings&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// the name of the WASM module being imported&lt;/span&gt;
@@ -448,10 +450,11 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The only problem is that each of these bindings need to be written by hand in our Rust program. There’s no way to introduce new bindings at runtime, which makes it hard for Brick packages to use any external code I didn’t plan for.&lt;/p&gt;
 &lt;p&gt;Here’s the goal: link our wasm binary directly with a dynamic library, without needing to hand-write these bindings.&lt;/p&gt;
-&lt;aside class=&quot;callout callout-info&quot;&gt;
-&lt;h3 class=&quot;callout-title&quot;&gt;&lt;span class=&quot;callout-symbol&quot;&gt;ⓘ&lt;/span&gt;What is linking?&lt;/h3&gt;&lt;p&gt;Linking is the process by which different binary objects form one application on an operating system. There are two types of linking: dynamic and static. Dynamic linking means that our application knows what libraries it needs to run, and functions it needs from those libraries, but it doesn’t store those functions directly. Instead the program asks the operating system for the library each time it runs&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/wasmtime-dl.html#fn2&quot; id=&quot;fnref2&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;. Static linking bundles a library’s contents directly into the binary, and is favored by Rust and Go. It allows the final result to be easily portable.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!info] What is linking?
+Linking is the process by which different binary objects form one application on an operating system. There are two types of linking: dynamic and static. Dynamic linking means that our application knows what libraries it needs to run, and functions it needs from those libraries, but it doesn’t store those functions directly. Instead the program asks the operating system for the library each time it runs&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://rygoldstein.com/posts/wasmtime-dl.html#fn2&quot; id=&quot;fnref2&quot; aria-describedby=&quot;footnotes-label&quot; role=&quot;doc-noteref&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;. Static linking bundles a library’s contents directly into the binary, and is favored by Rust and Go. It allows the final result to be easily portable.&lt;/p&gt;
 &lt;p&gt;In this case, because I want to include unforeseen-at-compile-time code, I need to use dynamic linking.&lt;/p&gt;
-&lt;/aside&gt;
+&lt;/blockquote&gt;
 &lt;h2&gt;High Crime: Break down the sandbox&lt;/h2&gt;
 &lt;p&gt;Enter &lt;code&gt;wasmtime-dl&lt;/code&gt;, a very bad idea I had. My goal was to break a hole in the side of the sandbox, and allow Brick packages to link to arbitrary dynamic libraries.&lt;/p&gt;
 &lt;p&gt;The first design I sketched out was simple: given a set of function definitions, link the dynamic library with wasmtime. I had no idea how to accomplish this, but I’m in batch at the Recurse Center! It was time to work at the edge of my abilities.&lt;/p&gt;
@@ -502,10 +505,11 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;p&gt;The generated code in that function is sorta unreadable, but you can &lt;a href=&quot;https://github.com/ryanisaacg/wasmtime-dl/blob/14c0ce31e9052b8bc83e3506573295e246453471/src/lib.rs#L33&quot;&gt;check it out on GitHub&lt;/a&gt; if you want to see it for yourself.&lt;/p&gt;
 &lt;h2&gt;Misdemeanor: Why define the bindings?&lt;/h2&gt;
 &lt;p&gt;You shouldn’t have to define the bindings - they’re right there in the binary! I’m not sure if I realized this in the shower, or on the train, or at the gym, but it hit me like a bolt of lightning. A wasm binary defines the types of its imports, including what parameters and return values functions have.&lt;/p&gt;
-&lt;aside class=&quot;callout callout-info&quot;&gt;
-&lt;p&gt;Remember our Rust example from before? &lt;code&gt;do_side_effect&lt;/code&gt;’s type is encoded right in the wasm:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!INFO]
+Remember our Rust example from before? &lt;code&gt;do_side_effect&lt;/code&gt;’s type is encoded right in the wasm:&lt;/p&gt;
 &lt;pre class=&quot;language-lisp&quot;&gt;&lt;code class=&quot;language-lisp&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;env&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;do_side_effect&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;func&lt;/span&gt; $do_side_effect &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token car&quot;&gt;param&lt;/span&gt; i32 f32&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/aside&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;That means we can save some work for &lt;code&gt;wasmtime-dl&lt;/code&gt;’s caller. Instead of asking them for some external definition for each function, we’ll just use the one provided by the wasm binary.&lt;/p&gt;
 &lt;p&gt;The first experimental version worked! Driving the function bindings by examining the imports of the module itself meant that the user only needed to provide a wasm module and a dynamic library, and &lt;code&gt;wasmtime-dl&lt;/code&gt; could drive the rest. Our interface from before can remove user-provided binding definitions entirely; doesn’t it look so much simpler?&lt;/p&gt;
 &lt;pre class=&quot;language-rust&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;pub&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;unsafe&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;token function-definition function&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
@@ -526,14 +530,14 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 &lt;h2&gt;Misdemeanor: Floats and ints… they’re all just bytes, right?&lt;/h2&gt;
 &lt;p&gt;At this point I had another good? bad? idea. To cut down on the combinatorial explosion, what if I pretended that all float parameters are ints? An &lt;code&gt;f32&lt;/code&gt; or an &lt;code&gt;i32&lt;/code&gt; are both 32-bit chunks of data; the only difference between them is how you interpret those 32 bits. By treating all parameters to the dynamic library functions as &lt;code&gt;i32&lt;/code&gt; or &lt;code&gt;i64&lt;/code&gt; we can drastically cut down on the number of generated match cases.&lt;/p&gt;
 &lt;p&gt;This required some finagling. First, instead of getting to use the convenient type-safe methods on wasmtime’s &lt;code&gt;Linker&lt;/code&gt;, I had to drop down into the less-convenient, less-safe, and slower “raw” binding mode. Second, I discovered that punning an &lt;code&gt;f32&lt;/code&gt; into an &lt;code&gt;i32&lt;/code&gt; was a little more complicated than I initially expected. After a few iterations where the bindings produced total gibberish, I ended up with a pretty simple use of the &lt;a href=&quot;https://crates.io/crates/bytemuck&quot;&gt;&lt;code&gt;bytemuck&lt;/code&gt;&lt;/a&gt; crate to transmute the provided f32 bytes into an i32.&lt;/p&gt;
-&lt;aside class=&quot;callout callout-info&quot;&gt;
-&lt;h3 class=&quot;callout-title&quot;&gt;&lt;span class=&quot;callout-symbol&quot;&gt;ⓘ&lt;/span&gt;Binding Example&lt;/h3&gt;&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!info] Binding Example&lt;/p&gt;
 &lt;p&gt;For a given function signature of &lt;code&gt;func(f32, i64)&lt;/code&gt;, we can match it like this:&lt;/p&gt;
 &lt;pre class=&quot;language-rust&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ParamType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;I32&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ParamType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;F32&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ParamType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;I64&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ParamType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;F64&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;token class-name&quot;&gt;None&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/aside&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;By constraining the combinatorial space, I managed to fit in up to eight parameters in the generated code. It still takes minutes to compile though, even on an M1 Mac, so it’s not exactly lightweight.&lt;/p&gt;
 &lt;h2&gt;A snag: structs&lt;/h2&gt;
 &lt;p&gt;I was excited to have created this horrible beast. To make a little demo I decided to pull in &lt;a href=&quot;https://www.raylib.com/index.html&quot;&gt;&lt;code&gt;raylib&lt;/code&gt;&lt;/a&gt;, a simple C library for creating games, and call it from some wasm. As I scrolled through the raylib API, it hit me: wasm doesn’t know about structs! Any C function that takes a struct or union will expect it to conform to the C calling ABI; wasm only knows about its core primitive types. As it stands there’s no way to call a function that expects a non-primitive argument.&lt;/p&gt;
@@ -563,10 +567,10 @@ borrow value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
       <updated>2024-08-14T00:00:00Z</updated>
       <id>https://rygoldstein.com/posts/markdown-it-callouts.html</id>
       <content xml:lang="en" type="html">&lt;p&gt;I’ve got a blog post in the works that uses infoboxes. Previously I had a little snippet adapted from &lt;a href=&quot;https://github.com/rothsandro/eleventy-notes&quot;&gt;eleventy-notes&lt;/a&gt; so I could parse &lt;a href=&quot;https://help.obsidian.md/Editing+and+formatting/Callouts&quot;&gt;Obsidian callouts&lt;/a&gt; into &lt;code&gt;aside&lt;/code&gt; elements, but now I wanted to have special styling.&lt;/p&gt;
-&lt;aside class=&quot;callout callout-info&quot;&gt;
-&lt;h3 class=&quot;callout-title&quot;&gt;&lt;span class=&quot;callout-symbol&quot;&gt;ⓘ&lt;/span&gt;They look like this!&lt;/h3&gt;&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!info] They look like this!&lt;/p&gt;
 &lt;p&gt;It’s like my styling for asides, but a little more flexible. The colors can be changed, and a little symbol can be configured to show up next to the title.&lt;/p&gt;
-&lt;/aside&gt;
+&lt;/blockquote&gt;
 &lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; [!info] They&#39;re defined like this!
 &lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; The first line is the title, and subsequent lines are the body.
 &lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&lt;/span&gt; You can put whatever elements you want in here too, like code blocks or images.&lt;/code&gt;&lt;/pre&gt;
@@ -1014,14 +1018,13 @@ Here at the outset my goals are:&lt;/p&gt;
       <link href="https://rygoldstein.com/posts/nvim_and_vscode.html"/>
       <updated>2024-03-30T00:00:00Z</updated>
       <id>https://rygoldstein.com/posts/nvim_and_vscode.html</id>
-      <content xml:lang="en" type="html">&lt;p&gt;Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After &lt;a href=&quot;https://rygoldstein.com/posts/TODO&quot;&gt;some involved setup&lt;/a&gt;, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?&lt;/p&gt;
+      <content xml:lang="en" type="html">&lt;p&gt;Around a year ago, I decided to use Neovim as my editor for working on Unity-based projects. After &lt;a href=&quot;https://rygoldstein.com/posts/recurse/todo&quot;&gt;some involved setup&lt;/a&gt;, I thought I had everything just how I liked it. Then my autocomplete broke one too many times, and I knew it just wasn’t worth the hassle. It was time to bite the bullet and use VSCode; but could I do that without giving up Vim?&lt;/p&gt;
 &lt;p&gt;Most text editors targeted towards programmer types have some kind of vim mode. Despite being an avid vim user, I never enable it. The emulation is never exact enough; invariably I’ll try something like a basic macro and completely fumble as I hit a missing feature or three. At that point I’d rather just use the basic EMacs shortcuts available in all macOS input fields. Previously I had tried a Vim plugin for VSCode and had the same disappointing experience. Neovim changed the game in Vim modes, though. The re-architecture of the project apparently allows Neovim to be fully embedded within other applications. Instead of relying on janky emulations, I can get the real thing.&lt;/p&gt;
 &lt;p&gt;I installed &lt;a href=&quot;https://github.com/vscode-neovim/vscode-neovim&quot;&gt;the VSCode plugin&lt;/a&gt; and had to do some fiddling to get it recognize my &lt;code&gt;nvim&lt;/code&gt; binary (which I’ve unfortunately now forgotten). Then I had to &lt;a href=&quot;https://github.com/ryanisaacg/dotfiles/commit/ef085b3b9b4749c95327fedf3f78ad6e25ac3020&quot;&gt;make a few VSCode-specific tweaks to my config&lt;/a&gt;. I skipped loading basically all my usual plugins. LSP, syntax highlighting, git change markers: all these sorts of things are built into VSCode (and won’t work with the Neovim ⭤  VSCode bridge anyways). I also had to re-do all my custom keybindings (for example, opening a fuzzy finder when I hit &lt;code&gt;t&lt;/code&gt; in normal mode) to bind to VSCode actions instead. &lt;code&gt;vscode-neovim&lt;/code&gt; is a handy plugin that allows me to do that very easily.&lt;/p&gt;
 &lt;p&gt;For the past few months I’ve been using this setup as a daily driver. The C# autocomplete integration works out of the box, unlike in my previous Neovim setup (because it’s a proprietary Microsoft extension &amp;gt;_&amp;gt;). Go-to-definition and find-references and all that are working fine. All around it’s a &lt;em&gt;much&lt;/em&gt; better C# editing experience. For the other projects in our monorepo (some Terraform and Typescript, mostly), things work fine. I would prefer to be back in my natural habitat (nvim + tmux + fish) but it’s more convenient to have the whole monorepo open in VSCode than to jump back and forth between environments.&lt;/p&gt;
 &lt;p&gt;So on one hand, I did sorta give up on having my neovim + Unity setup from my last post. But on the other, I maybe have the best of both worlds?&lt;/p&gt;
 </content>
     </entry>
-  
   
   
     <entry>

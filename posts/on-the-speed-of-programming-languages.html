@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/post.css" />
+        
+        <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> On the Relative Speed of Programming Languages </title>
+<meta property="og:title" content="On the Relative Speed of Programming Languages">
+
+<meta name="description" content="true">
+<meta property="og:description" content="true">
+
+<meta name="theme-color" content="#7d7fff">
+
+
+    </head>
+    <body>
+        <header>
+            <div class="page-header">
+    <strong>Ryan Goldstein</strong>
+    <div class="header-links">
+        <a href="/">/home</a>
+        <a href="/posts">/all posts</a>
+    </div>
+</div>
+
+            
+                <aside class="callout-note">
+                    <p>
+                        This post is a draft. Please don't share it with anyone else; if I didn't send you the link directly, you're probably not supposed to be seeing it!
+                    </p>
+                </aside>
+            
+
+            <h1> On the Relative Speed of Programming Languages </h1>
+            <small> 1 May  2025 </small>
+        </header>
+        <article>
+            <p>Programmers often talk about the programming languages as having a property of how fast their programs are. For example, It is received wisdom that Python is “slow” and C is “fast”. Why are some languages “faster”—and what does it even mean to be “fast”, anyway?</p>
+<h2>Coding, Fast and Slow</h2>
+<p>It would be unreasonable to expect a programming language to transmogrify an inefficient design into an efficient one.
+%% TOOD %%</p>
+<h2>What does it even mean to be fast?</h2>
+<p>Usually, what we really mean is “not slow.” That is, if a program is written in a fairly clear and idiomatic style, will it meet our performance criteria? Some usual criteria are:</p>
+<ul>
+<li>How long it takes a program to complete a large chunk of work</li>
+<li>How long it takes a program to start up</li>
+<li>Some kind of soft-realtime%% TODO: explain soft real time%% requirement for predictable performance</li>
+</ul>
+<p>Depending on our domain, some of these may be more or less important. A webserver might not need to start up that quickly; a simple CLI utility might not need to process large amounts of data. In games or UI development, avoiding any kind of pause is critical, whereas an hours-long number-crunching process can pause for seconds at a time if necessary. So we’ll need to consider different sorts of slowness</p>
+<h2>(Not) Garbage Collection</h2>
+<p>Garbage collection is a frequent culprit for unpredictable pausing. Many GC implementations “stop the world” at some point in a program’s lifecycle<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup>. Many toolchains offer various knobs to control GC parameters. I’m not super familiar, but I think the JVM is notable for having many options (including intended length of GC pauses).</p>
+<p>I wanted to talk about garbage collection early in the post to get it out of the way. I believe it is widely <em>over-discussed</em> in matters of programming language performance. I see sentiments like “Rust and C++ are fast because they let you avoid garbage collection.” When the TypeScript team announced their intent to port their compiler from TypeScript to Go, I saw some widespread shock that Go could be ‘fast’—its garbage collected, after all!</p>
+<p>%% TODO %%</p>
+<h2>(Not) “Compiled vs Interpreted”</h2>
+<p>On my commute home recently I overheard two men talking about programming. One asked the other “Is OCaml fast? I thought it was interpreted?”</p>
+<p>The other said “it can be, but you can also compile it.”</p>
+<p>“To byte code or a real executable, like C++?”</p>
+<p>“A real executable.”</p>
+<p>Not put two random guys on the subway on blast, but this is a totally wrongheaded way to think about performance.</p>
+<h2>Indirection</h2>
+<p>It’s my contention that the best heuristic to answer the question “how fast is this programming language going to get?” is “indirection.” The more indirection a language’s design requires, the less efficient its implementations may be.</p>
+<h3>Pointers</h3>
+<p>One simple (and powerful) example of indirection is memory layout.</p>
+<p>Imagine a record that represents an enemy in a video game. It has a position, a velocity, a health value, and an enemy type.</p>
+<p>In a language with strong support for value types we express this value similarly. I’ll use Rust syntax, but the core concept is the same in other languages like Go, Zig, or C++:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">Enemy</span> <span class="token punctuation">{</span>
+    position<span class="token punctuation">:</span> <span class="token class-name">Vector2</span><span class="token punctuation">,</span>
+    velocity<span class="token punctuation">:</span> <span class="token class-name">Vector2</span><span class="token punctuation">,</span>
+    health<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span>
+    enemy_type<span class="token punctuation">:</span> <span class="token class-name">EnemyType</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> <span class="token type-definition class-name">Vector2</span> <span class="token punctuation">{</span>
+    x<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span>
+    y<span class="token punctuation">:</span> <span class="token keyword">f32</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">enum</span> <span class="token type-definition class-name">EnemyType</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Slime</span><span class="token punctuation">,</span>
+    <span class="token class-name">Knight</span><span class="token punctuation">,</span>
+    <span class="token class-name">Dragon</span>
+<span class="token punctuation">}</span></code></pre>
+<p>An <code>Enemy</code> is a single, contiguous block of memory. We can abstractly imagine it in memory as a series of labels for byte offsets: %% TODO: is “word” right? %%</p>
+<pre><code>0: [position.x]
+32: [position.y]
+64: [velocity.x]
+96: [velocity.y]
+128: [health]
+160: [enemy_type]
+</code></pre>
+<p>If we need to access any of field of <code>Enemy</code>, it’s a fixed, known offset from the address of the <code>Enemy</code> itself. On some fake, abstract machine the assembly to move the entity might look like:</p>
+<p>%% TODO: maybe godbolt this? %%</p>
+<pre><code>mov [enemy]+0 into register a
+mov [enemy]+32 into register b
+add [enemy]+64 into register a
+add [enemy]+96 into register b
+</code></pre>
+<p>Some ahead-of-time compiled languages only support reference types. The most obvious of these is Java which I’ll use for the example, but you can extrapolate to other JVM languages, or idiomatic C#<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>, or Haskell, or what have you:</p>
+<pre class="language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Enemy</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Vector2</span> position<span class="token punctuation">,</span> velocity<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> health<span class="token punctuation">;</span>
+    <span class="token class-name">EnemyType</span> enemyType<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Vector2</span> <span class="token punctuation">{</span>
+    <span class="token keyword">float</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">enum</span> <span class="token class-name">EnemyType</span> <span class="token punctuation">{</span>
+    <span class="token constant">SLIME</span><span class="token punctuation">,</span> <span class="token constant">KNIGHT</span><span class="token punctuation">,</span> <span class="token constant">DRAGON</span>
+<span class="token punctuation">}</span></code></pre>
+<p>In Java, all structures consist of basic numerical values or pointers to other structures. That means our memory layout looks more like:</p>
+<pre><code>Enemy:
+0: [pointer to Vector2 position]
+64: [pointer to Vector2 velocity]
+160: [health]
+192: [enemyType]
+
+Vector2:
+0: [x]
+32: [y]
+</code></pre>
+<h3>Vtables</h3>
+<h2>Slow: Everything is a Reference Type</h2>
+<h2>Slower: Everything is a Hashmap</h2>
+<h2>Cache Locality</h2>
+<h2>SIMD</h2>
+<p>While our model of programming remains stubbornly single-threaded, hardware offers ever more parallelism. %% TODO %%</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>I believe this is often to compact the heap, but don’t quote me on that; I’m not a GC expert. <a href="#fnref1" aria-label="Back to reference 1" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>In C#, <code>struct</code>s are value types. However, a struct is always a value type and a class is always a reference type. A struct may be passed as a <code>ref</code> to access its contents by reference, but as far as I know it may never be heap-allocated and garbage collected. A class may not be stack-allocated. These two different universes make it somewhat harder to gain the advantage of good memory layouts. <a href="#fnref2" aria-label="Back to reference 2" role="doc-backlink" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        </article>
+    </body>
+</html>
+

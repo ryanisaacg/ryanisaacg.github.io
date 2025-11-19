@@ -51,9 +51,9 @@
 <p>I made two changes to how <a href="https://github.com/ryanisaacg/brick">Brick</a>’s runtime works:</p>
 <ol>
 <li>Instead of requiring it to be built manually, I set up a Rust build script so that the runtime will be automatically rebuilt.</li>
-<li>I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.</li>
+<li>I wrote a small crate to expose some things that were previously internals in the Rust compiler’s output.
+With these two changes, I can now link the runtime module directly to the compiled binary with <a href="https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module">wasmtime’s Linker interface</a>. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.</li>
 </ol>
-<p>With these two changes, I can now link the runtime module directly to the compiled binary with <a href="https://docs.rs/wasmtime/latest/wasmtime/struct.Linker.html#method.module">wasmtime’s Linker interface</a>. Previously I had been writing the wasmtime bindings by hand; this is a big ergonomics improvement. It also tees up the improvement I’m trying to make in week 8, which is linking the application and runtime within the compiler itself.</p>
 </li>
 </ul>
 

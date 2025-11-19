@@ -4,7 +4,7 @@
   <subtitle></subtitle>
   <link href="https://rygoldstein.com/rss.xml" rel="self"/>
   <link href="https://rygoldstein.com"/>
-  <updated>2025-11-19T02:01:32Z</updated>
+  <updated>2025-11-19T02:03:04Z</updated>
   <id>https://rygoldstein.com</id>
   <author>
     <name>Ryan</name>
@@ -839,7 +839,7 @@ Remember our Rust example from before? &lt;code&gt;do_side_effect&lt;/code&gt;�
       <link href="https://rygoldstein.com/posts/programming-language-for-fun.html"/>
       <updated>2024-07-15T00:00:00Z</updated>
       <id>https://rygoldstein.com/posts/programming-language-for-fun.html</id>
-      <content xml:lang="en" type="html">&lt;p&gt;For a little under a year I’ve been working on &lt;a href=&quot;https://github.com/ryanisaacg/my-programming-language/&quot;&gt;a programming language project&lt;/a&gt;. It’s a high level language that compiles to WebAssembly, designed to small games or scripts. Here I’ll introduce the language, explain my design decisions thus far, and complain about naming things.&lt;/p&gt;
+      <content xml:lang="en" type="html">&lt;p&gt;For a little under a year I’ve been working on &lt;a href=&quot;https://codeberg.org/rgoldstein/felt/&quot;&gt;a programming language project&lt;/a&gt;. It’s a high level language that compiles to WebAssembly, designed to small games or scripts. Here I’ll introduce the language, explain my design decisions thus far, and complain about naming things.&lt;/p&gt;
 &lt;h2&gt;An Example&lt;/h2&gt;
 &lt;p&gt;Before I get into the weeds, I figured I should show off what a snippet of the language looks like:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import self.tilemap.Tilemap;

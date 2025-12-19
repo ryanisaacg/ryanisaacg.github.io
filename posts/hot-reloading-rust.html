@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="/post.css" />
+        <link rel="stylesheet" href="/post.css">
         
         <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
@@ -29,16 +29,16 @@
 
             
 
-            <h1> Hot Reloading for Rust Gamedev </h1>
+            <h1 id="hot-reloading-for-rust-gamedev"> Hot Reloading for Rust Gamedev </h1>
             <small> 26 Aug  2025 </small>
         </header>
         <article>
-            <h2>An Idea</h2>
+            <h2 id="an-idea">An Idea</h2>
 <p>I used to think hot reloading was something only “managed” languages could do, not “compiled” languages. When I change a React component it can update on the page; when I change a line of code in a Rust daemon I have to kill the program and bring it back up. This makes writing games in the “compiled” languages somewhat painful. Games tend to be highly stateful; if a bit of behavior only triggers in a particular state, it can be annoying to return to that state after relaunching the game. For example, if you’re tweaking font size in a dialogue system, you’ll need to re-initiate a dialogue each time you change the code.</p>
 <p>Last year I had a realization while working on my hobby programming language (called Felt). Felt compiles to WebAssembly (WASM); in WASM the code for your application is entirely separate from its linear memory<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup>. It’s really easy to replace the code and keep the memory the same. As long as your program can still interpret that memory the same way<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>, this gives you hot reloading for free. I made a demo in Felt where a single keystroke recompiled the game and reloaded it live, allowing you to change all the rendering or game logic without having to relaunch or replay anything.</p>
 <p>This year I’ve been working on Felt a lot less. Instead I’m currently making a small game in Rust. Pretty early on I ran into some font layout bugs in my new game engine, and wanted seamless code reloading. Is such a thing possible?</p>
 <p>It is, if we take advantage of dynamic libraries. There are two ways to link binary blobs of code together: static linking (where we concatenate the binaries into one final product) and dynamic linking (where the libraries are found on-disk each time the program launches). By default Rust statically links crates together, which means we can’t easily load in a new version of our game’s logic. But if we dynamically link the crates, we can reload the dynamic library.</p>
-<h2>The “Easy” Way</h2>
+<h2 id="the-easy-way">The “Easy” Way</h2>
 <p>At first I tried the <a href="https://docs.rs/hot-lib-reloader/latest/hot_lib_reloader/"><code>hot-lib-reloader</code> crate</a>. It seemed promising, and has a nice API; take this example from their docs:</p>
 <pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[hot_lib_reloader::hot_module(dylib = <span class="token string">"lib"</span>)]</span>
 <span class="token keyword">mod</span> <span class="token module-declaration namespace">hot_lib</span> <span class="token punctuation">{</span>
@@ -61,7 +61,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>That macro automatically handles a bunch of binding work for us. Unfortunately, it also doesn’t work. Rust 2024 requires that the <code>#[no_mangle]</code> attribute be decorated as <code>unsafe</code> (because it allows a bunch of link-time badness), so it now looks like <code>#[unsafe(no_mangle)]</code>. <code>hot-lib-reloader</code> doesn’t understand this syntax. There are some open PRs to add support, but I don’t really want to get that far into the weeds. Instead I think it’s best if we cut through the magic and do the bindings ourselves.</p>
-<h2>The Simple Way</h2>
+<h2 id="the-simple-way">The Simple Way</h2>
 <p>I have my game’s logic defines in a separate crate called <code>game-core</code>, with the following stanza in its <code>Cargo.toml</code> to make it a dynamic library:</p>
 <pre class="language-toml"><code class="language-toml"><span class="token punctuation">[</span><span class="token table class-name">lib</span><span class="token punctuation">]</span>
 <span class="token key property">crate-type</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">"rlib"</span><span class="token punctuation">,</span> <span class="token string">"dylib"</span><span class="token punctuation">]</span></code></pre>

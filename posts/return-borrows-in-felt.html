@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="/post.css" />
+        <link rel="stylesheet" href="/post.css">
         
         <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
@@ -29,17 +29,17 @@
 
             
 
-            <h1> Return-Position Borrows in Felt </h1>
+            <h1 id="return-position-borrows-in-felt"> Return-Position Borrows in Felt </h1>
             <small> 16 Jun  2025 </small>
         </header>
         <article>
-            <h2>Felt Context</h2>
+            <h2 id="felt-context">Felt Context</h2>
 <p><em>Feel free to skip this section if you’ve been following my little PL project.</em></p>
 <p>I’ve been working on a programming language called “Felt”<sup class="footnote-ref"><a href="#fn1" id="fnref1" aria-describedby="footnotes-label" role="doc-noteref">[1]</a></sup> for the past couple years. I <a href="programming-language-for-fun">last wrote about it</a> during my batch at the <a href="https://www.recurse.com/">Recurse Center</a>, and that blog post remains a good overview of the general vibe of the project.</p>
 <p>One of my goals with Felt is to create a simple programming language that enforces “shared XOR mutable”. That is, at no point in a valid program can there be a <em>shared</em> reference and a <em>mutable</em> reference to the same value, at the same time. I think that “shared XOR mutable” is a hugely beneficial innovation in Rust<sup class="footnote-ref"><a href="#fn2" id="fnref2" aria-describedby="footnotes-label" role="doc-noteref">[2]</a></sup>, and has broad benefits beyond maximum-performance systems programming.</p>
 <p>Sort of as a proof of that theory, I’ve set out to make a simple, imperative, high-level language that gives similar guarantees around aliasing. I’m pretty serious about keeping things simple—partially because I have to implement whatever I design. This whole project is for fun, so designing something super complex means I have to implement something super complex… No thanks.</p>
 <p>Plus, I feel like there might be a niche for a PL shaped like Go, but designed with niceties like sum types.</p>
-<h2>Basics of Borrowing in Felt</h2>
+<h2 id="basics-of-borrowing-in-felt">Basics of Borrowing in Felt</h2>
 <p><em>If you’re familiar with Rust, you can mentally replace Felt’s <code>ref</code> keyword with <code>&amp;</code> and its <code>unique</code> keyword with <code>&amp;mut</code> and skip this section.</em></p>
 <p>Felt’s references are pointers that encode whether they are shared (copyable and immutable) or unique (non-copyable and mutable). They also must always point to a valid object, which may not be changed, destroyed, or moved while there are any active references. The latter obviously has some memory safety benefits, but it’s the former that is more interesting to me. It eliminates a class of annoying, spooky-action-at-a-distance bugs like iterator invalidation<sup class="footnote-ref"><a href="#fn3" id="fnref3" aria-describedby="footnotes-label" role="doc-noteref">[3]</a></sup>, concurrent race conditions, and unknown writers clobbering data in deeply-nested function calls.</p>
 <p>Taking a reference (or “borrowing”) looks like this:</p>
@@ -48,7 +48,7 @@ do_something_immutable(ref x);
 do_something_mutable(unique x);
 </code></pre>
 <p>And produces types with names like <code>unique i32</code> and <code>ref i32</code>.</p>
-<h2>Borrow Limitations</h2>
+<h2 id="borrow-limitations">Borrow Limitations</h2>
 <p>My original design for borrowed references to values was very constrained: borrows exist only in the syntactical scope where they’re created. There’s no way to assign a borrowed value to a new name. That way the entire problem of borrow-lifetime-checking is essentially avoided: it’s impossible to define a borrow that lives longer than the thing it’s borrowing, because references may only ever have a narrower scope than what they are borrowing. I implemented this borrow checker, wrote a couple tests, and saw that it worked. Life is good.</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> x <span class="token operator">=</span> list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">{</span>
@@ -95,7 +95,7 @@ do_something_mutable(unique x);
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Then I thought “it would be nice to take a mutable reference to a <code>Tile</code>, so I can both get the value and set it without having to round-trip through the <code>Tilemap</code>.” Ah, crap. That requires the ability to return references. Maybe it’s not sustainable to have the collections in the language hard-coded in the compiler after all.</p>
-<h2>Returning References from Functions</h2>
+<h2 id="returning-references-from-functions">Returning References from Functions</h2>
 <p>I sat on the problem for the next two and a half months. A couple times I doodled ideas on the back of a bill or hopefully-unimportant tax document. Various solutions came to mind with various issues, including “implement full Rust-style borrow checking” (which I know I don’t want to do) or “give up” (which I also don’t really wanna do).</p>
 <p>The solution ended up requiring 20% of the effort to get 80% of what I want, which is sort of the Felt project’s motto. You are now permitted to return a reference from a function—as long as it only borrows from the function’s parameters. References returned from a function are assumed to be constrained by the lifetime of the shortest-lived parameter.</p>
 <p>We know all parameters must outlive the current function (because their lifetime originates in the caller). There’s still no way to return a reference that borrows a local value, because those values will go out of scope when the function returns. Without any kind of annotation syntax to pick which parameters constrain the lifetime of the return value, we’re forced to assume they all do. Whichever argument has the shortest lifetime will determine the lifetime of the returned value.</p>
@@ -133,7 +133,7 @@ borrow value <span class="token operator">=</span> <span class="token function">
 <span class="token function">examine_value</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// this is now a compile error</span></code></pre>
 <p><code>value</code>’s lifetime is the the intersection of <code>dict</code> and <code>key</code>. The immutable borrow of <code>key</code> must end on the next line, when <code>key</code> is mutably borrowed. Because a value can never be mutable and immutably borrowed at the same time, the previous immutable borrow to <code>key</code> is invalidated at this point which transitively invalidates <code>value</code>. Thus attempting to use <code>value</code> on the next line is a compiler error.</p>
 <p>The latter case isn’t a hard limitation; I could introduce something like Rust’s lifetime annotations to solve it. It’s definitely overly strict. In the above example, it’s almost certainly safe to mutate <code>value</code> while observing <code>key</code>, but we can’t express that to the compiler. Maybe I’ll change that at some point, but for now I’m happy with my “barely good enough” solution.</p>
-<h2>The Next Problem: Optional References</h2>
+<h2 id="the-next-problem-optional-references">The Next Problem: Optional References</h2>
 <p>At some point, I <em>know</em> I’m going to want to express “this function takes either a reference or some null-value” or “this function returns a reference or an error” or something similar. Right now… you super can’t do that. There are two reasons:</p>
 <ol>
 <li>Nullability is a language-level construct that has sorta jank semantics. I’m planning to replace it with Felt’s union mechanism, but I don’t have type parameters yet. (Look out out for that later this year, I hope).</li>

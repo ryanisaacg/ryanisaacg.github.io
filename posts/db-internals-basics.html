@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="/post.css" />
+        <link rel="stylesheet" href="/post.css">
         
         <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
@@ -29,12 +29,12 @@
 
             
 
-            <h1> Learning What the Heck is Inside SQLite </h1>
+            <h1 id="learning-what-the-heck-is-inside-sqlite"> Learning What the Heck is Inside SQLite </h1>
             <small> 2 Aug  2024 </small>
         </header>
         <article>
             <p>Starting my batch at the Recurse Center, I knew one of the things I wanted to learn was the basics of database internals. My goal was to answer a basic question: “what does a database look like physically, from the perspective of files on disk?”</p>
-<h2>B+Trees</h2>
+<h2 id="b-trees">B+Trees</h2>
 <p>I started with <a href="https://build-your-own.org/database/">“Build Your Own Database From Scratch In Go”</a>. By working through the first half of the book in Rust, I learned:</p>
 <ul>
 <li>“Logs” in databases mean something pretty different from what I’m used to. Instead of storing information about a program’s operation history, a “write ahead log” is a data structure you can safely append incoming operations to. This allows concurrent operations to be safely stored in a durable fashion, even if the process crashes mid-write.</li>
@@ -43,7 +43,7 @@
 </ul>
 <p>Following along, I <a href="https://github.com/ryanisaacg/catalog">built a memory-mapped B+Tree in Rust</a> to make sure I understood the concepts. A B+Tree consists of internal nodes with variable numbers of children and leaf nodes with data. Each node has a key, and the key type can be ordered between them. Internal nodes store the key ranges of their children, allowing them to determine which children to recurse to when finding a node. There’s also a rebalancing algorithm to split up nodes that get too large and condense nodes that get too small, to ensure that the height of the tree remains small (and thus fast to traverse).</p>
 <p>I think my implementation doesn’t fully rebalance itself (making it inefficient), but it does correctly handle get/insert/remove operations. Using <code>mmap</code> means that the file is automatically updated under the hood, which is how some real database systems work. Unfortunately <code>mmap</code> is super unergonomic in Rust, because I’m taking a byte array and doing a bunch of unsafe witchery to map the bytes to data structures. I think my use of <code>MaybeUninit</code> in this code is actually unsound? So I wouldn’t use that B+Tree code as a good example of anything.</p>
-<h2>SQLite Format</h2>
+<h2 id="sqlite-format">SQLite Format</h2>
 <p>In week 2 I joined some of my batchmates in writing SQLite from scratch. I decided to <a href="https://github.com/ryanisaacg/sqlite">go about this in Zig</a>, partially to learn a new language and partially to avoid the memory-mapping problems I had in Rust. The first step is to parse <a href="https://www.sqlite.org/fileformat.html#the_database_header">the database file’s header</a>, which is pretty simple. Things immediately kicked up a notch on the next step, as I began to dig into SQLite’s internal structures. Each SQLite database is represented by pages (4096 bytes in the test database, but it can be configured on a per-DB basis). Each page consists of a header, an array of internal pointers to “cells”, and then the cells themselves. A page is a node in a B+Tree, either a leaf or branch; these trees represent tables and indices in SQLite.</p>
 <p>All this actually sounds pretty simple. Let me assure you that there was plenty of room to write frustrating, hard-to-understand bugs along the way:</p>
 <ul>
@@ -53,7 +53,7 @@
 <li>The cell offsets on the first database page treat the database header as belonging to that page, so their offsets aren’t relative to the page header but rather to byte 0.</li>
 </ul>
 <p>After I had worked through these initial obstacles, my program was able to enumerate the tables in a SQLite database file and read the <code>sqlite_schema</code> table to determine their names. For now I’ve stopped there, because I feel like I’ve developed a good understanding of the physical basis of database file storage.</p>
-<h2>Takeaways</h2>
+<h2 id="takeaways">Takeaways</h2>
 <p>With what I learned from my projects, I can return to my initial question of “what does a database look like physically?” At its simplest, my answer is two core facts:</p>
 <ol>
 <li>A key-value store is represented by a tree (probably a B+Tree or an LSM tree) which allows for atomic writes.</li>

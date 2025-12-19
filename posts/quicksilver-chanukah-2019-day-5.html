@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="/post.css" />
+        <link rel="stylesheet" href="/post.css">
         
         <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
@@ -29,20 +29,20 @@
 
             
 
-            <h1> A Quicksilver Chanukah, Day 5: Golem </h1>
+            <h1 id="a-quicksilver-chanukah-day-5-golem"> A Quicksilver Chanukah, Day 5: Golem </h1>
             <small> 26 Dec  2019 </small>
         </header>
         <article>
             <p><code>golem</code> is a mostly-safe graphics API that targets OpenGL 3.2 and WebGL 1 that helps make writing GL less painful.</p>
-<h2>Why <code>golem</code> and not X</h2>
+<h2 id="why-golem-and-not-x">Why <code>golem</code> and not X</h2>
 <p>If you’re just interested in what <code>golem</code> is and how it works, feel free to skip this section!</p>
 <p>The previous three days I’ve introduced new crates that mostly stood on their own. I’m not aware of any fleshed-out alternatives, so creating those libraries myself doesn’t require much explanation. <code>golem</code>, however, is a different story: there aren’t exactly a shortage of Rust graphics libraries. There are a variety of reasons as to why none of them fit Quicksilver’s needs, most of which revolve around support for older hardware or older APIs. For brevity, I’d recommend you check out <a href="https://wiki.alopex.li/AGuideToRustGraphicsLibraries2019">icefox’s guide to the existing graphics options</a>.</p>
 <p>I have a test device that I think is a good benchmark for something Quicksilver-powered games should be able to target, and it doesn’t support Vulkan. This eliminates <code>ash</code> and <code>vulkano</code> straight off the bat, and <code>gfx-hal</code> as well. <code>ash</code> and <code>vulkano</code> target Vulkan directly, and <code>gfx-hal</code>’s OpenGL backend is not currently reliable enough (though I hope to see that improve!)</p>
 <p>I also want to be able to support WebGL 1, but WebGL 1 is not a very modern version of OpenGL. This makes it, for good reaon, unattractive to other libraries (like <code>luminance</code>, which is targeting WebGL 2 in its upcoming web support). However, WebGL 2’s <a href="https://caniuse.com/#feat=webgl2">market share</a> still hovers at around 75%, which isn’t ideal; notably missing from WebGL 2 support are the current verisons of Edge, Safari, and iOS Safari. Quicksilver recently transitioned to using WebGL 1 for better platform support, and I didn’t want to regress by requiring a high version. This rules out <code>luminance</code>, and presumably <code>glium</code> (which has no current development towards web support as far as I’m aware.)</p>
 <p>With just those two constraints I’m out of options, so I decided to write <code>golem</code>.</p>
-<h2>Mostly-Safe?</h2>
+<h2 id="mostly-safe">Mostly-Safe?</h2>
 <p>Where possible, <code>golem</code> handles for you the complex state machine of OpenGL. In other places, it prevents you from using resources that haven’t been properly set-up. In these cases, <code>golem</code> is safe with low-overhead, removing footguns from OpenGL without slowing your code down. In others, more overhead would be required to keep the API free of <code>unsafe</code>. Currently only two functions are marked as <code>unsafe</code> in <code>golem</code>’s public API, but they are the only functions that draw things to the screen! This means using <code>unsafe</code> code as a consumer of <code>golem</code> is unavoidable, hence “mostly-safe.”</p>
-<h2>A Code Snippet</h2>
+<h2 id="a-code-snippet">A Code Snippet</h2>
 <p>Hopefully if you’re familiar with graphics APIs, this code snippet to draw a triangle to the screen will look a little familiar. If not, the comments should help you follow along!</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">blinds<span class="token punctuation">::</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
 <span class="token keyword">use</span> <span class="token namespace">golem<span class="token punctuation">::</span></span><span class="token punctuation">{</span>
@@ -149,7 +149,7 @@
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <p>(This is also an example of <a href="../quicksilver-chanukah-2019-day-4">yesterday’s <code>blinds</code></a> and its OpenGL support.)</p>
-<h2>Further Development</h2>
+<h2 id="further-development">Further Development</h2>
 <p><code>golem</code> is not intended to be a fully-featured wrapper around all of OpenGL. It’s intended to be enough to write fairly complex 2D graphics, or fairly simple 3D graphics. That said, there is a lot that’s missing! Some of it is documented on the <a href="https://github.com/ryanisaacg/golem/issues">issue tracker</a>, but I’m sure that I’ve missed other things. Nearly everything I need for Quicksilver is done, but your use case might be different. Feel free to open an issue discussing a feature addition, or try and experiment with a fork for larger changes.</p>
 <p><code>golem</code> is the last new crate to announce, which means tomorrow is about what these crates enable: the new version of Quicksilver.</p>
 <ol>

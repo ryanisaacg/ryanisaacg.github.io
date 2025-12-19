@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="/post.css" />
+        <link rel="stylesheet" href="/post.css">
         
         <link rel="alternate" type="application/atom+xml" href="/rss.xml" title="RSS feed">
 <meta charset="UTF-8">
@@ -29,18 +29,18 @@
 
             
 
-            <h1> A Quicksilver Chanukah, Day 8: Rust Gamedev and the Web </h1>
+            <h1 id="a-quicksilver-chanukah-day-8-rust-gamedev-and-the-web"> A Quicksilver Chanukah, Day 8: Rust Gamedev and the Web </h1>
             <small> 29 Dec  2019 </small>
         </header>
         <article>
             <p>This year has been great for Rust gamedev on the web. Huge progress has been made towards a full game stack being available more-or-less “for free:” most of the foundational crates have available web support, in one way or another.</p>
-<h2>Windowing and Input</h2>
+<h2 id="windowing-and-input">Windowing and Input</h2>
 <p>For opening a window and receiving events from it, the Rust ecosystem has <a href="https://github.com/rust-windowing/winit"><code>winit</code></a>. Along with <a href="https://github.com/hecrj">Héctor Ramón (hecrj)</a> and and <a href="https://github.com/blm768">Ben Merritt (blm768)</a>, I worked on adding web support. <a href="https://users.rust-lang.org/t/winit-0-20-and-web-support/36155">It has been merged and released</a>, and is used in <a href="https://github.com/hecrj/coffee">coffee</a> and <a href="https://github.com/ryanisaacg/blinds">blinds</a>. While using <code>winit</code> directly does require some glue code to plug your canvas into the webpage, intermediate layers like game frameworks can take care of the details.</p>
 <p>While <code>winit</code> doesn’t currently provide gamepad events, <a href="https://gitlab.com/gilrs-project/gilrs"><code>gilrs</code></a> fills that gap nicely. In the beginning of the year I added web support via stdweb, which should translate to <code>wasm-bindgen</code> when necessary. Unlike <code>winit</code>, which requires a little glue code to connect to your webpage, <code>gilrs</code> Just Works. It functions nearly the same as the desktop version, with the only limitations being those the web platform imposes.</p>
-<h2>Graphics</h2>
+<h2 id="graphics">Graphics</h2>
 <p>When it comes to graphics on the web, there are two APIs to keep in mind. One is WebGL, which is the current way of writing graphics code for the web. The other is WebGPU, an evolving standard based on newer, more modern APIs that will be the way forward. Currently WebGPU is just in the draft phase, so we can’t target it just yet. Targeting WebGL directly is an option, but it seems like a waste to write OpenGL code for desktop and then again for web. Enter <a href="https://github.com/grovesNL/glow"><code>glow</code></a>, which brings a unified API across destop and WebGL.</p>
 <p>Built on top of <code>glow</code> is <code>gfx-backend-gl</code>, which brings <a href="https://github.com/gfx-rs/gfx"><code>gfx-hal</code></a> to desktop GL and web. By extension comes <a href="https://github.com/gfx-rs/wgpu-rs"><code>wgpu</code></a>, an idiomatic Rust implementation of the upcoming WebGPU specification. It uses WebGL for now, but when WebGPU is stabilization and available, we’ll have a modern graphics API that works seamlessly across desktop and web.</p>
-<h2>Audio</h2>
+<h2 id="audio">Audio</h2>
 <p>The audio story for Rust on the web is not there yet, unfortunately. <a href="https://github.com/RustAudio/cpal"><code>cpal</code></a>, a cross-platform library for Rust audio, doesn’t have web support yet. However, there is hope! <a href="https://nannou.cc/posts/moss_grant_announce">Mozilla announced a grant to Nannou</a> that includes web support in <code>cpal</code> as a core goal. The relevant issue is <a href="https://github.com/RustAudio/cpal/issues/212">cpal #212</a>, which will hopefully yield some information early next year.</p>
 <p>That’s it for my updates! This was a good year for Rust on the web, and laid the groundwork for the changes I’ve talked about in Quicksilver. I’ll be back in the new year with a State of Quicksilver 2020, which should come along with an alpha release of the new Quicksilver version.</p>
 <p>If you’re interested in updates from other places in the Rust ecosystem, check out the <a href="https://wiki.alopex.li/TheStateOfGGEZ2020">State of GGEZ 2020</a> and the <a href="https://rust-gamedev.github.io/">Rust Gamedev Working Group’s newsletters</a>. See you in the new year!</p>
